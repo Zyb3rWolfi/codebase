@@ -1,12 +1,9 @@
 <template>
-
-    <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png" alt="User dropdown">
-
-    <div id="userDropdown" class="hidden">
-        <h1>Hello</h1>
-    </div>
+    <button type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm  dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Dark</button>
 
 </template>
-<script>
+
+<script setup>
     import { ref } from 'vue'
+
 </script>
