@@ -11,10 +11,14 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         <!-- Styles -->
-        @vite('resources/css/app.css')
     </head>
     <body>
+        <p>hello world</p>
         <div id="app"></div>
-        @vite('resources/js/app.js')
+        <?php 
+            if (DB::connection()->getDatabaseName()) {
+                echo "connected successfully to database ".DB::connection()->getDatabaseName();
+            }
+        ?>
     </body>
 </html>

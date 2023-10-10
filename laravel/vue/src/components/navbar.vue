@@ -17,7 +17,6 @@
 </script>
 
 <template>
-<p> {{ store.count }} </p>
 <nav class="">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a href="https://flowbite.com/" class="flex items-center">
