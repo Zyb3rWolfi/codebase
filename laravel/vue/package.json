@@ -9,7 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@highlightjs/vue-plugin": "^2.1.0",
+    "highlight.js": "^11.9.0",
+    "markdown-it": "^13.0.2",
+    "markdown-it-highlightjs": "^4.0.1",
     "vue": "^3.3.4",
+    "vue-plugin": "^0.0.1",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"
   },

@@ -7,8 +7,13 @@ use Illuminate\Support\Facades\DB;
 
 class DbController extends Controller
 {
-    public function getData() {
-        $data = DB::table('sample')->pluck('strings');
-        return response()->json(["search_results"=>["names"=>$data]], 200);
+    public function getData(string $search) {
+        $data = DB::table('sample')->where('strings', 'LIKE', '%'.$search.'%')->get();
+        foreach ($data as $key => $value) {
+            $data[$key] = $value;
+        }
+        return response()->json([
+            'strings' => $data,
+        ]);
     }
 }

@@ -17,7 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/test', function () {
-    return 'yar!';
-});
-Route::get('/test', [App\Http\Controllers\DbController::class, 'getData']);
+Route::get('/test/{search}', [App\Http\Controllers\DbController::class, 'getData']);

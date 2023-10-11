@@ -1,5 +1,5 @@
 <template>
-    <div class="md:container mx-auto my-52 lg:max-w-screen-md md:max-w-screen-sm sm:max-w-screen-sm">
+    <div class="md:container mx-auto mt-52 lg:max-w-screen-md md:max-w-screen-sm sm:max-w-screen-sm">
         <div class="text-center my-6">
             <p class="text-4xl">Search Engine For Code</p>
         </div>
@@ -12,11 +12,16 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
+                    <input v-model="search" type="search" id="default-search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required>
                     <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> 
                 </div>
-                <p v-for="ans in answer">{{ ans }}</p>
             </form>
+        </div>
+    </div>
+    <div class=" text-center my-10">
+        <p class=" text-2xl font-bold mb-5">Search Results</p>
+        <div class="container grid grid-cols-3 gap-3 mx-auto">
+            <Result v-for="ans in answer" :search="ans"></Result>
         </div>
     </div>
 
@@ -25,19 +30,34 @@
 <script>
 import axios from 'axios';
 import { ref, watch } from 'vue';
+import Result from '../components/result.vue';
+
 export default {
     name: 'search',
     data() {
         return {
-            answer: {},
+            answer: [],
+            search: '',
         }
+    },
+    components: {
+        Result,
     },
     methods: {
         async getResponse() {
-            const response = await axios.get('http://127.0.0.1:8000/api/test');
-            this.answer = response.data["search_results"]["names"];
-            console.log(this.answer);
+            if (this.search === '') {
+                this.answer = {};
+                return;
+            }
+            const response = await axios.get('http://127.0.0.1:8000/api/test/' + this.search);
+            this.answer = response.data["strings"];
             },
+        },
+        watch: {
+            search() {
+                this.getResponse();
+                
+            }
         },
         beforeMount() {
             this.getResponse();
