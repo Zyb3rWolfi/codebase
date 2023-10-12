@@ -3,7 +3,6 @@
   import { store } from '../Stores/store.js';
   import { ref } from 'vue';
   import MarkdownIt from 'markdown-it'
-  import codes from 'highlight.js/lib/common';
   const markdown = new MarkdownIt()
   const router = useRouter()
   const props = defineProps(['search'])

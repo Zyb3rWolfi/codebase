@@ -7,6 +7,8 @@
   const router = useRouter()
 
   function Manage() {
+
+    const cookie = this.$cookies.get('token')
     router.push("/Login")
   }
 
