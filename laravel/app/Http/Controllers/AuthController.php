@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Cookie;
+use Response;
 
 class AuthController extends Controller
 {
@@ -38,7 +40,7 @@ class AuthController extends Controller
 
         return response([
             'message'=> 'success'  
-        ]) -> cookie($cookie);
+        ]) -> withCookie($cookie);
     }
 
     public function User(Request $request) {
