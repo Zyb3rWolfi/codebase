@@ -1,5 +1,8 @@
 <script setup>
-import NavBar from './components/navbar.vue'
+import axios from 'axios';
+import NavBar from './components/navbar.vue';
+
+
 </script>
 
 <template>

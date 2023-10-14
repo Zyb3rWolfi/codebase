@@ -1,8 +1,13 @@
 <script setup>
   import { useRouter } from 'vue-router';
-  import { store } from '../Stores/store.js';
   import { ref } from 'vue'
+  import { useStore } from 'vuex';
+  import {computed} from 'vue'
   const isActive = ref(false)
+  const store = useStore()
+
+  const auth = computed(() => store.state.auth)
+  console.log(auth)
 
   const router = useRouter()
 
@@ -20,6 +25,7 @@
 
 <template>
 <nav class="">
+  <p>{{ auth }}</p>
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
     <a href="https://flowbite.com/" class="flex items-center">
         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">CodeBase</span>

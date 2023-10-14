@@ -17,6 +17,7 @@
                 </div>
             </form>
         </div>
+        <p> ppp {{ auth }}</p>
     </div>
     <div class=" text-center my-10">
         <p class=" text-2xl font-bold mb-5">Search Results</p>
@@ -31,13 +32,40 @@
 import axios from 'axios';
 import { ref, watch } from 'vue';
 import Result from '../components/result.vue';
+import { onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 export default {
     name: 'search',
+    setup() {
+    const store = useStore();
+
+    onMounted(async () => {
+        try {
+            const headers = {
+                Accept: 'application/json',
+                'content-type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'}
+                const response = await axios.get('http://127.0.0.1:8000/api/user', {headers: headers, withCredentials: true})
+                console.log(response)
+            
+                await store.dispatch('setAuthentication', true)
+
+                console.log("signed in")
+
+            } catch(e) {
+            await store.dispatch('setAuthentication', false) 
+            console.log("signed out", e)
+            }
+    })
+
+  },
     data() {
         return {
             answer: [],
             search: '',
+            auth: null,
         }
     },
     components: {
@@ -52,11 +80,11 @@ export default {
             const response = await axios.get('http://127.0.0.1:8000/api/test/' + this.search);
             this.answer = response.data["strings"];
             },
+        
         },
         watch: {
             search() {
-                this.getResponse();
-                
+                this.getResponse();      
             }
         },
         beforeMount() {

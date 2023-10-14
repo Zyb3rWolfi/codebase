@@ -1,6 +1,5 @@
 <script setup>
   import { useRouter } from 'vue-router';
-  import { store } from '../Stores/store.js';
   import { ref } from 'vue';
   import MarkdownIt from 'markdown-it'
   const markdown = new MarkdownIt()
