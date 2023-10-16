@@ -11,6 +11,8 @@ import VueCookies from 'vue-cookies';
 import axios from 'axios';
 import store from './store'
 
+
+
 createApp(App)
     .use(hljsVuePlugin)
     .use(router)
