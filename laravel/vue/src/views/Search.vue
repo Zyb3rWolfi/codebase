@@ -1,4 +1,5 @@
 <template>
+    <NavBar/>
     <div class="md:container mx-auto mt-52 lg:max-w-screen-md md:max-w-screen-sm sm:max-w-screen-sm">
         <div class="text-center my-6">
             <p class="text-4xl">Search Engine For Code</p>
@@ -28,6 +29,7 @@
 </template>
     
 <script>
+import NavBar from '../components/navbar.vue';
 import axios from 'axios';
 import { ref, watch } from 'vue';
 import Result from '../components/result.vue';
@@ -48,6 +50,7 @@ export default {
     },
     components: {
         Result,
+        NavBar
     },
     methods: {
         async getResponse() {

@@ -28,7 +28,7 @@ onMounted(async ()=> {
 
 <template>
   <header>
-    <NavBar/>
+    
   </header>
   <router-view></router-view>
 </template>

@@ -13,7 +13,7 @@
 
   function Manage() {
     if (auth.value) {
-      router.push("/user/" + store.state.id)
+      router.push("/user/" + store.state.id + "/code")
     } else {
       router.push("/Login")
     }

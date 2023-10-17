@@ -1,4 +1,5 @@
 <template>
+    <NavBar />
     <div class="md:container mx-auto contain flex-col my-36 flex justify-center items-center">
         <form class=" col-start start-3">
             <p class=" text-center text-2xl font-bold mb-5">Sign Up</p>
@@ -31,6 +32,7 @@
 import axios from 'axios'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import NavBar from '../components/navbar.vue';
 
 export default {
     name: 'signup',
@@ -38,6 +40,9 @@ export default {
         const router = useRouter()
         const store = useStore()
         return { router, store }
+    },
+    components: {
+        NavBar
     },
     data() {
         return {
