@@ -1,5 +1,4 @@
 <template>
-    <NavBar />
     <div class="md:container mx-auto contain flex-col my-36 flex justify-center items-center">
         <form class=" col-start start-3">
             <p class=" text-center text-2xl font-bold mb-5">Sign Up</p>

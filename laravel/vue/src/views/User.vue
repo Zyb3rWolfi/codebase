@@ -1,8 +1,11 @@
 <template>
-    <aside id="default-sidebar" c class="fixed top-0 left-0 border-r z-40 w-64 h-screen pt-20 transition-transform -translate-x-full border-gray-200 sm:translate-x-0 dark:border-gray-500" aria-label="Sidebar">
-        <sidebarVue></sidebarVue>
-    </aside>
-    <div class="sm:ml-96 mt-20">
+    <div class="grid grid-cols-1 row-auto ">
+        <div class="flex-auto flex flex-col col-start-1">
+            <settingsNav class=""></settingsNav>
+        </div>
+    </div>
+
+    <div class=" ml-72 mt-10">
         <router-view></router-view>
     </div>
 
@@ -17,6 +20,7 @@ import { computed } from 'vue';
 import sidebarVue from '../components/sidebar.vue';
 import codePage from '../components/code.vue';
 import accountPage from '../components/account.vue';
+import settingsNav from '../components/settingsNav.vue'
 
 export default {
     name: 'user',
@@ -52,7 +56,7 @@ export default {
         };
         userRequest();
     },
-    components: { sidebarVue, codePage, accountPage }
+    components: { sidebarVue, codePage, accountPage, settingsNav }
 }
 
 </script>

@@ -1,5 +1,4 @@
 <template>
-    <NavBar/>
     <div class="md:container mx-auto contain flex-col my-36 flex justify-center items-center">
         <form class=" col-start start-3">
             
@@ -70,7 +69,7 @@ export default {
                 const user = await axios.get('http://127.0.0.1:8000/api/user', {headers: this.headers, withCredentials: true})
                 await this.$store.dispatch('setAuthentication', true)
                 await this.$store.dispatch('setUserID', user.data["id"])
-                await this.$router.push("/user/" + user.data["id"])
+                await this.$router.push("/user/" + user.data["id"] + "/code")
 
             } catch(e) {
                 this.incorrect = true

@@ -1,5 +1,4 @@
 <template>
-    <NavBar/>
     <div class="md:container mx-auto mt-52 lg:max-w-screen-md md:max-w-screen-sm sm:max-w-screen-sm">
         <div class="text-center my-6">
             <p class="text-4xl">Search Engine For Code</p>
@@ -46,6 +45,11 @@ export default {
             answer: [],
             search: '',
             auth: null,
+            header: {
+                Accept: 'application/json',
+                'content-type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         }
     },
     components: {
@@ -58,7 +62,7 @@ export default {
                 this.answer = {};
                 return;
             }
-            const response = await axios.get('http://127.0.0.1:8000/api/test/' + this.search);
+            const response = await axios.get('http://127.0.0.1:8000/api/test/' + this.search, {headers: this.header, withCredentials: true});
             this.answer = response.data["strings"];
             },
         
