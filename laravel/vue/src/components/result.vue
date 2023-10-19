@@ -7,7 +7,6 @@
   const props = defineProps(['search'])
   import simpleEditor from 'simple-code-editor'
 
-  var example = markdown.render("" + props.search["content"])
   var codess = props.search["content"]
   console.log(codess)
 
@@ -24,12 +23,11 @@
 
 <template>
 
-  <div style="background-color: #161616;" class="block grid-rows-3">
-    <p class=" text-2xl mt-2 font-semibold row-start-1">{{props.search["strings"]}}</p>
-    
-    <div class="h-24 text-left row-start-2 flex items-center justify-center ">   
-        <simpleEditor v-model="codess" :read-only="true" width="80%"/>
-    </div>
-  </div>
+<a href="#" class="block max-w-sm p-6 shadow-2xl">
+  <p class=" text-2xl mt-2 font-semibold row-start-1 mb-3">{{props.search["strings"]}}</p>
+  <simpleEditor v-model="codess" :read-only="true" width="100%"/>
+</a>
+
+
 
 </template>

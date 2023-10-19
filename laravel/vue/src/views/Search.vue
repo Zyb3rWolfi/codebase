@@ -20,7 +20,7 @@
     </div>
     <div class=" text-center my-10">
         <p class=" text-2xl font-bold mb-5">Search Results</p>
-        <div class="container grid grid-cols-3 gap-3 mx-auto">
+        <div class="container grid grid-cols-4 gap-2 mx-auto">
             <Result v-for="ans in answer" :search="ans"></Result>
         </div>
     </div>

@@ -1,25 +1,51 @@
 <template>
-    <div class="">
-        <div class="container h-auto max-h-56 p-6 bg-white border border-gray-200 rounded-t-md  shadow dark:bg-gray-800 dark:border-gray-700 max-w-4xl">
+    <div class=" shadow-2xl border-black rounded-lg ">
+        <div class="container h-auto p-6  border-gray-200 rounded-t-md dark:border-gray-700 max-w-4xl">
         <a href="#">
-            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ props.search["strings"] }}</h5>
+            <h5 class=" text-center mb-4 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ props.search["strings"] }}</h5>
         </a>
         <div class=" relative">
             <CodeEditor :read-only="true" v-model="codeResult" width="100%" :line-nums="true"/>
         </div>
           
         </div>
-    <ul class="flex flex-wrap dark:bg-gray-800 dark:border-gray-700 border-b border-l border-r p-2 text-gray-400 font-semibold gap-5">
+    <ul class=" justify-center flex flex-wrap p-2 text-gray-400 font-semibold gap-5">
         <li class="mr-2">
-            <button ata-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="dark:hover:bg-gray-700 dark:hover:text-gray-300">Modify</button>
+            <button :ata-modal-target="codeResult" :data-modal-toggle="codeResult" class="dark:hover:bg-gray-700 dark:hover:text-gray-300">Modify</button>
         </li>
         <li class="dark:hover:bg-gray-700 dark:hover:text-gray-300">
             <button @click="removeBlock()" class="dark:hover:bg-gray-700 dark:hover:text-gray-300">Delete</button>
         </li>
     </ul>
     </div>
-    <modal :title="codeDescription" :code="codeResult"/>
-    
+
+    <div :id="codeResult" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative w-full max-w-md max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-slate-950">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="px-6 py-6 lg:px-8">
+                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Modify This Code Block</h3>
+                <form class="space-y-6" action="#">
+                    <div>
+                        <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code Block Description</label>
+                        <input v-model="title" type="text" name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Center a DIV" required>
+                    </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code</label>
+                        <CodeEditor v-model="codeResult" width="100%" :header="true" :languages="[['python', 'Python'], ['cpp', 'c++']]" :line-nums="true"/>
+                    </div>
+                    <button @click="modifyBlock()" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modify</button>
+                </form>
+            </div>
+        </div> 
+        </div>
+        </div>
  
 </template>
 
@@ -36,8 +62,12 @@ onMounted(() => {
 })
 
 const prop = ref(props.search)
-const codeResult = ref(props.search["content"])
-const codeDescription = ref(props.search["strings"])
+
+var codeResult = ref(props.search["content"])
+var title = ref(props.search["strings"])
+
+const originalCode = ref(props.search["content"])
+const originalTitle = ref(props.search["strings"])
 
 const headers = {
         Accept: 'application/json',
@@ -50,6 +80,14 @@ var blockData = {
     description: '',
 }
 
+var changedData = {
+    code: '',
+    description: '',
+
+    newCode: '',
+    newDescription: '',
+}
+
 async function removeBlock() {
     blockData.code = codeResult
     blockData.description = props.search["strings"]
@@ -58,6 +96,11 @@ async function removeBlock() {
 }
 
 async function modifyBlock() {
+
+    changedData.code = originalCode.value
+    changedData.description = originalTitle.value
+    changedData.newCode = codeResult.value
+    changedData.newDescription = title.value
 
     console.log(changedData)
     const response = await axios.post('http://127.0.0.1:8000/api/updateBlock', changedData, {headers: this.headers, withCredentials: true})
