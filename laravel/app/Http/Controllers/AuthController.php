@@ -26,6 +26,17 @@ class AuthController extends Controller
 
     }
 
+    public function changeDetails(Request $request) {
+
+        $user = Auth::user();
+        $user->name = $request->input('user_name');
+        $user->email = $request->input('user_email');
+
+        $user->save();
+
+        return response($user, 201);
+    }
+
     public function Login(Request $request) {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response([
@@ -41,6 +52,22 @@ class AuthController extends Controller
         return response([
             'message'=> 'success'  
         ]) -> withCookie($cookie);
+    }
+
+    public function changePassword(Request $request) {
+        $user = Auth::user();
+
+        $currentPassword = Auth::user()->password;
+
+        if (!(Hash::check($request->input('user_password'), $currentPassword))) {
+            return response([
+                'message' => 'The provided credentials are incorrect.'
+            ], 401);
+        }
+        $user->password = Hash::make($request->input('user_new_password'));
+        $user->save();
+
+        return response($user, 201);
     }
 
     public function User(Request $request) {

@@ -20,6 +20,8 @@ Route::post('login', [App\Http\Controllers\AuthController::class, 'Login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('getBlocks', [App\Http\Controllers\DbController::class, 'getUserBlocks']);
     Route::get('user', [App\Http\Controllers\AuthController::class, 'User']);
+    Route::post('changedetails', [App\Http\Controllers\AuthController::class, 'changeDetails']);
+    Route::post('changePassword', [App\Http\Controllers\AuthController::class, 'changePassword']);
     Route::post('logout', [App\Http\Controllers\AuthController::class, 'Logout']);
     Route::get('/test/{search}', [App\Http\Controllers\DbController::class, 'getData']);
     Route::post('/addBlock', [App\Http\Controllers\DbController::class, 'addBlock']);
