@@ -3,7 +3,6 @@ import axios from 'axios';
 import NavBar from './components/navbar.vue';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
-
 const store = useStore();
 
 onMounted(async ()=> {

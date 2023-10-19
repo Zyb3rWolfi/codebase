@@ -34,7 +34,7 @@ import { ref, watch } from 'vue';
 import Result from '../components/result.vue';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
-import { computed } from 'vue';
+import { computed } from 'vue';``
 
 export default {
     name: 'search',

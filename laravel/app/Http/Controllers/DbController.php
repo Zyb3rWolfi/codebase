@@ -37,4 +37,41 @@ class DbController extends Controller
             ]);
         }
     }
+
+    public function addBlock(Request $request) {
+        if (Auth::user()) {
+            $id = Auth::user()->id;
+            $data = DB::table('sample')->insert([
+                'id' => $id,
+                'strings' => $request->input('description'),
+                'content' => $request->input('code'),
+            ]);
+            return response()->json([
+                'message' => 'success',
+            ]);
+        }
+    }
+
+    public function deleteBlock(Request $request) {
+        if (Auth::user()) {
+            $id = Auth::user()->id;
+            DB::table('sample')->where('id', $id)->where('strings', $request->input('description'))->delete();
+            return response()->json([
+                'message' => 'success',
+            ]);
+        }
+    }
+
+    public function updateBlock(Request $request) {
+        if (Auth::user()) {
+            $id = Auth::user()->id;
+            DB::table('sample')->where('id', $id)->where('strings', $request->input('before_description'))->update([
+                'content' => $request->input('code'),
+                'strings' => $request->input('description'),
+            ]);
+            return response()->json([
+                'message' => 'success',
+            ]);
+        }
+    }
 }

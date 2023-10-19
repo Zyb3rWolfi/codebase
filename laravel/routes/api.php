@@ -22,4 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [App\Http\Controllers\AuthController::class, 'User']);
     Route::post('logout', [App\Http\Controllers\AuthController::class, 'Logout']);
     Route::get('/test/{search}', [App\Http\Controllers\DbController::class, 'getData']);
+    Route::post('/addBlock', [App\Http\Controllers\DbController::class, 'addBlock']);
+    Route::post('/deleteBlock', [App\Http\Controllers\DbController::class, 'deleteBlock']);
+    Route::post('/updateBlock', [App\Http\Controllers\DbController::class, 'updateBlock']);
 });
