@@ -42,4 +42,8 @@ var title = ref(props.title)
 const originalCode = ref(props.code)
 const originalTitle = ref(props.title)
 
+function reloadPage() {
+    this.$forceUpdate();
+}
+
 </script>

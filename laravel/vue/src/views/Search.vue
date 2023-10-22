@@ -1,7 +1,7 @@
 <template>
     <div class="md:container mx-auto mt-52 lg:max-w-screen-md md:max-w-screen-sm sm:max-w-screen-sm">
         <div class="text-center my-6">
-            <p class="text-4xl">Search Engine For Code</p>
+            <p id="searchTitle" class="text-4xl">Search Engine For Code</p>
         </div>
         <div class="">
             <form> 
@@ -20,7 +20,7 @@
     </div>
     <div class=" text-center my-10">
         <p class=" text-2xl font-bold mb-5">Search Results</p>
-        <div class="container grid grid-cols-4 gap-2 mx-auto">
+        <div class="container grid grid-cols-4 gap-6 mx-auto">
             <Result v-for="ans in answer" :search="ans"></Result>
         </div>
     </div>

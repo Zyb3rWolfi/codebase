@@ -1,15 +1,40 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: jetbrainsMonoLight;
+  src: url("./assets/fonts/JetBrainsMono-Light.ttf");
+}
+@font-face {
+  font-family: jetbrainsMonoMedium;
+  src: url('./assets/fonts/JetBrainsMono-Medium.ttf');
+}
+
+@font-face {
+  font-family: jetbrainsMonoBold;
+  src: url('./assets/fonts/JetBrainsMono-Bold.ttf');
+}
+
+#logo {
+  font-family: jetbrainsMonoBold;
+}
+
+#searchTitle {
+  font-family: jetbrainsMonoBold;
+}
+
+#resultTitle {
+  font-family: jetbrainsMonoMedium;
+}
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: jetbrainsMonoLight;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #0F0E16;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
