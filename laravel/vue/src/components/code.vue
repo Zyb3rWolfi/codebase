@@ -1,8 +1,10 @@
-<template>
-    <p class=" text-2xl font-semibold">Code Blocks</p>
-    <div class="grid grid-cols-4 w-auto mt-10 gap-10">
+<template class="">
+    <div class="grid lg:grid-cols-7 md:grid-cols-6 sm:grid-cols-2">
+        <p class=" text-2xl font-semibold col-start-2">Code Blocks</p>
+    </div>
+    <div class="lg:grid-cols-4 w-auto mt-10 gap-5 grid sm:grid-cols-1 md:grid-cols-2 lg:ml-20 lg:mr-20 sm:ml-5 sm:mr-5">
         <codeBlock v-for="ans in answer" :search="ans" :key="ans"/>
-        <div class=" my-auto">
+        <div class="my-auto mt-20 mx-auto">
             <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" type="button" class="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">
             <svg class="w-5 h-5 transition-transform group-hover:rotate-45" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
@@ -30,7 +32,7 @@
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code</label>
-                        <CodeEditor v-model="sendData.code" width="100%" :header="true" :languages="[['python', 'Python'], ['cpp', 'c++']]" :line-nums="true"/>
+                        <CodeEditor v-model="sendData.code" font-size="15px" width="100%" :header="true" :languages="[['python', 'Python'], ['cpp', 'c++']]" :line-nums="true"/>
                     </div>
                     <button @click="sendBlock()" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
                 </form>

@@ -1,11 +1,11 @@
 <template>
-    <div class="grid grid-cols-1 row-auto ">
-        <div class="flex-auto flex flex-col col-start-1">
+    <div class="grid lg:grid-cols-7 md:grid-cols-4 sm:grid-cols-2 shadow-xl">
+        <div class="col-start-2">
             <settingsNav class=""></settingsNav>
         </div>
     </div>
 
-    <div class=" ml-72 mt-10">
+    <div class="mx-auto content-center mt-10">
         <router-view></router-view>
     </div>
 

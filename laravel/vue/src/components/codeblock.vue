@@ -1,11 +1,11 @@
 <template>
     <div class=" shadow-2xl border-black rounded-lg ">
-        <div class="container h-auto p-6  border-gray-200 rounded-t-md dark:border-gray-700 max-w-4xl">
+        <div class="container h-auto p-6   border-gray-200 rounded-t-md dark:border-gray-700 max-w-4xl">
         <a href="#">
             <h5 class=" text-center mb-4 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ props.search["strings"] }}</h5>
         </a>
         <div class=" relative">
-            <CodeEditor :read-only="true" v-model="codeResult" width="100%" :line-nums="true"/>
+            <CodeEditor font-size="15px" :read-only="true" v-model="codeResult" width="100%"/>
         </div>
           
         </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code</label>
-                        <CodeEditor v-model="codeResult" width="100%" :header="true" :languages="[['python', 'Python'], ['cpp', 'c++']]" :line-nums="true"/>
+                        <CodeEditor font-size="15px" v-model="codeResult" width="100%" :header="true" :languages="[['python', 'Python'], ['cpp', 'c++']]" :line-nums="true"/>
                     </div>
                     <button @click="modifyBlock()" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modify</button>
                 </form>
