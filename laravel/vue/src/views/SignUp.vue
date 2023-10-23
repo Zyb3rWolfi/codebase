@@ -1,7 +1,7 @@
 <template>
-    <div class="md:container mx-auto contain flex-col my-36 flex justify-center items-center">
-        <form class=" col-start start-3">
-            <p class=" text-center text-2xl font-bold mb-5">Sign Up</p>
+    <div class="md:container mx-auto contain flex-col my-20 flex justify-center items-center">
+        <form class=" col-start p-16 rounded-2xl start-3 shadow-xl" style="background-color: #23272f;">
+            <p id="loginTitle" class=" text-center text-2xl font-bold mb-5">Sign Up</p>
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
                 <input v-model="login.name" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
@@ -14,14 +14,12 @@
                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
                 <input v-model="login.password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             </div>
-            <a @click="signIn()" class=" cursor-pointer">Already have an account?</a>
-            <div class="flex items-start mb-6">
-                <div class="flex items-center h-5">
-                <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required>
-                </div>
-                <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
+            <div class="flex align-middle justify-center">
+                <button @click="submitData()" type="button" class=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
             </div>
-            <button @click="submitData()" type="button" class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <div class="flex align-middle justify-center">
+                <a @click="signIn()" class="cursor-pointer text-sm text-gray-400 mt-5">Already have an account?</a>
+            </div>
         </form>
     </div>
 
@@ -56,6 +54,9 @@ export default {
     },
     methods: {
         async submitData() {
+            if (this.login.name === '' || this.login.email === '' || this.login.password === '') {
+                return
+            }
             await axios.post('http://127.0.0.1:8000/api/register', this.login)
             
             return this.signIn()

@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import NavBar from './components/navbar.vue';
+import footerComp from './components/footer.vue';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore();
@@ -30,6 +31,8 @@ onMounted(async ()=> {
     <NavBar></NavBar>
   </header>
   <router-view></router-view>
+
+  <footerComp />
 </template>
 
 <style scoped>

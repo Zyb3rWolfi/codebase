@@ -1,8 +1,8 @@
 <template class="">
     <div class="grid lg:grid-cols-7 md:grid-cols-6 sm:grid-cols-2">
-        <p class=" text-2xl font-semibold col-start-2">Code Blocks</p>
+        <p id="userTitle" class=" text-2xl font-semibold col-start-2">Code Blocks</p>
     </div>
-    <div class="lg:grid-cols-4 w-auto mt-10 gap-5 grid sm:grid-cols-1 md:grid-cols-2 lg:ml-20 lg:mr-20 sm:ml-5 sm:mr-5">
+    <div class="lg:grid-cols-4 w-auto mt-10 gap-5 sm:grid-cols-1 md:grid-cols-2 lg:ml-20 lg:mr-20 sm:ml-5 sm:mr-5 grid">
         <codeBlock v-for="ans in answer" :search="ans" :key="ans"/>
         <div class="my-auto mt-20 mx-auto">
             <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" type="button" class="flex items-center justify-center text-white bg-blue-700 rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-blue-800">

@@ -15,6 +15,23 @@
   src: url('./assets/fonts/JetBrainsMono-Bold.ttf');
 }
 
+#title {
+  font-family: jetbrainsMonoBold;
+}
+
+#sub {
+  font-family: jetbrainsMonoMedium;
+}
+
+#loginTitle {
+  font-family: jetbrainsMonoBold;
+}
+
+#userTitle {
+  font-family: jetbrainsMonoBold;
+}
+
+
 #logo {
   font-family: jetbrainsMonoBold;
 }
@@ -34,7 +51,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #0F0E16;
+  background-color: #16181d;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -64,6 +81,11 @@ code.hljs {
   padding: 3px 5px
 }
 /*
+
+
+
+
+
 
 Atom One Dark by Daniel Gamage
 Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax

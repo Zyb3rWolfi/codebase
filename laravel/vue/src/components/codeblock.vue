@@ -1,11 +1,11 @@
 <template>
-    <div class=" shadow-2xl rounded-lg border border-white">
-        <div class="container h-auto p-6   border-gray-200 rounded-t-md dark:border-gray-700 max-w-4xl">
+    <div class=" shadow-2xl shadow-black p-10 rounded-2xl border-white" style="background-color: #23272f;">
+        <div class="container h-auto p-6border-gray-200 rounded-t-md max-w-4xl">
         <a href="#">
             <h5 class=" text-center mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
         </a>
-        <div class=" relative">
-            <CodeEditor font-size="15px" :read-only="true" v-model="codeResult" width="100%"/>
+        <div class="">
+            <CodeEditor height="200px" max-height="200px" font-size="15px" :read-only="true" v-model="codeResult" width="100%"/>
         </div>
           
         </div>
