@@ -1,5 +1,5 @@
 <script setup>
-  import { useRouter } from 'vue-router';
+  import { RouterLink, useRouter } from 'vue-router';
   import { ref } from 'vue'
   import { useStore } from 'vuex';
   import {computed} from 'vue'
@@ -61,13 +61,14 @@
     <div class="hidden w-full md:block md:w-auto my-auto" id="navbar-default">
       <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 text-sm my-auto border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
         <li>
-          <a @click="Search()" class=" cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:p-0 dark:text-white">// Search</a>
+          <router-link active-class="active" :to="'/'" class=" cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:p-0 dark:text-neutral-500">// Search</router-link>
+        </li>
+        
+        <li v-if="auth">
+          <router-link active-class="active" :to="'/user/' + store.state.id + '/code'" class="cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:p-0 dark:text-neutral-500">// Manage</router-link>
         </li>
         <li>
-          <a @click="Manage()" class="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">// Manage</a>
-        </li>
-        <li>
-          <a href="#" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">// About</a>
+          <router-link active-class="active" :to="'/about'" class="cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:bg-transparent md:p-0 dark:text-neutral-500">// About</router-link>
         </li>
         
       </ul>

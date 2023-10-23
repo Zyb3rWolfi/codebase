@@ -9,7 +9,7 @@
 import { onBeforeMount, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-import Search from '../components/Search.vue'
+import Search from '../views/Search.vue'
 import guestHome from '../components/guestHome.vue' 
 
 const router = useRouter()

@@ -5,6 +5,7 @@ import User from "../views/User.vue";
 import code from "../components/Code.vue";
 import account from "../components/account.vue";
 import homePage from "../views/homePage.vue";
+import about from "../views/about.vue";
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
                 component: account,
             }
         ]
+    },
+    {
+        path: '/about',
+        name: 'about',
+        component: about,
     }
 ];
 

@@ -15,6 +15,16 @@
   src: url('./assets/fonts/JetBrainsMono-Bold.ttf');
 }
 
+.active {
+  color: white !important;
+}
+
+.manageActive {
+  border-bottom: white 2px solid !important;
+  color: violet !important;
+}
+
+
 #title {
   font-family: jetbrainsMonoBold;
 }
