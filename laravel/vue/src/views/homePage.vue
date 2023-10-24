@@ -1,5 +1,6 @@
 <template>
 
+    // Checks the auth store variable and displays the search page if the user is logged in
     <Search v-if="store.state.auth" />
     <guestHome v-else />
 
@@ -12,12 +13,11 @@ import { useStore } from 'vuex';
 import Search from '../views/Search.vue'
 import guestHome from '../components/guestHome.vue' 
 
+// Instances of the router and store
 const router = useRouter()
 const store = useStore()
 
 onMounted(() => {
-    
-
 
 })
 

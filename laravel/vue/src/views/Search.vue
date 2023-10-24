@@ -20,7 +20,7 @@
     </div>
     <div class=" text-center my-10">
         <p class=" text-2xl font-bold mb-5">Search Results</p>
-        <div class="container justify-center justify-items-center grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6 mx-auto">
+        <div class="container grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6 mx-auto">
             <Result v-for="ans in answer" :search="ans"></Result>
         </div>
     </div>
@@ -32,9 +32,6 @@ import NavBar from '../components/navbar.vue';
 import axios from 'axios';
 import { ref, watch } from 'vue';
 import Result from '../components/result.vue';
-import { onMounted } from 'vue';
-import { useStore } from 'vuex';
-import { computed } from 'vue';``
 
 export default {
     name: 'search',
@@ -54,24 +51,28 @@ export default {
     },
     components: {
         Result,
-        NavBar
+        NavBar,
     },
     methods: {
         async getResponse() {
+            // If the search is empty we will empty the answer array and return
             if (this.search === '') {
                 this.answer = {};
                 return;
             }
+            // Otherwise we will make a request to the api and set the answer array to the response
             const response = await axios.get('http://127.0.0.1:8000/api/test/' + this.search, {headers: this.header, withCredentials: true});
             this.answer = response.data["strings"];
             },
         
         },
         watch: {
+            // Watches the search variable and calls the getResponse function when it changes
             search() {
                 this.getResponse();      
             }
         },
+        // Calls the getResponse function when the component is mounted
         beforeMount() {
             this.getResponse();
         },

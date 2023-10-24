@@ -32,7 +32,7 @@ onMounted(async ()=> {
   </header>
   <router-view></router-view>
 
-  <footerComp />
+
 </template>
 
 <style scoped>

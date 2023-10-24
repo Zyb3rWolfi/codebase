@@ -43,24 +43,29 @@ export default {
     },
     data() {
         return {
+            // The payload we will send to the api
             login: {
                 name: '',
                 email: '',
                 password: '',
             },
+            // Headers we will send to the api
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'}
         }
     },
     methods: {
+        // Submits the data to the api
         async submitData() {
+            // If any of the fields are empty we will return
             if (this.login.name === '' || this.login.email === '' || this.login.password === '') {
                 return
             }
+            // Otherwise we will make a post request to the api
             await axios.post('http://127.0.0.1:8000/api/register', this.login)
-            
             return this.signIn()
         },
+        // Redirects the user to the login page
         async signIn() {
             this.$router.push('/Login')
         }
