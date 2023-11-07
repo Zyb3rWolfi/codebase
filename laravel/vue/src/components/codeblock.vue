@@ -1,5 +1,5 @@
 <template>
-    <div class=" shadow-2xl shadow-black p-10 rounded-2xl border-white" style="background-color: #23272f;">
+    <div v-if="deleted == false" class=" shadow-2xl shadow-black p-10 rounded-2xl border-white" style="background-color: #23272f;">
         <div class="container h-auto p-6border-gray-200 rounded-t-md max-w-4xl">
         <a href="#">
             <h5 class=" text-center mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
@@ -46,7 +46,6 @@
             </div> 
             </div>
         </div>
- 
 </template>
 
 <script setup>
@@ -56,8 +55,10 @@ import axios from 'axios';
 const props = defineProps(['search'])
 import { initFlowbite } from 'flowbite'
 import Modal from './modal.vue';
+import { useStore } from 'vuex';
 
 const intance = getCurrentInstance();
+const store = useStore()
 
 onMounted(() => {
     initFlowbite()
@@ -67,6 +68,7 @@ const prop = ref(props.search)
 
 var codeResult = ref(props.search["content"])
 var title = ref(props.search["strings"])
+var deleted = ref(false)
 
 const originalCode = ref(props.search["content"])
 const originalTitle = ref(props.search["strings"])
@@ -94,7 +96,16 @@ async function removeBlock() {
     blockData.code = codeResult
     blockData.description = props.search["strings"]
     const response = await axios.post('http://127.0.0.1:8000/api/deleteBlock', blockData, {headers: this.headers, withCredentials: true})
-    intance.proxy.forceUpdate();
+    deleted.value = true
+    store.commit('ADD_TOAST', {
+        title: 'Block Deleted',
+        type: 'success',
+        id: Math.floor(Math.random() * 50),
+        duration: 5000
+    })
+
+    console.log(store.state.toasts)
+
 
 }
 

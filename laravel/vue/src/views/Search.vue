@@ -20,8 +20,8 @@
     </div>
     <div class=" text-center my-10">
         <p class=" text-2xl font-bold mb-5">Search Results</p>
-        <div class="container grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6 mx-auto">
-            <Result v-for="ans in answer" :search="ans"></Result>
+        <div class="container grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6 mx-auto justify-center">
+            <Result v-if="answer.length > 0" v-for="ans in answer" :search="ans"></Result>
         </div>
     </div>
 
@@ -39,7 +39,7 @@ export default {
   },
     data() {
         return {
-            answer: [],
+            answer: {},
             search: '',
             auth: null,
             header: {
@@ -57,7 +57,7 @@ export default {
         async getResponse() {
             // If the search is empty we will empty the answer array and return
             if (this.search === '') {
-                this.answer = {};
+                this.answer = [];
                 return;
             }
             // Otherwise we will make a request to the api and set the answer array to the response
@@ -69,7 +69,7 @@ export default {
         watch: {
             // Watches the search variable and calls the getResponse function when it changes
             search() {
-                this.getResponse();      
+                this.getResponse();
             }
         },
         // Calls the getResponse function when the component is mounted

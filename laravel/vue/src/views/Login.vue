@@ -1,5 +1,8 @@
 <template>
-    <div class="md:container mx-auto flex-col my-24 flex justify-center items-center">
+    <div v-if="auth">
+        <h1>Checking...</h1>
+    </div>
+    <div v-if="!auth" class="md:container mx-auto flex-col my-24 flex justify-center items-center">
         <form class=" col-start start-3 p-16 rounded-2xl shadow-xl" style="background-color: #23272f;">
             
             <p id="loginTitle" class=" text-center text-2xl font-bold mb-5">Sign In</p>
@@ -42,6 +45,11 @@ export default {
         return { router, store }
 
     },
+    computed: {
+        auth() {
+            return this.$store.state.auth
+        }
+    },
     components: {
         NavBar
     },
@@ -64,6 +72,16 @@ export default {
         }
     },
     methods: {
+        async getUser() {
+            const response = await axios.get('http://127.0.0.1:8000/api/user', {headers: this.headers, withCredentials: true})
+            console.log(response.status)
+            if (response.status == 200) {
+                return true
+            } else {
+                return false
+            }
+        
+        },
         // Called when the submit button is clicked
         async submitData() {
             try {

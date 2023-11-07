@@ -7,18 +7,21 @@ export default createStore({
         auth: false,
         id: -1,
         blockRefresh: false,
+        toasts : [],
         
     },
     mutations: {
         SET_AUTH: (state: {auth: boolean}, authh: boolean) => state.auth = authh,
         SET_ID: (state: {id: number}, id: number) => state.id = id,
         SET_BLOCK_REFRESH: (state: {blockRefresh: boolean}, block: boolean) => state.blockRefresh = block,
-
+        ADD_TOAST: (state: {toasts: any}, toast: any) => state.toasts.push(toast),
+        REMOVE_TOAST: (state: {toasts: any}, toast: any) => state.toasts.splice(state.toasts.indexOf(toast), 1),
     },
     actions: {
         setAuthentication: ({commit}: {commit: Commit}, authh: boolean) => commit('SET_AUTH', authh),
         setUserID: ({commit}: {commit: Commit}, id: number) => commit('SET_ID', id),
         setBlockRefresh: ({commit}: {commit: Commit}, block: boolean) => commit('SET_BLOCK_REFRESH', block),
+
     },
     modules: {
 

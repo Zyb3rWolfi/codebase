@@ -1,6 +1,4 @@
 <template>
-
-    // Checks the auth store variable and displays the search page if the user is logged in
     <Search v-if="store.state.auth" />
     <guestHome v-else />
 

@@ -15,7 +15,6 @@
     "flowbite": "^1.8.1",
     "highlight.js": "^11.8.0",
     "markdown-it": "^13.0.2",
-    "markdown-it-highlightjs": "^4.0.1",
     "monaco-editor-vue": "^1.0.10",
     "monaco-editor-webpack-plugin": "^7.1.0",
     "monaco-languageclient": "^6.6.0",

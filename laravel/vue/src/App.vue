@@ -4,6 +4,7 @@ import NavBar from './components/navbar.vue';
 import footerComp from './components/footer.vue';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
+import Toasts from './components/Toasts.vue';
 const store = useStore();
 
 onMounted(async ()=> {
@@ -13,11 +14,8 @@ onMounted(async ()=> {
           'content-type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest'}
           const response = await axios.get('http://127.0.0.1:8000/api/user', {headers: headers, withCredentials: true})
-          console.log(response.data)
           await store.dispatch('setAuthentication', true)
           await store.dispatch('setUserID', response.data["id"])
-          console.log(store.state.id)
-
 
       } catch(e) {
       await store.dispatch('setAuthentication', false) 
@@ -31,8 +29,7 @@ onMounted(async ()=> {
     <NavBar></NavBar>
   </header>
   <router-view></router-view>
-
-
+  <Toasts class=" absolute right-2 bottom-2"></Toasts>
 </template>
 
 <style scoped>
