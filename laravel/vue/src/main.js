@@ -11,6 +11,7 @@ import VueCookies from 'vue-cookies';
 import axios from 'axios';
 import store from './store'
 import { install as VueMonacoEditorPlugin } from '@guolao/vue-monaco-editor'
+import { Modal} from 'flowbite';
 
 
 createApp(App)
