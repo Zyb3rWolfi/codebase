@@ -5,6 +5,7 @@ import footerComp from './components/footer.vue';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 import Toasts from './components/Toasts.vue';
+import loginpage from  './views/loginRegisterView.vue'
 const store = useStore();
 
 onMounted(async ()=> {

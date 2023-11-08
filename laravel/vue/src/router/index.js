@@ -52,19 +52,5 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach(async (to, from) => {
-    const auth = store.state.auth;
-    console.log(auth);
-    if (
-      // make sure the user is authenticated
-      !auth &&
-      // ❗️ Avoid an infinite redirect
-      to.name !== 'login'
-    ) {
-      // redirect the user to the login page
-      return { name: 'login' }
-    }
-  })
-
 
 export default router

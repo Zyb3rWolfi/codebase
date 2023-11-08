@@ -3,22 +3,22 @@
         <form class=" col-start p-16 rounded-2xl start-3 shadow-xl" style="background-color: #23272f;">
             <p id="loginTitle" class=" text-center text-2xl font-bold mb-5">Sign Up</p>
             <div class="mb-6">
-                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
-                <input v-model="login.name" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <label for="Regname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
+                <input v-model="login.name" type="text" id="Regname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             </div>
             <div class="mb-6">
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                <input v-model="login.email" type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required>
+                <label for="Regemail" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                <input v-model="login.email" type="email" id="Regemail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required>
             </div>
             <div class="mb-6">
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                <input v-model="login.password" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <label for="Regpassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+                <input v-model="login.password" type="password" id="Regpassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             </div>
             <div class="flex align-middle justify-center">
                 <button @click="submitData()" type="button" class=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
             </div>
             <div class="flex align-middle justify-center">
-                <a @click="signIn()" class="cursor-pointer text-sm text-gray-400 mt-5">Already have an account?</a>
+                <a data-modal-hide="registerView" data-modal-toggle="loginView" data-modal-target="loginView" class="cursor-pointer text-sm text-gray-400 mt-5">Already have an account?</a>
             </div>
         </form>
     </div>
@@ -29,7 +29,6 @@
 import axios from 'axios'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import NavBar from '../components/navbar.vue';
 
 export default {
     name: 'signup',
@@ -38,9 +37,7 @@ export default {
         const store = useStore()
         return { router, store }
     },
-    components: {
-        NavBar
-    },
+
     data() {
         return {
             // The payload we will send to the api

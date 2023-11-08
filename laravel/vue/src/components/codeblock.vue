@@ -11,7 +11,7 @@
         </div>
     <ul class=" justify-center flex flex-wrap p-2 text-gray-400 font-semibold gap-5">
         <li class="mr-2">
-            <button :ata-modal-target="codeResult" :data-modal-toggle="codeResult" class="dark:hover:bg-gray-700 dark:hover:text-gray-300">Modify</button>
+            <button :data-modal-target="codeResult" :data-modal-toggle="codeResult" class="dark:hover:bg-gray-700 dark:hover:text-gray-300">Modify</button>
         </li>
         <li class="dark:hover:bg-gray-700 dark:hover:text-gray-300">
             <button @click="removeBlock()" class="dark:hover:bg-gray-700 dark:hover:text-gray-300">Delete</button>
