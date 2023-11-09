@@ -66,12 +66,12 @@ onMounted(() => {
 
 const prop = ref(props.search)
 
-var codeResult = ref(props.search["content"])
-var title = ref(props.search["strings"])
+var codeResult = ref(props.search["code"])
+var title = ref(props.search["title"])
 var deleted = ref(false)
 
-const originalCode = ref(props.search["content"])
-const originalTitle = ref(props.search["strings"])
+const originalCode = ref(props.search["code"])
+const originalTitle = ref(props.search["title"])
 
 const headers = {
         Accept: 'application/json',

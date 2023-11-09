@@ -43,8 +43,8 @@ class DbController extends Controller
             $id = Auth::user()->id;
             $data = DB::table('sample')->insert([
                 'user_id' => $id,
-                'strings' => $request->input('title'),
-                'content' => $request->input('code'),
+                'title' => $request->input('title'),
+                'code' => $request->input('code'),
                 'description' => $request->input('description'),
             ]);
             return response()->json([
