@@ -102,11 +102,14 @@ export default {
         async getResponse() {
             const response = await axios.get('http://127.0.0.1:8000/api/getBlocks', {headers: this.headers, withCredentials: true})
             this.answer = response.data["strings"]
+            console.log(this.answer)
             },
         
         async sendBlock() {
+            console.log(this.sendData)
             const response = await axios.post('http://127.0.0.1:8000/api/addBlock', this.sendData, {headers: this.headers, withCredentials: true})
-            console.log(response.data)
+            console.log("sending")
+
             this.store.commit('ADD_TOAST', {
                 title: 'Block Created',
                 type: 'success',

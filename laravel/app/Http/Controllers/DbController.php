@@ -10,7 +10,7 @@ class DbController extends Controller
 {
     public function getData(string $search) {
         $id = Auth::user()->id;
-        $data = DB::table('sample')->where('strings', 'LIKE', '%'.$search.'%') ->where('id', $id) -> get();
+        $data = DB::table('sample')->where('strings', 'LIKE', '%'.$search.'%') ->where('user_id', $id) -> get();
         foreach ($data as $key => $value) {
             $data[$key] = $value;
         }
@@ -22,7 +22,7 @@ class DbController extends Controller
     public function getUserBlocks() {
         if (Auth::user()){
             $id = Auth::user()->id;
-            $data = DB::table('sample')->where('id', $id)->get();
+            $data = DB::table('sample')->where('user_id', $id)->get();
 
             foreach ($data as $key => $value) {
                 $data[$key] = $value;
@@ -42,7 +42,7 @@ class DbController extends Controller
         if (Auth::user()) {
             $id = Auth::user()->id;
             $data = DB::table('sample')->insert([
-                'id' => $id,
+                'user_id' => $id,
                 'strings' => $request->input('title'),
                 'content' => $request->input('code'),
                 'description' => $request->input('description'),
@@ -56,7 +56,7 @@ class DbController extends Controller
     public function deleteBlock(Request $request) {
         if (Auth::user()) {
             $id = Auth::user()->id;
-            DB::table('sample')->where('id', $id)->where('strings', $request->input('description'))->delete();
+            DB::table('sample')->where('user_id', $id)->where('strings', $request->input('description'))->delete();
             return response()->json([
                 'message' => 'success',
             ]);

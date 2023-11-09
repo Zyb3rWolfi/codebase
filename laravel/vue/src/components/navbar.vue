@@ -4,9 +4,8 @@
   import { useStore } from 'vuex';
   import {computed} from 'vue'
   import axios from 'axios'
-  import { initFlowbite } from 'flowbite'
-  import login from "../views/loginRegisterView.vue"
-  import loginModal from "../views/Login.vue"
+  import { initFlowbite, Modal } from 'flowbite'
+  import loginRegister from "../views/loginRegisterView.vue"
   
   const store = useStore()
   var show = ref(false)
@@ -18,6 +17,16 @@
 
   onMounted(() => {
     initFlowbite()
+    const $target = document.getElementById('loginRegisterModal')
+    const $button = document.getElementById('openLogin')
+    const $submitButton = document.getElementById('submitButton')
+
+    if ($target) {
+      const modal = new Modal($target)
+
+      $button.addEventListener('click', () => modal.toggle())
+      $submitButton.addEventListener('click', () => modal.toggle())
+    }
   })
 
   function Manage() {
@@ -80,9 +89,9 @@
         
       </ul>
     </div>
-    <button v-if="auth" @click="logOut()" type="button" class="text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 border dark:hover:bg-gray-800 focus:outline-none dark:focus:ring-blue-800">Sign Out</button>
-    <button v-else="!auth" @click="show = true" type="button" class="text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 border dark:hover:bg-gray-800">Sign In</button>
+    <button v-show="auth" @click="logOut()" type="button" class="text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 border dark:hover:bg-gray-800 focus:outline-none dark:focus:ring-blue-800">Sign Out</button>
+    <button id="openLogin" v-show="!auth"  type="button" class="text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 border dark:hover:bg-gray-800">Sign In</button>
   </div>
 </nav>
-<login-modal :show="show"/>
+<loginRegister />
 </template>

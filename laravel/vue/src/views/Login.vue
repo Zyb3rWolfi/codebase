@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!auth && showModal" id="loginView" class=" md:container mx-auto flex-col my-24 flex justify-center items-center fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div v-if="showModal" id="loginView" class=" md:container mx-auto flex-col flex justify-center items-center fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <form class=" col-start start-3 p-16 rounded-2xl shadow-xl" style="background-color: #23272f;">
             
             <p id="loginTitle" class=" text-center text-2xl font-bold mb-5">Sign In</p>
