@@ -17,15 +17,19 @@
 
   onMounted(() => {
     initFlowbite()
+    
     const $target = document.getElementById('loginRegisterModal')
     const $button = document.getElementById('openLogin')
     const $submitButton = document.getElementById('submitButton')
-
+    const $submitButtonRegister = document.getElementById('submitButtonRegister')
+    
     if ($target) {
+
       const modal = new Modal($target)
 
       $button.addEventListener('click', () => modal.toggle())
       $submitButton.addEventListener('click', () => modal.toggle())
+      $submitButtonRegister.addEventListener('click', () => modal.toggle())
     }
   })
 
