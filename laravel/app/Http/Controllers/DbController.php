@@ -10,7 +10,7 @@ class DbController extends Controller
 {
     public function getData(string $search) {
         $id = Auth::user()->id;
-        $data = DB::table('sample')->where('strings', 'LIKE', '%'.$search.'%') ->where('user_id', $id) -> get();
+        $data = DB::table('sample')->where('title', 'LIKE', '%'.$search.'%') ->where('user_id', $id) -> get();
         foreach ($data as $key => $value) {
             $data[$key] = $value;
         }
@@ -66,9 +66,9 @@ class DbController extends Controller
     public function updateBlock(Request $request) {
         if (Auth::user()) {
             $id = Auth::user()->id;
-            $db = DB::table('sample')->where('id', $id)->where('strings', $request->input('description'))->update([
-                'content' => $request->input('newCode'),
-                'strings' => $request->input('newDescription'),
+            $db = DB::table('sample')->where('user_id', $id)->where('title', $request->input('description'))->update([
+                'code' => $request->input('newCode'),
+                'title' => $request->input('newDescription'),
             ]);
             return response()->json([
                 'message' => 'success',

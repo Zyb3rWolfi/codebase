@@ -10,8 +10,8 @@
   import modal from './modal.vue'
 
 
-  var codess = props.search["content"]
-  var title = props.search["strings"]
+  var codess = props.search["code"]
+  var title = props.search["title"]
   var description = props.search["description"]
   
   function Manage() {
@@ -24,20 +24,38 @@
 
   onMounted(() => {
     initFlowbite()
+
+    const $target = document.getElementById(title)
+    const $inspectOpen = document.getElementById(title + "_button")
+    const $inspectClose = document.getElementById(title + "_button_close")
+
+    const settings = {
+      placement: 'bottom-right',
+      backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
+      closable: true,
+    }
+
+    if ($target) {
+
+      const modal = new Modal($target, settings)
+
+      $inspectOpen.addEventListener('click', () => modal.toggle())
+      $inspectClose.addEventListener('click', () => modal.toggle())
+}
+
   })
-
-
 
 
 </script>
 
 <template>
 <a class="block max-w-sm p-6 shadow-2xl shadow-black rounded-2xl" style="background-color: #23272f;">
-  <p id="resultTitle" class=" text-2xl mt-2 font-semibold row-start-1 mb-3">{{props.search["strings"]}}</p>
-  <simpleEditor :id="props.search['content']" height="170px" font-size="15px" :autofocus="true" v-model="props.search['content']" :read-only="true" width="100%"/>
-  <button class=" mt-5" :data-modal-target="title" :data-modal-toggle="title">Inspect</button>
+  <p id="resultTitle" class=" text-2xl mt-2 font-semibold row-start-1 mb-3">{{props.search["title"]}}</p>
+  <simpleEditor :id="props.search['code']" height="170px" font-size="15px" :autofocus="true" v-model="props.search['code']" :read-only="true" width="100%"/>
+  <button :id="title + '_button'" class=" mt-5">Inspect</button>
 </a>
-<modal :id="props.search['strings']" tabindex="-1" aria-hidden="true" :code="props.search['content']" :title="props.search['strings']" :description="props.search['description']"/>
+
+<modal :id="props.search['title']" tabindex="-1" aria-hidden="true" :code="props.search['code']" :title="props.search['title']" :description="props.search['description']"/>
 
 
 
