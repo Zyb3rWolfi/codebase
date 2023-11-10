@@ -16,7 +16,7 @@
             <p v-if="loggingIn" class=" text-green-600 text-sm mb-5">Logging in, redirecting...</p>
             <p v-if="incorrect" class=" text-red-600 text-sm mb-5">Incorrect Password Or Username</p>
             <div class="flex align-middle justify-center">
-                <button id="submitButton" @click="submitData(),this.store.dispatch('setSignupModalState', 0)" type="button" class=" text-white hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
+                <button id="submitButton" @click="submitData()" type="button" class=" text-white hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
             </div>
             <div class="flex align-middle justify-center">
                 <a @click="this.store.dispatch('setSignupModalState', 2)"  class="cursor-pointer text-sm text-gray-400 mt-5">Dont have an account? Sign up.</a>
@@ -41,7 +41,7 @@
                 <input v-model="signup.password" type="password" id="Regpassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             </div>
             <div class="flex align-middle justify-center">
-                <button id="submitButtonRegister" @click="submitDataRegister(),this.store.dispatch('setSignupModalState', 0) " type="button" class=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
+                <button id="submitButtonRegister" @click="submitDataRegister() " type="button" class=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
             </div>
             <div class="flex align-middle justify-center">
                 <a @click="this.store.dispatch('setSignupModalState', 1)" class="cursor-pointer text-sm text-gray-400 mt-5">Already have an account?</a>
@@ -53,7 +53,7 @@
 </template>
     
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -112,6 +112,9 @@ export default {
     methods: {
         // Submits the data to the api
         async submitDataRegister() {
+
+            
+
             // If any of the fields are empty we will return
             if (this.signup.name === '' || this.signup.email === '' || this.signup.password === '') {
                 return
@@ -129,10 +132,13 @@ export default {
             await this.router.push("/user/" + user.data["id"] + "/code")
             this.router.push("/user/" + user.data["id"] + "/code")
 
+            this.store.dispatch('setSignupModalState', 0)
+
         },
 
         // Called when the submit button is clicked
         async submitData() {
+
             try {
                 // If the email or password is empty we will return
                 if(this.login.email == '' || this.login.password == '') {
@@ -155,6 +161,7 @@ export default {
                 await this.$router.push("/user/" + user.data["id"] + "/code")    
                 this.loggingIn = false
 
+                this.store.dispatch('setSignupModalState', 0)
 
             } // Error handling 
             catch(e) {
@@ -169,5 +176,6 @@ export default {
         }
     }
     }
+
     
 </script>

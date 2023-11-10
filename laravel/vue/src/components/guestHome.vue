@@ -36,13 +36,16 @@ onMounted(() => {
 
     const $signUpButon = document.getElementById('openSignUp')
     const $loginButton = document.getElementById('openLoginModal')
+    const $signInButton = document.getElementById('openLogin')
     const $target = document.getElementById('loginRegisterModal')
+    
 
     if($target){
         const modal = new Modal($target)
 
         $signUpButon.addEventListener('click', () => toggleSignUpModal(2,modal))
         $loginButton.addEventListener('click', () => toggleSignUpModal(1, modal))
+        $signInButton.addEventListener('click', () => toggleSignUpModal(1, modal))
     }
 
 
