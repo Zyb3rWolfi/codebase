@@ -23,9 +23,14 @@
     const $submitButton = document.getElementById('submitButton')
     const $submitButtonRegister = document.getElementById('submitButtonRegister')
     
+    const options = {
+
+    closable: true,
+    };
+    
     if ($target) {
 
-      const modal = new Modal($target)
+      const modal = new Modal($target, options)
 
       $button.addEventListener('click', () => modal.toggle())
       $submitButton.addEventListener('click', () => modal.toggle())

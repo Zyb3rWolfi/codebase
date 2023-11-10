@@ -1,6 +1,6 @@
 <template>
 <div id="loginRegisterModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div v-show="this.showLogin == 1" class=" md:container mx-auto flex-col flex justify-center items-center fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div v-show="this.store.state.SignupModalState == 1" class=" md:container mx-auto flex-col flex justify-center items-center fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <form class=" col-start start-3 p-16 rounded-2xl shadow-xl" style="background-color: #23272f;">
             
             <p id="loginTitle" class=" text-center text-2xl font-bold mb-5">Sign In</p>
@@ -19,13 +19,13 @@
                 <button id="submitButton" @click="submitData()" type="button" class=" text-white hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
             </div>
             <div class="flex align-middle justify-center">
-                <a @click="this.showLogin = 2; console.log(this.show);" class="cursor-pointer text-sm text-gray-400 mt-5">Dont have an account? Sign up.</a>
+                <a @click="this.store.dispatch('setSignupModalState', 2)"  class="cursor-pointer text-sm text-gray-400 mt-5">Dont have an account? Sign up.</a>
             </div>
 
         </form>
     </div>
 
-    <div v-show="this.showLogin == 2" class="md:container mx-auto contain flex-col my-20 flex justify-center items-center">
+    <div v-show="this.store.state.SignupModalState == 2" class="md:container mx-auto contain flex-col my-20 flex justify-center items-center">
         <form class=" col-start p-16 rounded-2xl start-3 shadow-xl" style="background-color: #23272f;">
             <p id="loginTitle" class=" text-center text-2xl font-bold mb-5">Sign Up</p>
             <div class="mb-6">
@@ -44,7 +44,7 @@
                 <button id="submitButtonRegister" @click="submitDataRegister()" type="button" class=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
             </div>
             <div class="flex align-middle justify-center">
-                <a @click="showLogin = 1" class="cursor-pointer text-sm text-gray-400 mt-5">Already have an account?</a>
+                <a @click="this.store.dispatch('setSignupModalState', 1)" class="cursor-pointer text-sm text-gray-400 mt-5">Already have an account?</a>
             </div>
         </form>
     </div>
@@ -58,6 +58,7 @@ import axios from 'axios'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { initFlowbite, Modal } from 'flowbite'
+
 export default {
     name: 'search',
     setup() {
@@ -70,13 +71,15 @@ export default {
     props: {
         show: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
+
     },
     computed: {
         auth() {
-            return this.$store.state.auth
+            return this.store.state.auth   
         },
+
     },
     mounted() {
         initFlowbite()
@@ -88,7 +91,6 @@ export default {
                 email: '',
                 password: '',
             },
-            showLogin: 1,
             // The payload we will send to the api
             login: {
                 email: '',
@@ -108,16 +110,6 @@ export default {
         }
     },
     methods: {
-        async getUser() {
-            const response = await axios.get('http://127.0.0.1:8000/api/user', {headers: this.headers, withCredentials: true})
-            console.log(response.status)
-            if (response.status == 200) {
-                return true
-            } else {
-                return false
-            }
-        
-        },
         // Submits the data to the api
         async submitDataRegister() {
             // If any of the fields are empty we will return
