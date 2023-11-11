@@ -12,7 +12,7 @@
             <div class="px-8 pb-8 py-10 lg:px-20">
                 <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{ props.title }}</h3>
                 <p class="mb-5">{{ props.description }}</p>
-                <CodeEditor :read-only="true" font-size="15px" :value="props.code" width="" :header="true" :languages="[['python', 'Python'], ['cpp', 'c++']]" :line-nums="true"/>
+                <CodeEditor :value="code" width="100%" height="600px" :read-only="true" />
             </div>
             
         </div> 
