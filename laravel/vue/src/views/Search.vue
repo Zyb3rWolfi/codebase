@@ -18,9 +18,9 @@
             </form>
         </div>
     </div>
-    <div class=" text-center my-10">
+    <div class=" text-center content-end my-10">
         <p class=" text-2xl font-bold mb-5">Search Results</p>
-        <div class="container grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-6 mx-auto justify-center">
+        <div class=" grid auto-cols-max place-content-evenly sm:grid-cols-1 sm:gap-4  md:grid-cols-2 md:gap-4 lg:grid-cols-3 xl:grid-cols-4 ">
             <Result v-if="answer.length > 0" v-for="ans in answer" :search="ans"></Result>
         </div>
     </div>
