@@ -1,10 +1,9 @@
 <script setup>
   import { RouterLink, useRouter } from 'vue-router';
-  import { ref, onMounted } from 'vue'
+  import { ref } from 'vue'
   import { useStore } from 'vuex';
   import {computed} from 'vue'
   import axios from 'axios'
-  import { initFlowbite, Modal } from 'flowbite'
   import loginRegister from "../views/loginRegisterView.vue"
   
   const store = useStore()
@@ -15,28 +14,7 @@
   var selected = ref("search")
   const router = useRouter()
 
-  onMounted(() => {
-    initFlowbite()
-    
-    const $target = document.getElementById('loginRegisterModal')
-    const $button = document.getElementById('openLogin')
-    const $submitButton = document.getElementById('submitButton')
-    const $submitButtonRegister = document.getElementById('submitButtonRegister')
-    
-    const options = {
-
-    closable: true,
-    };
-    
-    if ($target) {
-
-      const modal = new Modal($target, options)
-
-      $button.addEventListener('click', () => modal.toggle())
-      $submitButton.addEventListener('click', () => modal.toggle())
-      $submitButtonRegister.addEventListener('click', () => modal.toggle())
-    }
-  })
+ 
 
   function Manage() {
     if (auth.value) {
