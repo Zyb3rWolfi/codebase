@@ -54,7 +54,6 @@ export default  {
 
 async mounted() {
     const data = await this.getUser()
-    console.log(data)
 },
 
 methods: {
@@ -77,8 +76,6 @@ async changeDetails() {
     async changePassword() {
     this.accountDetails.user_password = this.user_password
     this.accountDetails.user_new_password = this.user_new_password
-
-    console.log(this.accountDetails)
 
     const response = await axios.post('http://127.0.0.1:8000/api/changePassword', this.accountDetails, {headers: headers, withCredentials: true})
     this.changed2 = true

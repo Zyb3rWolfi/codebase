@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, Static } from 'vue'
+import { ref, onMounted, Static, computed } from 'vue'
 import { useRouter } from 'vue-router';
 import { initFlowbite, Modal } from 'flowbite'
 import { useStore } from 'vuex';
@@ -32,6 +32,10 @@ function signIn() {
 function signUp() {
     router.push("/register")
 }
+
+const auth = computed(() => store.state.auth)
+
+const modal = ref()
 
 onMounted(() => {
     initFlowbite()
@@ -50,21 +54,35 @@ onMounted(() => {
     const options = {
         closable: true,
     };
+    const instanceOptions = {
+        id: 'modalEl',
+        override: true
+        };
 
     if($target){
-        const modal = new Modal($target, options)
+
+        const modal = new Modal($target, options, instanceOptions)
 
         $signUpButon.addEventListener('click', () => toggleSignUpModal(2,modal))
         $loginButton.addEventListener('click', () => toggleSignUpModal(1, modal))
         $signInButton.addEventListener('click', () => toggleSignUpModal(1, modal))
-        $submitButton.addEventListener('click', () => modal.hide())
-        $submitButtonRegister.addEventListener('click', () => modal.hide())
-        $close.addEventListener('click', () => modal.hide())
+        $submitButtonRegister.addEventListener('click', () => closeModal(modal))
         $closeregister.addEventListener('click', () => modal.hide())
+        $submitButton.addEventListener('click', () => closeModal(modal))
+        $close.addEventListener('click', () => modal.hide())
     }
 
-
 })
+
+function closeModal(modal) {
+    setTimeout(() => {
+        if (auth.value){
+            modal.hide()
+        }
+    }, 2000);
+}
+
+
 async function toggleSignUpModal(state, modal){
     await store.dispatch('setSignupModalState', state)
     modal.toggle()

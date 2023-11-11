@@ -18,7 +18,6 @@ export default {
     },
     setup() {
         const store = useStore();
-        console.log(store.state.toasts)
         return { store }
     },
     computed: {

@@ -104,9 +104,6 @@ async function removeBlock() {
         duration: 5000
     })
 
-    console.log(store.state.toasts)
-
-
 }
 
 async function modifyBlock() {
@@ -116,9 +113,7 @@ async function modifyBlock() {
     changedData.newCode = codeResult.value
     changedData.newDescription = title.value
 
-    console.log(changedData)
     const response = await axios.post('http://127.0.0.1:8000/api/updateBlock', changedData, {headers: this.headers, withCredentials: true})
-    console.log(response.data)
     intance.proxy.$forceUpdate();
 
 }

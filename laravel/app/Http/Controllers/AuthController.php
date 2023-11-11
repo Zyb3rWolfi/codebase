@@ -17,6 +17,12 @@ class AuthController extends Controller
 {
     public function Register(Request $request) {
 
+        if (User::where('email', '=', $request->input('email'))->exists()) {
+            return response([
+                'message' => 'Email already exists'
+            ], 409);
+        }
+
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
