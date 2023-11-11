@@ -39,6 +39,8 @@ onMounted(() => {
     const $signInButton = document.getElementById('openLogin')
     const $target = document.getElementById('loginRegisterModal')
     const $submitButton = document.getElementById('submitButton')
+    const $submitButtonRegister = document.getElementById('submitButtonRegister')
+
     
     const options = {
 
@@ -51,7 +53,8 @@ onMounted(() => {
         $signUpButon.addEventListener('click', () => toggleSignUpModal(2,modal))
         $loginButton.addEventListener('click', () => toggleSignUpModal(1, modal))
         $signInButton.addEventListener('click', () => toggleSignUpModal(1, modal))
-        $submitButton.addEventListener('click', () => modal.toggle())
+        $submitButton.addEventListener('click', () => modal.hide())
+        $submitButtonRegister.addEventListener('click', () => modal.hide())
     }
 
 

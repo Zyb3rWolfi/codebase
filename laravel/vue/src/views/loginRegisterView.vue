@@ -16,7 +16,7 @@
             <p v-if="loggingIn" class=" text-green-600 text-sm mb-5">Logging in, redirecting...</p>
             <p v-if="incorrect" class=" text-red-600 text-sm mb-5">Incorrect Password Or Username</p>
             <div class="flex align-middle justify-center">
-                <button id="submitButton" @click="submitData()" type="button" class=" text-white hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
+                <button data-modal-hide="loginRegisterModal" id="submitButton" @click="submitData()" type="button" class=" text-white hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
             </div>
             <div class="flex align-middle justify-center">
                 <a @click="this.store.dispatch('setSignupModalState', 2)"  class="cursor-pointer text-sm text-gray-400 mt-5">Dont have an account? Sign up.</a>
