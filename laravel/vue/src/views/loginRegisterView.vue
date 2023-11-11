@@ -2,8 +2,18 @@
 <div id="loginRegisterModal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div v-show="this.store.state.SignupModalState == 1" class=" md:container mx-auto flex-col flex justify-center items-center fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <form class=" col-start start-3 p-16 rounded-2xl shadow-xl" style="background-color: #23272f;">
-            
-            <p id="loginTitle" class=" text-center text-2xl font-bold mb-5">Sign In</p>
+            <!-- Modal header -->
+            <div class="flex items-center justify-left p-4 md:p-5 border-b rounded-t dark:border-gray-600 mb-4">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Sign in
+                </h3>
+                <button id="closeButton" type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="loginRegisterModal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
             
             <div class="mb-6">
                 <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
@@ -27,7 +37,17 @@
 
     <div v-show="this.store.state.SignupModalState == 2" class="md:container mx-auto contain flex-col my-20 flex justify-center items-center">
         <form class=" col-start p-16 rounded-2xl start-3 shadow-xl" style="background-color: #23272f;">
-            <p id="loginTitle" class=" text-center text-2xl font-bold mb-5">Sign Up</p>
+            <div class="flex items-center justify-left p-4 md:p-5 border-b rounded-t dark:border-gray-600 mb-4">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Sign up
+                </h3>
+                <button id="closeButtonRegister" type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="loginRegisterModal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>            
             <div class="mb-6">
                 <label for="Regname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
                 <input v-model="signup.name" type="text" id="Regname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
