@@ -12,13 +12,15 @@
 
         </div>   
     </div>
+    <loginRegister />
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, Static } from 'vue'
 import { useRouter } from 'vue-router';
 import { initFlowbite, Modal } from 'flowbite'
 import { useStore } from 'vuex';
+import loginRegister from "../views/loginRegisterView.vue"
 
 const router = useRouter()
 const store = useStore()
@@ -40,10 +42,12 @@ onMounted(() => {
     const $target = document.getElementById('loginRegisterModal')
     const $submitButton = document.getElementById('submitButton')
     const $submitButtonRegister = document.getElementById('submitButtonRegister')
+    const $close = document.getElementById('closeButton')
+    const $closeregister = document.getElementById('closeButtonRegister')
+
 
     
     const options = {
-
         closable: true,
     };
 
@@ -55,6 +59,8 @@ onMounted(() => {
         $signInButton.addEventListener('click', () => toggleSignUpModal(1, modal))
         $submitButton.addEventListener('click', () => modal.hide())
         $submitButtonRegister.addEventListener('click', () => modal.hide())
+        $close.addEventListener('click', () => modal.hide())
+        $closeregister.addEventListener('click', () => modal.hide())
     }
 
 
