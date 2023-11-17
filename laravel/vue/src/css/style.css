@@ -1,18 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @font-face {
   font-family: jetbrainsMonoLight;
-  src: url("./assets/fonts/JetBrainsMono-Light.ttf");
+  src: url("../assets/fonts/JetBrainsMono-Light.ttf");
 }
 @font-face {
   font-family: jetbrainsMonoMedium;
-  src: url('./assets/fonts/JetBrainsMono-Medium.ttf');
+  src: url('../assets/fonts/JetBrainsMono-Medium.ttf');
 }
 
 @font-face {
   font-family: jetbrainsMonoBold;
-  src: url('./assets/fonts/JetBrainsMono-Bold.ttf');
+  src: url('../assets/fonts/JetBrainsMono-Bold.ttf');
 }
 
 .active {
