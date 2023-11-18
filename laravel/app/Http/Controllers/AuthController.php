@@ -11,6 +11,7 @@ use App\Models\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\RateLimiter;
 use Response;
 
 class AuthController extends Controller
@@ -44,9 +45,11 @@ class AuthController extends Controller
     }
 
     public function Login(Request $request) {
+
+
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response([
-                'message' => 'Invalid credentials'
+                'message' => 'Invalid credentials '
             ], 401);
         }
 

@@ -94,15 +94,21 @@ var changedData = {
 
 async function removeBlock() {
     blockData.code = codeResult
-    blockData.description = props.search["strings"]
-    const response = await axios.post('https://codebranch.me/api/deleteBlock', blockData, {headers: this.headers, withCredentials: true})
-    deleted.value = true
-    store.commit('ADD_TOAST', {
-        title: 'Block Deleted',
-        type: 'success',
-        id: Math.floor(Math.random() * 50),
-        duration: 5000
+    blockData.description = props.search["title"]
+    try {
+        await axios.post('https://codebranch.me/api/deleteBlock', blockData, {headers: headers, withCredentials: true}).then(function(response) {
+            deleted.value = true
+            store.commit('ADD_TOAST', {
+                title: 'Block Deleted',
+                type: 'success',
+                id: Math.floor(Math.random() * 50),
+                duration: 5000
+            })
     })
+    } 
+    catch (e) {
+        console.log(e)
+    }
 
 }
 

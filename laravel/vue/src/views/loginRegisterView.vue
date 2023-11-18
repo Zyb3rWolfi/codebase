@@ -61,6 +61,7 @@
                 <input v-model="signup.password" type="password" id="Regpassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
             </div>
             <p v-if="this.accountExists" class=" text-red-600 text-sm mb-5">Account With This Email Already Exists!</p>
+            <p v-if="this.passwordTooShort" class=" text-red-600 text-sm mb-5">The Password Should Be 8 Characters Or Longer</p>
             <div class="flex align-middle justify-center">
                 <button id="submitButtonRegister" @click="submitDataRegister() " type="button" class=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
             </div>
@@ -121,6 +122,7 @@ export default {
             incorrect: false,
             loggingIn: false,
             accountExists: false,
+            passwordTooShort: false,
             
             // The headers we will send to the api
             headers: {
@@ -136,6 +138,9 @@ export default {
 
             // If any of the fields are empty we will return
             if (this.signup.name === '' || this.signup.email === '' || this.signup.password === '') {
+                return
+            } else if (this.signup.password.length < 8) {
+                this.passwordTooShort = true
                 return
             }
             // Otherwise we will make a post request to the api

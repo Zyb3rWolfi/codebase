@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('register', [App\Http\Controllers\AuthController::class, 'Register']);
-Route::post('login', [App\Http\Controllers\AuthController::class, 'Login']);
+Route::middleware(['throttle:20,1']) ->group(function () {
+    Route::post('register', [App\Http\Controllers\AuthController::class, 'Register']);
+    Route::post('login', [App\Http\Controllers\AuthController::class, 'Login']);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('getBlocks', [App\Http\Controllers\DbController::class, 'getUserBlocks']);
