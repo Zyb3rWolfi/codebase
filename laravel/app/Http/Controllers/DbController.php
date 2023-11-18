@@ -10,7 +10,7 @@ class DbController extends Controller
 {
     public function getData(string $search) {
         $id = Auth::user()->id;
-        $data = DB::table('sample')->where('title', 'LIKE', '%'.$search.'%') ->where('user_id', $id) -> get();
+        $data = DB::table('codeBlocks')->where('title', 'LIKE', '%'.$search.'%') ->where('user_id', $id) -> get();
         foreach ($data as $key => $value) {
             $data[$key] = $value;
         }
@@ -22,7 +22,7 @@ class DbController extends Controller
     public function getUserBlocks() {
         if (Auth::user()){
             $id = Auth::user()->id;
-            $data = DB::table('sample')->where('user_id', $id)->get();
+            $data = DB::table('codeBlocks')->where('user_id', $id)->get();
 
             foreach ($data as $key => $value) {
                 $data[$key] = $value;
@@ -41,7 +41,8 @@ class DbController extends Controller
     public function addBlock(Request $request) {
         if (Auth::user()) {
             $id = Auth::user()->id;
-            $data = DB::table('sample')->insert([
+            $data = DB::table('codeBlocks')->insert([
+                'language' => $request->input('language'),
                 'user_id' => $id,
                 'title' => $request->input('title'),
                 'code' => $request->input('code'),
@@ -56,7 +57,7 @@ class DbController extends Controller
     public function deleteBlock(Request $request) {
         if (Auth::user()) {
             $id = Auth::user()->id;
-            DB::table('sample')->where('user_id', $id)->where('title', $request->input('description'))->delete();
+            DB::table('codeBlocks')->where('user_id', $id)->where('title', $request->input('description'))->delete();
             return response()->json([
                 'message' => 'success',
             ]);
@@ -66,7 +67,7 @@ class DbController extends Controller
     public function updateBlock(Request $request) {
         if (Auth::user()) {
             $id = Auth::user()->id;
-            $db = DB::table('sample')->where('user_id', $id)->where('title', $request->input('description'))->update([
+            $db = DB::table('codeBlocks')->where('user_id', $id)->where('title', $request->input('description'))->update([
                 'code' => $request->input('newCode'),
                 'title' => $request->input('newDescription'),
             ]);

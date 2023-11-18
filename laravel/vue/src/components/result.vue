@@ -51,8 +51,9 @@
 <template :id="title">
 <a class="block max-w-sm p-6 shadow-2xl shadow-black rounded-2xl" style="background-color: #23272f;">
   <p id="resultTitle" class=" text-2xl mt-2 font-semibold row-start-1 mb-3">{{props.search["title"]}}</p>
-  <simpleEditor height="170px" font-size="15px" :autofocus="true" v-model="props.search['code']" :read-only="true" width="100%"/>
+  <simpleEditor :id="codess" height="170px" :languages="[[props.search['language']]]" font-size="15px" :autofocus="true" v-model="props.search['code']" :read-only="true" width="100%"/>
   <button :id="title + '_button'" class=" mt-5">Inspect</button>
+  <p>{{ props.search["language"] }}</p>
 </a>
 
 <modal :id="props.search['title']" tabindex="-1" aria-hidden="true" :code="props.search['code']" :title="props.search['title']" :description="props.search['description']"/>
