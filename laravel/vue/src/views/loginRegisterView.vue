@@ -170,7 +170,7 @@ export default {
                 }
 
                 // Otherwise we will make a request to the api and set the answer array to the response
-                const response = await axios.post('http://127.0.0.1:8000/api/login', this.login, {headers: this.headers, withCredentials: true})
+                const response = await axios.post('http://codebranch.me/api/login', this.login, {headers: this.headers, withCredentials: true})
                 
                 // If the response is 401 we will set the incorrect variable to true
                 if (response.status == 401) {
@@ -179,7 +179,7 @@ export default {
 
                 // Otherwise we will set the authentication variable to true and redirect to the users code page
                 this.loggingIn = true
-                const user = await axios.get('http://127.0.0.1:8000/api/user', {headers: this.headers, withCredentials: true})
+                const user = await axios.get('http://codebranch.me/api/user', {headers: this.headers, withCredentials: true})
                 await this.$store.dispatch('setAuthentication', true)
                 await this.$store.dispatch('setUserID', user.data["id"])
                 await this.$router.push("/user/" + user.data["id"] + "/code")    
