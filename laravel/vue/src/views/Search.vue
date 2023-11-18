@@ -60,7 +60,7 @@ export default {
                 return;
             }
             // Otherwise we will make a request to the api and set the answer array to the response
-            const response = await axios.get('http://127.0.0.1:8000/api/test/' + this.search, {headers: this.header, withCredentials: true});
+            const response = await axios.get('https://codebranch.me/api/test/' + this.search, {headers: this.header, withCredentials: true});
             this.answer = response.data["strings"];
             },
         
