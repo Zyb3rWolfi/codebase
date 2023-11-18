@@ -12,12 +12,16 @@ onMounted(async ()=> {
           Accept: 'application/json',
           'content-type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest'}
-          const response = await axios.get('https://codebranch.me/api/user', {headers: headers, withCredentials: true}).then
-          await store.dispatch('setAuthentication', true)
-          await store.dispatch('setUserID', response.data["id"])
+          const response = await axios.get('https://codebranch.me/api/user', {headers: headers, withCredentials: true}).then(function(response) {
+          
+            store.dispatch('setAuthentication', true)
+            store.dispatch('setUserID', response.data["id"])
+          
+          })
 
       } catch(e) {
-      await store.dispatch('setAuthentication', false) 
+        console.log(e)
+        await store.dispatch('setAuthentication', false) 
       }
 })
 </script>
