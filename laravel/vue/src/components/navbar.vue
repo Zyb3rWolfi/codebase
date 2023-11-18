@@ -40,7 +40,7 @@
     const headers = {
       Accept: 'application/json',
       'content-type': 'application/json',}
-    const response = await axios.post('http://127.0.0.1:8000/api/logout', {headers: headers}, {withCredentials: true})
+    const response = await axios.post('https://codebranch.me/api/logout', {headers: headers}, {withCredentials: true})
     await store.dispatch('setAuthentication', false)
     await store.dispatch('setUserID', -1)
     router.push("/")

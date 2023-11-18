@@ -99,12 +99,12 @@ export default {
     },
     methods: {
         async getResponse() {
-            const response = await axios.get('http://codebranch.me/api/getBlocks', {headers: this.headers, withCredentials: true})
+            const response = await axios.get('https://codebranch.me/api/getBlocks', {headers: this.headers, withCredentials: true})
             this.answer = response.data["strings"]
             },
         
         async sendBlock() {
-            const response = await axios.post('http://codebranch.me/api/addBlock', this.sendData, {headers: this.headers, withCredentials: true})
+            const response = await axios.post('https://codebranch.me/api/addBlock', this.sendData, {headers: this.headers, withCredentials: true})
 
             this.store.commit('ADD_TOAST', {
                 title: 'Block Created',
