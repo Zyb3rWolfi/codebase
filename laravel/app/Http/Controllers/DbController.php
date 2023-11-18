@@ -56,7 +56,7 @@ class DbController extends Controller
     public function deleteBlock(Request $request) {
         if (Auth::user()) {
             $id = Auth::user()->id;
-            DB::table('sample')->where('user_id', $id)->where('strings', $request->input('description'))->delete();
+            DB::table('sample')->where('user_id', $id)->where('title', $request->input('description'))->delete();
             return response()->json([
                 'message' => 'success',
             ]);
