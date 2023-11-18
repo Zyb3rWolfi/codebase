@@ -58,7 +58,7 @@ export default {
         }
         // This function will make a request to the api to get the users name
         const userRequest = async () => {
-            const response = await axios.get('http://127.0.0.1:8000/api/user', { headers: this.headers, withCredentials: true });
+            const response = await axios.get('http://codebranch.me/api/user', { headers: this.headers, withCredentials: true });
             this.name = response.data["name"];
         };
         userRequest();

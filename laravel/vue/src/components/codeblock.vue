@@ -95,7 +95,7 @@ var changedData = {
 async function removeBlock() {
     blockData.code = codeResult
     blockData.description = props.search["strings"]
-    const response = await axios.post('http://127.0.0.1:8000/api/deleteBlock', blockData, {headers: this.headers, withCredentials: true})
+    const response = await axios.post('http://codebranch.me/api/deleteBlock', blockData, {headers: this.headers, withCredentials: true})
     deleted.value = true
     store.commit('ADD_TOAST', {
         title: 'Block Deleted',
@@ -113,7 +113,7 @@ async function modifyBlock() {
     changedData.newCode = codeResult.value
     changedData.newDescription = title.value
 
-    const response = await axios.post('http://127.0.0.1:8000/api/updateBlock', changedData, {headers: this.headers, withCredentials: true})
+    const response = await axios.post('http://codebranch.me/api/updateBlock', changedData, {headers: this.headers, withCredentials: true})
     intance.proxy.$forceUpdate();
 
 }

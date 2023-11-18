@@ -59,7 +59,7 @@ async mounted() {
 methods: {
     // Get user details
     async getUser() {
-        await axios.get('http://127.0.0.1:8000/api/user', {headers: headers, withCredentials: true}).then(response => {
+        await axios.get('http://codebranch.me/api/user', {headers: headers, withCredentials: true}).then(response => {
         this.user_name = response.data["name"], this.user_email = response.data["email"]})
 },
     
@@ -68,7 +68,7 @@ async changeDetails() {
     this.accountDetails.user_name = this.user_name
     this.accountDetails.user_email = this.user_email
 
-    const response = await axios.post('http://127.0.0.1:8000/api/changedetails', this.accountDetails, {headers: headers, withCredentials: true})
+    const response = await axios.post('http://codebranch.me/api/changedetails', this.accountDetails, {headers: headers, withCredentials: true})
     this.changed = true
     },
 
@@ -77,7 +77,7 @@ async changeDetails() {
     this.accountDetails.user_password = this.user_password
     this.accountDetails.user_new_password = this.user_new_password
 
-    const response = await axios.post('http://127.0.0.1:8000/api/changePassword', this.accountDetails, {headers: headers, withCredentials: true})
+    const response = await axios.post('http://codebranch.me/api/changePassword', this.accountDetails, {headers: headers, withCredentials: true})
     this.changed2 = true
 
 }

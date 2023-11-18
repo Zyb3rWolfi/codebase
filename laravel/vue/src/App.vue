@@ -12,7 +12,7 @@ onMounted(async ()=> {
           Accept: 'application/json',
           'content-type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest'}
-          const response = await axios.get('http://127.0.0.1:8000/api/user', {headers: headers, withCredentials: true}).then
+          const response = await axios.get('http://codebranch.me/api/user', {headers: headers, withCredentials: true}).then
           await store.dispatch('setAuthentication', true)
           await store.dispatch('setUserID', response.data["id"])
 
