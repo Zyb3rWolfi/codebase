@@ -110,7 +110,8 @@ export default {
             },
         
         async sendBlock() {
-            if (send.data.code === '' || send.data.title === '' || send.data.language === '') {
+            
+            if (this.sendData.code == '' || this.sendData.title == '' || this.sendData.language == '') {
                 this.store.commit('ADD_TOAST', {
                     title: 'Please fill out all fields',
                     type: 'error',
