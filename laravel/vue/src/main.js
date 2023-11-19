@@ -1,7 +1,5 @@
 import { createApp } from 'vue'
 import './css/style.css'
-import './css/atom-one-dark.css'
-import './css/index.css'
 import router from '../src/router/index.js'
 import App from './App.vue'
 import 'highlight.js/styles/stackoverflow-light.css'

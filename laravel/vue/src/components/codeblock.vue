@@ -1,9 +1,8 @@
 <template>
-    <div v-if="deleted == false" class=" shadow-2xl shadow-black p-10 rounded-2xl border-white" style="background-color: #23272f;">
+    <div id="block" v-if="deleted == false" class="border-white">
         <div class="container h-auto p-6border-gray-200 rounded-t-md max-w-4xl">
-        <a href="#">
-            <h5 class=" text-center mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
-        </a>
+        <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
+        <p class="mb-5 text-sm">{{ props.search["description"] }}</p>
         <div class="">
             <CodeEditor :languages="[[props.search['language']]]" height="200px" max-height="200px" font-size="15px" :read-only="true" v-model="codeResult" width="100%"/>
         </div>
@@ -56,6 +55,8 @@ const props = defineProps(['search'])
 import { initFlowbite } from 'flowbite'
 import Modal from './modal.vue';
 import { useStore } from 'vuex';
+const apiUrl = import.meta.env.VITE_API_BASE_URL
+
 
 const intance = getCurrentInstance();
 const store = useStore()
@@ -96,7 +97,7 @@ async function removeBlock() {
     blockData.code = codeResult
     blockData.description = props.search["title"]
     try {
-        await axios.post('https://codebranch.me/api/deleteBlock', blockData, {headers: headers, withCredentials: true}).then(function(response) {
+        await axios.post(apiUrl + '/api/deleteBlock', blockData, {headers: headers, withCredentials: true}).then(function(response) {
             deleted.value = true
             store.commit('ADD_TOAST', {
                 title: 'Block Deleted',
@@ -119,7 +120,7 @@ async function modifyBlock() {
     changedData.newCode = codeResult.value
     changedData.newDescription = title.value
 
-    const response = await axios.post('https://codebranch.me/api/updateBlock', changedData, {headers: this.headers, withCredentials: true})
+    const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: this.headers, withCredentials: true})
     intance.proxy.$forceUpdate();
 
 }

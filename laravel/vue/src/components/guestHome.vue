@@ -1,5 +1,7 @@
-<template>
-
+<template id="guestHome">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
     <div class=" grid lg:grid-cols-3 grid-rows-3 mt-40 sm:grid-cols-1 md:grid-cols-3 justify-items-center mx-auto">
         <div class="col-start-2 text-center">
             <h1 id="title" class=" text-4xl row-start-1">A Safe Place For Your Code</h1>
@@ -21,6 +23,7 @@ import { useRouter } from 'vue-router';
 import { initFlowbite, Modal } from 'flowbite'
 import { useStore } from 'vuex';
 import loginRegister from "../views/loginRegisterView.vue"
+import '../css/guestStyle.css'
 
 const router = useRouter()
 const store = useStore()
@@ -40,6 +43,8 @@ const modal = ref()
 onMounted(() => {
     initFlowbite()
 
+    document.documentElement.style.overflow = 'hidden';
+
     const $signUpButon = document.getElementById('openSignUp')
     const $loginButton = document.getElementById('openLoginModal')
     const $signInButton = document.getElementById('openLogin')
@@ -53,6 +58,7 @@ onMounted(() => {
     
     const options = {
         closable: true,
+        backdropClasses: '',
     };
     const instanceOptions = {
         id: 'modalEl',

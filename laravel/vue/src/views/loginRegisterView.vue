@@ -80,6 +80,7 @@ import axios from 'axios'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { initFlowbite, Modal } from 'flowbite'
+const apiUrl = import.meta.env.VITE_API_BASE_URL
 
 export default {
     name: 'search',
@@ -144,12 +145,12 @@ export default {
                 return
             }
             // Otherwise we will make a post request to the api
-            axios.post('https://codebranch.me/api/register', this.signup).then(async () => {
+            axios.post(apiUrl + '/api/register', this.signup).then(async () => {
                 this.login.email = this.signup.email
                 this.login.password = this.signup.password
 
-                await axios.post('https://codebranch.me/api/login', this.login, {headers: this.headers, withCredentials: true}).then(async () => {
-                    const user = await axios.get('https://codebranch.me/api/user', {headers: this.headers, withCredentials: true}).then(async () => {
+                await axios.post(apiUrl + '/api/login', this.login, {headers: this.headers, withCredentials: true}).then(async () => {
+                    const user = await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(async () => {
                         await this.store.dispatch('setAuthentication', true)
                         await this.store.dispatch('setUserID', user.data["id"])
                         await this.router.push("/user/" + user.data["id"] + "/code")
@@ -175,7 +176,7 @@ export default {
                 }
 
                 // Otherwise we will make a request to the api and set the answer array to the response
-                const response = await axios.post('https://codebranch.me/api/login', this.login, {headers: this.headers, withCredentials: true})
+                const response = await axios.post(apiUrl + '/api/login', this.login, {headers: this.headers, withCredentials: true})
                 
                 // If the response is 401 we will set the incorrect variable to true
                 if (response.status == 401) {
@@ -184,7 +185,7 @@ export default {
 
                 // Otherwise we will set the authentication variable to true and redirect to the users code page
                 this.loggingIn = true
-                const user = await axios.get('https://codebranch.me/api/user', {headers: this.headers, withCredentials: true})
+                const user = await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true})
                 await this.$store.dispatch('setAuthentication', true)
                 await this.$store.dispatch('setUserID', user.data["id"])
                 await this.$router.push("/user/" + user.data["id"] + "/code")    

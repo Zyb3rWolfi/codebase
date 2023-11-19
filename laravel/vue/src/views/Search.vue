@@ -17,9 +17,9 @@
             </form>
         </div>
     </div>
-    <div class=" text-center content-end my-10">
-        <p class=" text-2xl font-bold mb-5">Search Results</p>
-        <div class=" grid auto-cols-max place-content-evenly sm:grid-cols-1 sm:gap-4  md:grid-cols-2 md:gap-4 lg:grid-cols-3 xl:grid-cols-4 ">
+    <div class="my-10">
+        <p class="text-center text-2xl font-bold mb-5">Search Results</p>
+        <div class="grid mx-auto grid-cols-1  gap-5 justify-items-center">
             <Result v-if="answer.length > 0" v-for="ans in answer" :search="ans"></Result>
         </div>
     </div>
@@ -31,7 +31,7 @@ import NavBar from '../components/navbar.vue';
 import axios from 'axios';
 import { ref, watch } from 'vue';
 import Result from '../components/result.vue';
-
+const apiUrl = import.meta.env.VITE_API_BASE_URL
 export default {
     name: 'search',
     setup() {
@@ -48,6 +48,9 @@ export default {
             }
         }
     },
+    mounted() {
+        document.documentElement.style.overflow = 'auto';
+    },
     components: {
         Result,
         NavBar,
@@ -60,7 +63,7 @@ export default {
                 return;
             }
             // Otherwise we will make a request to the api and set the answer array to the response
-            const response = await axios.get('https://codebranch.me/api/test/' + this.search, {headers: this.header, withCredentials: true});
+            const response = await axios.get(apiUrl + '/api/test/' + this.search, {headers: this.header, withCredentials: true});
             this.answer = response.data["strings"];
             },
         

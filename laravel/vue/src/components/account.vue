@@ -36,6 +36,7 @@
 <script>
 import { onMounted, ref, computed, onBeforeMount } from 'vue'
 import axios from 'axios';
+const apiUrl = import.meta.env.VITE_API_BASE_URL
 
 export default  {
     data() {
@@ -64,7 +65,7 @@ async mounted() {
 methods: {
     // Get user details
     async getUser() {
-        await axios.get('https://codebranch.me/api/user', {headers: headers, withCredentials: true}).then(response => {
+        await axios.get(apiUrl + '/api/user', {headers: headers, withCredentials: true}).then(response => {
         this.user_name = response.data["name"], this.user_email = response.data["email"]})
 },
     
@@ -74,7 +75,7 @@ async changeDetails() {
     this.accountDetails.user_name = this.user_name
     this.accountDetails.user_email = this.user_email
 
-    await axios.post('https://codebranch.me/api/changedetails', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
+    await axios.post(apiUrl + '/api/changedetails', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
         this.changed = true
         this.emailAlreadyExists = false
     }).catch(error => {
@@ -99,7 +100,7 @@ async changeDetails() {
         return
     }
 
-    await axios.post('https://codebranch.me/api/changePassword', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
+    await axios.post(apiUrl + '/api/changePassword', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
         this.changed2 = true
     }).catch(error => {
         this.textPlaceholder = 'Old password is incorrect'

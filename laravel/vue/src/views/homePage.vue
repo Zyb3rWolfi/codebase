@@ -1,6 +1,6 @@
 <template>
     <Search v-if="store.state.auth" />
-    <guestHome v-else />
+    <guestHome id="guestHome" v-else />
 
 </template>
 
@@ -18,7 +18,5 @@ const store = useStore()
 onMounted(() => {
 
 })
-
-
 
 </script>

@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/*Fonts Impots */
 @font-face {
   font-family: jetbrainsMonoLight;
   src: url("../assets/fonts/JetBrainsMono-Light.ttf");
@@ -16,6 +18,8 @@
   src: url('../assets/fonts/JetBrainsMono-Bold.ttf');
 }
 
+
+/* Manages Active Links */
 .active {
   color: white !important;
 }
@@ -25,7 +29,7 @@
   color: violet !important;
 }
 
-
+/* Fonts for different importance*/
 #title {
   font-family: jetbrainsMonoBold;
 }
@@ -55,6 +59,7 @@
   font-family: jetbrainsMonoMedium;
 }
 
+
 :root {
   font-family: jetbrainsMonoLight;
   line-height: 1.5;
@@ -71,6 +76,8 @@
   -webkit-text-size-adjust: 100%;
 }
 
+
+/* Dark Mode for the code editor*/
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -92,11 +99,6 @@ code.hljs {
   padding: 3px 5px
 }
 /*
-
-
-
-
-
 
 Atom One Dark by Daniel Gamage
 Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax

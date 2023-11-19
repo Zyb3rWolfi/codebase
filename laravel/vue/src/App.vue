@@ -5,14 +5,15 @@ import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 import Toasts from './components/Toasts.vue';
 const store = useStore();
-
+const apiUrl = import.meta.env.VITE_API_BASE_URL
+console.log(apiUrl)
 onMounted(async ()=> {
   try {
       const headers = {
           Accept: 'application/json',
           'content-type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest'}
-          const response = await axios.get('https://codebranch.me/api/user', {headers: headers, withCredentials: true}).then(function(response) {
+          const response = await axios.get(apiUrl + '/api/user', {headers: headers, withCredentials: true}).then(function(response) {
           
             store.dispatch('setAuthentication', true)
             store.dispatch('setUserID', response.data["id"])
