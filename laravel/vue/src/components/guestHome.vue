@@ -25,20 +25,8 @@ import { useStore } from 'vuex';
 import loginRegister from "../views/loginRegisterView.vue"
 import '../css/guestStyle.css'
 
-const router = useRouter()
 const store = useStore()
-
-function signIn() {
-    router.push("/login")
-}
-
-function signUp() {
-    router.push("/register")
-}
-
 const auth = computed(() => store.state.auth)
-
-const modal = ref()
 
 onMounted(() => {
     initFlowbite()

@@ -10,9 +10,9 @@
                 <span class="sr-only">Close modal</span>
             </button>
             <div class="px-8 pb-8 py-10 lg:px-20">
-                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{ props.title }}</h3>
-                <p class="mb-5">{{ props.description }}</p>
-                <CodeEditor :value="code" width="100%" height="600px" :read-only="true" />
+                <h3 id="title" class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{ props.title }}</h3>
+                <p id="sub" class="mb-5">{{ props.description }}</p>
+                <CodeEditor font-size="15px" :value="code" width="100%" height="600px" :read-only="true" />
             </div>
             
         </div> 

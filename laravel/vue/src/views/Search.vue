@@ -20,7 +20,7 @@
     <div class="my-10">
         <p class="text-center text-2xl font-bold mb-5">Search Results</p>
         <div class="grid mx-auto grid-cols-1  gap-5 justify-items-center">
-            <Result v-if="answer.length > 0" v-for="ans in answer" :search="ans"></Result>
+            <Result v-if="answer.length > 0" v-for="ans in answer" :search="ans" :key="ans.id"></Result>
         </div>
     </div>
 
