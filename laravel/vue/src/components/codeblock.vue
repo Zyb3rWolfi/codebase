@@ -1,9 +1,9 @@
 <template>
-    <div id="block" v-if="deleted == false && showModal == true" class="border-white">
+    <div id="block" v-if="deleted == false" class="border-white">
         <div class="w-auto mx-auto h-auto max-w-sm">
             <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
             <p class="mb-5 text-sm">{{ props.search["description"] }}</p>
-            <CodeEditor lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
+            <CodeEditor v-if="showModal" lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
         </div>
     <ul class=" justify-center flex flex-wrap p-2 text-gray-400 font-semibold gap-5">
         <li class="mr-2">
@@ -133,7 +133,7 @@ async function removeBlock() {
 }
 
 async function modifyBlock() {
-
+    console.log("pressing")
     showModal.value = false
     changedData.code = originalCode.value
     changedData.description = originalTitle.value
