@@ -127,6 +127,7 @@ export default {
     },
     methods: {
         getLanguage(lang) {
+            console.log(lang)
             this.sendData.language = lang
         },
         async getResponse() {

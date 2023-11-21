@@ -70,6 +70,7 @@ class DbController extends Controller
             $db = DB::table('codeBlocks')->where('user_id', $id)->where('title', $request->input('description'))->update([
                 'code' => $request->input('newCode'),
                 'title' => $request->input('newDescription'),
+                'language' => $request->input('newLanguage'),
             ]);
             return response()->json([
                 'message' => 'success',

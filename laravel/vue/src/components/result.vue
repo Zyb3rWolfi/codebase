@@ -1,6 +1,6 @@
 <script setup>
   import { useRouter } from 'vue-router';
-  import { computed, onMounted, onUpdated, ref } from 'vue';
+  import { computed,watch, onMounted, onUpdated, ref } from 'vue';
   import MarkdownIt from 'markdown-it'
   const markdown = new MarkdownIt()
   const router = useRouter()
@@ -13,7 +13,7 @@
   var codess = props.search["code"]
   var title = props.search["title"]
   var description = props.search["description"]
-  var language = computed(() => props.search["language"])
+  var language = computed(() =>  props.search["language"])
 
   onMounted(() => {
     initFlowbite()
