@@ -1,9 +1,9 @@
 <template>
-    <div id="block" v-if="deleted == false" class="border-white">
+    <div id="block" v-if="deleted == false && showModal == true" class="border-white">
         <div class="w-auto mx-auto h-auto max-w-sm">
             <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
             <p class="mb-5 text-sm">{{ props.search["description"] }}</p>
-            <CodeEditor :languages="[[props.search['language']]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
+            <CodeEditor lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
         </div>
     <ul class=" justify-center flex flex-wrap p-2 text-gray-400 font-semibold gap-5">
         <li class="mr-2">
@@ -34,7 +34,7 @@
                         </div>
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code</label>
-                            <CodeEditor font-size="15px" v-model="codeResult" width="100%" :header="true" :languages="[['python'], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']]"  @lang="getLanguage"/>
+                            <CodeEditor lang-list-height="200px" font-size="15px" v-model="codeResult" width="100%" :header="true" :languages="[['python'], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']]"  @lang="getLanguage"/>
                         </div>
                         <button :data-modal-hide="codeResult" @click="modifyBlock()" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modify</button>
                     </form>
@@ -54,9 +54,10 @@ import Modal from './modal.vue';
 import { useStore } from 'vuex';
 const apiUrl = import.meta.env.VITE_API_BASE_URL
 
-
-const intance = getCurrentInstance();
 const store = useStore()
+var tempLang = ref(props.search["language"])
+const currentLanguage = computed(() => tempLang.value)
+var showModal = ref(true)
 
 onMounted(() => {
     initFlowbite()
@@ -116,13 +117,16 @@ async function removeBlock() {
 
 async function modifyBlock() {
 
+    showModal.value = false
     changedData.code = originalCode.value
     changedData.description = originalTitle.value
     changedData.newCode = codeResult.value
     changedData.newDescription = title.value
 
     const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: this.headers, withCredentials: true})
-    intance.proxy.$forceUpdate();
+    
+    tempLang.value = changedData.newLanguage
+    showModal.value = true
 
 }
 
