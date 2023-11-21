@@ -34,7 +34,7 @@
                         </div>
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code</label>
-                            <CodeEditor lang-list-height="200px" font-size="15px" v-model="codeResult" width="100%" :header="true" :languages="[['python'], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']]"  @lang="getLanguage"/>
+                            <CodeEditor lang-list-height="200px" font-size="15px" v-model="codeResult" width="100%" :header="true" :languages="languages"  @lang="getLanguage"/>
                         </div>
                         <button :data-modal-hide="codeResult" @click="modifyBlock()" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modify</button>
                     </form>
@@ -64,6 +64,23 @@ onMounted(() => {
 })
 
 const prop = ref(props.search)
+
+var selectedLanguage = ref(props.search["language"])
+var tempLanguages = [[props.search["language"]]]
+
+var languages = [["python"], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']]
+
+for (var i = 0; i < languages.length; i++) {
+    if (languages[i][0] != selectedLanguage.value) {
+        tempLanguages.push(languages[i])
+    }
+}
+
+languages = tempLanguages
+
+for (var i = 0; i < languages.length; i++) {
+    console.log(languages[i])
+}
 
 var codeResult = ref(props.search["code"])
 var title = ref(props.search["title"])
@@ -127,7 +144,19 @@ async function modifyBlock() {
     
     tempLang.value = changedData.newLanguage
     showModal.value = true
+    selectedLanguage = ref(props.search["language"])
+    
+    tempLanguages = [[props.search["language"]]]
 
+    languages = [["python"], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']]
+
+    for (var i = 0; i < languages.length; i++) {
+        if (languages[i][0] != selectedLanguage.value) {
+            tempLanguages.push(languages[i])
+        }
+    }
+
+    languages = tempLanguages
 }
 
 
