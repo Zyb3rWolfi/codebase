@@ -1,12 +1,9 @@
 <template>
     <div id="block" v-if="deleted == false" class="border-white">
-        <div class="container w-auto h-auto p-6border-gray-200 rounded-t-md max-w-4xl">
-        <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
-        <p class="mb-5 text-sm">{{ props.search["description"] }}</p>
-        <div class="">
-            <CodeEditor :languages="[[props.search['language']]]" height="200px" max-height="200px" width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
-        </div>
-          
+        <div class="w-auto mx-auto h-auto max-w-sm">
+            <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
+            <p class="mb-5 text-sm">{{ props.search["description"] }}</p>
+            <CodeEditor :languages="[[props.search['language']]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
         </div>
     <ul class=" justify-center flex flex-wrap p-2 text-gray-400 font-semibold gap-5">
         <li class="mr-2">
