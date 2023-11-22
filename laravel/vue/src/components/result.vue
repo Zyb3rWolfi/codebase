@@ -47,6 +47,6 @@
   <button :id="title + '_button'" class=" mt-5">Inspect</button>
 </a>
 
-<modal :key="props.search.id" :id="props.search['title']" tabindex="-1" aria-hidden="true" :code="props.search['code']" :title="props.search['title']" :description="props.search['description']"/>
+<modal :key="props.search.id" :id="props.search['title']" tabindex="-1" aria-hidden="true" :code="props.search['code']" :title="props.search['title']" :description="props.search['description']" :language="[props.search['language']]"/>
 
 </template>

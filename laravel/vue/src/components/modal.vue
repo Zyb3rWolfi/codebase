@@ -12,7 +12,7 @@
             <div class="px-8 pb-8 py-10 lg:px-20">
                 <h3 id="title" class="mb-4 text-xl font-medium text-gray-900 dark:text-white">{{ props.title }}</h3>
                 <p id="sub" class="mb-5">{{ props.description }}</p>
-                <CodeEditor font-size="15px" :value="code" width="100%" height="600px" :read-only="true" />
+                <CodeEditor font-size="15px" :value="code" width="100%" height="600px" :read-only="true" :languages="[props.language]" />
             </div>
             
         </div> 
@@ -23,11 +23,9 @@
 <script setup>
 
 import { onMounted, ref, computed } from 'vue'
-const props = defineProps(['title', 'description', 'code'])
+const props = defineProps(['title', 'description', 'code', 'language'])
 import CodeEditor from "simple-code-editor";
 import hljs from 'highlight.js';
-
-var thisCode;
 
 function resetValue() {
 
