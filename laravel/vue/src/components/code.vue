@@ -130,7 +130,7 @@ export default {
             this.sendData.language = lang
         },
         async getResponse() {
-            const response = await axios.get(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
+            const response = await axios.get(apiUrl + '/api/getBlocks', {headers: headers, withCredentials: true})
             this.answer = response.data["strings"]
             },
         
