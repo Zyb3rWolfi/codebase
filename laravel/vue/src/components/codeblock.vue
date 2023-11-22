@@ -163,7 +163,7 @@ async function modifyBlock() {
     changedData.newCode = codeResult.value
     changedData.newDescription = title.value
 
-    const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: this.headers, withCredentials: true})
+    const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
     
     tempLang.value = changedData.newLanguage
     showModal.value = true
