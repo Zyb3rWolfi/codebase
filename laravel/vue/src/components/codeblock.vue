@@ -75,8 +75,8 @@ var tempLanguages = [[props.search["language"]]] // Temporary languages
 var showModal = ref(true) // Show modal
 // Languages for the code editor
 var languages = [["python"], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']]
-// ?
-languages = tempLanguages
+
+// there was this variable language = tempLanguages but dunno what it does so deleted it
 
 // Variables for the code editor
 var codeResult = ref(props.search["code"])
