@@ -131,12 +131,12 @@ export default {
         },
         async getResponse() {
             try {
-                const response = await axios.get(apiUrl + '/api/getBlocks', {headers: headers, withCredentials: true})
+                const response = await axios.get(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
+                this.answer = response.data["strings"]
             }
             catch (e) {
                 console.log(e)
             }
-            this.answer = response.data["strings"]
             },
         
         async sendBlock() {

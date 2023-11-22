@@ -122,9 +122,9 @@ for (var i = 0; i < languages.length; i++) {
 }
 
 
-for (var i = 0; i < languages.length; i++) {
-    console.log(languages[i])
-}
+//for (var i = 0; i < languages.length; i++) {
+    //console.log(languages[i])
+//}
 
 
 function getLanguage(lang) {
