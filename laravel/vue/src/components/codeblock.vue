@@ -1,12 +1,21 @@
 <template>
     <div id="block" v-if="deleted == false" class="border-white codeblock-container">
-        <div class="w-auto max-w-sm codeblock">
+        <div class="w-auto mx-auto max-w-sm codeblock">
             <div class="codeblock-text">
                 <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
-                <p class="mb-5 text-sm max-w-full">{{ props.search["description"] }}</p>    
+                <p class="mb-5 text-sm max-w-md">{{ props.search["description"] }}</p>    
             </div>
             <div>
                 <CodeEditor v-if="showModal" lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
+                <div v-if="!showModal" class="text-center mx-auto my-auto">
+                    <div role="status">
+                        <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                        </svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
             </div>
         </div>
     <ul class=" justify-center flex flex-wrap p-6 text-gray-400 font-semibold gap-5 codeblock-buttons">
@@ -49,61 +58,48 @@
 </template>
 
 <script setup>
+// Imports
 import { onMounted, ref, computed, getCurrentInstance } from 'vue'
 import CodeEditor from "simple-code-editor";
 import axios from 'axios';
-const props = defineProps(['search'])
 import { initFlowbite } from 'flowbite'
-import Modal from './modal.vue';
 import { useStore } from 'vuex';
-const apiUrl = import.meta.env.VITE_API_BASE_URL
 
-const store = useStore()
-var tempLang = ref(props.search["language"])
-const currentLanguage = computed(() => tempLang.value)
-var showModal = ref(true)
-
-onMounted(() => {
-    initFlowbite()
-})
-
-const prop = ref(props.search)
-
-var selectedLanguage = ref(props.search["language"])
-var tempLanguages = [[props.search["language"]]]
-
+const props = defineProps(['search']) // This is props
+const apiUrl = import.meta.env.VITE_API_BASE_URL // Api Url from .evn file
+const store = useStore() // Vuex Store
+var tempLang = ref(props.search["language"]) // Temporary language 
+const currentLanguage = computed(() => tempLang.value) // Current language using computed
+var selectedLanguage = ref(props.search["language"]) // Current language
+var tempLanguages = [[props.search["language"]]] // Temporary languages
+var showModal = ref(true) // Show modal
+// Languages for the code editor
 var languages = [["python"], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']]
-
-for (var i = 0; i < languages.length; i++) {
-    if (languages[i][0] != selectedLanguage.value) {
-        tempLanguages.push(languages[i])
-    }
-}
-
+// ?
 languages = tempLanguages
 
-for (var i = 0; i < languages.length; i++) {
-    console.log(languages[i])
-}
-
+// Variables for the code editor
 var codeResult = ref(props.search["code"])
 var title = ref(props.search["title"])
 var deleted = ref(false)
 
+// Original code and title
 const originalCode = ref(props.search["code"])
 const originalTitle = ref(props.search["title"])
 
+// Header for API
 const headers = {
-        Accept: 'application/json',
-        'content-type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-    }
+    Accept: 'application/json',
+    'content-type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
+}
 
+// Data for the API
 var blockData = {
     code: '',
     description: '',
 }
-
+// Changed data for the API
 var changedData = {
     code: '',
     description: '',
@@ -112,10 +108,31 @@ var changedData = {
     newDescription: '',
 }
 
+// On mounted
+// Currently initializing flowbite
+onMounted(() => {
+    initFlowbite()
+})
+
+// Zakk can you explain baby girl
+for (var i = 0; i < languages.length; i++) {
+    if (languages[i][0] != selectedLanguage.value) {
+        tempLanguages.push(languages[i])
+    }
+}
+
+
+for (var i = 0; i < languages.length; i++) {
+    console.log(languages[i])
+}
+
+
 function getLanguage(lang) {
     changedData.newLanguage = lang
 }
 
+
+// Calls API to remove block
 async function removeBlock() {
     blockData.code = codeResult
     blockData.description = props.search["title"]
@@ -136,6 +153,7 @@ async function removeBlock() {
 
 }
 
+// Calls API to modify block
 async function modifyBlock() {
     console.log("pressing")
     showModal.value = false
