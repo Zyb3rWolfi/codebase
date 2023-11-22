@@ -180,3 +180,27 @@ hue-6-2: #e6c07b
 .hljs-link {
   text-decoration: underline
 }
+
+div.codeblock-container{
+  height : 100%;
+}
+
+div.codeblock{
+  height: 78%;
+  margin-bottom: 4%;
+  position: relative;
+}
+div.codeblock-editor{
+  position: absolute;
+  bottom: 0;
+}
+div.codeblock-text{
+  height: 40%;
+  width: 100%;
+  overflow:auto;
+
+}
+div.codeblock-buttons{
+  position: absolute;
+  height: 18%;;
+}

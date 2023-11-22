@@ -1,11 +1,15 @@
 <template>
-    <div id="block" v-if="deleted == false" class="border-white">
-        <div class="w-auto mx-auto h-auto max-w-sm">
-            <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
-            <p class="mb-5 text-sm">{{ props.search["description"] }}</p>
-            <CodeEditor v-if="showModal" lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
+    <div id="block" v-if="deleted == false" class="border-white codeblock-container">
+        <div class="w-auto max-w-sm codeblock">
+            <div class="codeblock-text">
+                <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
+                <p class="mb-5 text-sm max-w-full">{{ props.search["description"] }}</p>    
+            </div>
+            <div>
+                <CodeEditor v-if="showModal" lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
+            </div>
         </div>
-    <ul class=" justify-center flex flex-wrap p-2 text-gray-400 font-semibold gap-5">
+    <ul class=" justify-center flex flex-wrap p-6 text-gray-400 font-semibold gap-5 codeblock-buttons">
         <li class="mr-2">
             <button :data-modal-target="codeResult" :data-modal-toggle="codeResult" class="dark:hover:bg-gray-700 dark:hover:text-gray-300">Modify</button>
         </li>
