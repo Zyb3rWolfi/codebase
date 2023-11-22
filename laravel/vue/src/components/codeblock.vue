@@ -156,6 +156,7 @@ async function removeBlock() {
 // Calls API to modify block
 async function modifyBlock() {
     console.log("pressing")
+    try {
     showModal.value = false
     changedData.code = originalCode.value
     changedData.description = originalTitle.value
@@ -177,8 +178,12 @@ async function modifyBlock() {
             tempLanguages.push(languages[i])
         }
     }
-
     languages = tempLanguages
+    }
+    catch (e) {
+        console.log(e)
+    }
+
 }
 
 
