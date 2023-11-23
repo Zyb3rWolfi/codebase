@@ -57,7 +57,7 @@ class DbController extends Controller
     public function deleteBlock(Request $request) {
         if (Auth::user()) {
             $id = Auth::user()->id;
-            DB::table('codeBlocks')->where('user_id', $id)->where('title', $request->input('description'))->delete();
+            DB::table('codeBlocks')->where('user_id', $id)->where('title', $request->input('title'))->delete();
             return response()->json([
                 'message' => 'success',
             ]);
@@ -67,9 +67,10 @@ class DbController extends Controller
     public function updateBlock(Request $request) {
         if (Auth::user()) {
             $id = Auth::user()->id;
-            $db = DB::table('codeBlocks')->where('user_id', $id)->where('title', $request->input('description'))->update([
+            $db = DB::table('codeBlocks')->where('user_id', $id)->where('title', $request->input('title'))->update([
                 'code' => $request->input('newCode'),
-                'title' => $request->input('newDescription'),
+                'title' => $request->input('newTitle'),
+                'description' => $request->input('newDescription'),
                 'language' => $request->input('newLanguage'),
             ]);
             return response()->json([

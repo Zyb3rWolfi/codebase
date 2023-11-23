@@ -28,7 +28,9 @@
   border-bottom: white 2px solid !important;
   color: violet !important;
 }
-
+* {
+  color: white;
+}
 /* Fonts for different importance*/
 #title {
   font-family: jetbrainsMonoBold;
@@ -188,20 +190,23 @@ div.codeblock-container{
 /* Codeblocks */
 div.codeblock{
   height: 78%;
-  margin-bottom: 4%;
   position: relative;
 }
 div.codeblock-editor{
   position: absolute;
   bottom: 0;
 }
-div.expand {
-  color: red;
+div.expandText {
+  max-height: 400px !important;
+  height: auto !important;
+  transition: max-height 0.5s !important;
 }
 div.codeblock-text{
-  height: 40%;
+  height: 25%;
+  max-height: 100px;
   width: 100%;
-  overflow:auto;
+  overflow:hidden;
+  transition: max-height 0.5s !important;
 
 }
 div.codeblock-buttons{
