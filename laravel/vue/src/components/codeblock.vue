@@ -1,11 +1,10 @@
 <template>
     <div id="block" v-if="deleted == false" class="border-white codeblock-container">
         <div class="w-auto mx-auto max-w-sm codeblock">
-            <div :class="{expand : expandIf}">
-                <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
-                <p class="mb-5 text-sm max-w-md">{{ props.search["description"] }}</p>    
+            <div v-bind:class="{ expandText : expandIf }" class="codeblock-text mt-10">
+                <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-white"> {{ title }}</h5>
+                <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 40" @click="expandManager">...</button> </p>    
             </div>
-            <button @click="change">...</button>
             <div>
                 <CodeEditor v-if="showModal" lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
                 
@@ -21,12 +20,12 @@
             
             </div>
         </div>
-    <ul class=" justify-center flex flex-wrap p-6 text-gray-400 font-semibold gap-5 codeblock-buttons">
+    <ul class="justify-center flex flex-wrap p-6 text-gray-400 font-semibold gap-5 codeblock-buttons">
         <li class="mr-2">
-            <button :data-modal-target="codeResult" :data-modal-toggle="codeResult" class="dark:hover:bg-gray-700 dark:hover:text-gray-300">Modify</button>
+            <button :data-modal-target="codeResult" :data-modal-toggle="codeResult" class="bg-transparent hover:bg-gray-700 hover:text-gray-300 ">Modify</button>
         </li>
-        <li class="dark:hover:bg-gray-700 dark:hover:text-gray-300">
-            <button @click="removeBlock()" class="dark:hover:bg-gray-700 dark:hover:text-gray-300">Delete</button>
+        <li class="hover:bg-gray-700 hover:text-gray-300">
+            <button @click="removeBlock()" class="hover:bg-gray-700 hover:text-gray-30 bg-transparent">Delete</button>
         </li>
     </ul>
     </div>
@@ -34,22 +33,26 @@
     <div :id="codeResult" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-5xl max-h-full">
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-slate-950">
-                <button :data-modal-hide="codeResult" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+            <div class="relative rounded-lg shadow bg-slate-950">
+                <button :data-modal-hide="codeResult" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white" data-modal-hide="authentication-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
                 <div class="px-6 py-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Modify This Code Block</h3>
+                    <h3 class="mb-4 text-xl font-medium text-white">Modify This Code Block</h3>
                     <form class="space-y-6" action="#">
                         <div>
-                            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code Block Description</label>
-                            <input v-model="title" type="text" name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="Center a DIV" required>
+                            <label for="description" class="block mb-2 text-sm font-medium text-white">Code Block Title</label>
+                            <input v-model="title" type="text" name="description" id="description" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
                         </div>
                         <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code</label>
+                            <label for="description" class="block mb-2 text-sm font-medium text-white">Code Block Description</label>
+                            <input v-model="title" type="text" name="description" id="description" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                        </div>
+                        <div>
+                            <label for="password" class="block mb-2 text-sm font-medium text-white">Code</label>
                             <CodeEditor lang-list-height="200px" font-size="15px" v-model="codeResult" width="100%" :header="true" :languages="languages"  @lang="getLanguage"/>
                         </div>
                         <button :data-modal-hide="codeResult" @click="modifyBlock()" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modify</button>
@@ -62,7 +65,7 @@
 
 <script setup>
 // Imports
-import { onMounted, ref, computed, getCurrentInstance } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import CodeEditor from "simple-code-editor";
 import axios from 'axios';
 import { initFlowbite } from 'flowbite'
@@ -89,7 +92,10 @@ var deleted = ref(false)
 // Original code and title
 const originalCode = ref(props.search["code"])
 const originalTitle = ref(props.search["title"])
-var expandIf = ref(false)
+const expandIf = ref(false)
+const descriptionLength = ref(props.search["description"].length)
+var shortDescription = ref()
+var tempDescription = ref(props.search["description"])
 
 // Header for API
 const headers = {
@@ -116,8 +122,26 @@ var changedData = {
 // Currently initializing flowbite
 onMounted(() => {
     initFlowbite()
-    expandIf = true
+    
+    if (descriptionLength.value > 40) {
+        shortDescription.value = props.search["description"].substring(0, 40)
+        tempDescription.value = shortDescription.value
+    }
+    else {
+        shortDescription.value = props.search["description"]
+    }
 })
+
+function expandManager() {
+    if (expandIf.value == true) {
+        expandIf.value = false
+        tempDescription.value = shortDescription.value
+    }
+    else {
+        expandIf.value = true
+        tempDescription.value = props.search["description"]
+    }
+}
 
 // Zakk can you explain baby girl
 for (var i = 0; i < languages.length; i++) {
@@ -192,7 +216,7 @@ async function modifyBlock() {
 
 function change() {
     console.log("Expanding")
-    expandIf = expandIf;
+    expandIf.value = true
     console.log(expandIf)
 }
 

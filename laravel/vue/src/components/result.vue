@@ -44,7 +44,7 @@
   <p id="resultTitle" class="text-2xl mt-2 font-semibold row-start-1 mb-3">{{props.search["title"]}}</p>
   <p class="mb-5 text-sm">{{ props.search["description"] }}</p>
   <simpleEditor :id="codess" height="300px" :languages="[[language]]" font-size="15px" :autofocus="true" v-model="props.search['code']" :read-only="true" width="100%"/>
-  <button :id="title + '_button'" class=" mt-5">Inspect</button>
+  <button :id="title + '_button'" class=" mt-5 bg-transparent text-white">Inspect</button>
 </a>
 
 <modal :key="props.search.id" :id="props.search['title']" tabindex="-1" aria-hidden="true" :code="props.search['code']" :title="props.search['title']" :description="props.search['description']" :language="[props.search['language']]"/>
