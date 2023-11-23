@@ -62,7 +62,7 @@
 
 <script setup>
 // Imports
-import { onMounted, ref, computed, getCurrentInstance } from 'vue'
+import { onMounted, ref, computed, getCurrentInstance, onUpdated } from 'vue'
 import CodeEditor from "simple-code-editor";
 import axios from 'axios';
 import { initFlowbite } from 'flowbite'
@@ -71,15 +71,17 @@ import { useStore } from 'vuex';
 const props = defineProps(['search']) // This is props
 const apiUrl = import.meta.env.VITE_API_BASE_URL // Api Url from .evn file
 const store = useStore() // Vuex Store
-var tempLang = ref(props.search["language"]) // Temporary language 
+var tempLang = ref(props.search["language"]) // Temporary language !!:: DO NOT DELETE ::!! idk what this does but it breaks everything if you do
 const currentLanguage = computed(() => tempLang.value) // Current language using computed
-var selectedLanguage = ref(props.search["language"]) // Current language
-var tempLanguages = [[props.search["language"]]] // Temporary languages
+
 var showModal = ref(true) // Show modal
+
 // Languages for the code editor
 var languages = [["python"], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']]
+var tempLanguages = [[props.search["language"]]] // Temporary languages used for ordering the code editor languages
+var selectedLanguage = ref(props.search["language"]) // Current language used to determin which language should be defualted to when modifying a code block
 
-// there was this variable language = tempLanguages but dunno what it does so deleted it
+// there was this variable language = tempLanguages but dunno what it does so deleted it <--- this was a mistake it broke stuff :(
 
 // Variables for the code editor
 var codeResult = ref(props.search["code"])
@@ -112,6 +114,17 @@ var changedData = {
     newDescription: '',
 }
 
+function orderLanguages() {
+
+    //simple linear search to put all but the slected language in the array 
+    for (var i = 0; i < languages.length; i++) {
+        if (languages[i][0] != selectedLanguage.value) {
+            tempLanguages.push(languages[i])
+        }
+    }
+    languages = tempLanguages
+}
+
 // On mounted
 // Currently initializing flowbite
 onMounted(() => {
@@ -119,18 +132,9 @@ onMounted(() => {
     expandIf = true
 })
 
-// Zakk can you explain baby girl
-for (var i = 0; i < languages.length; i++) {
-    if (languages[i][0] != selectedLanguage.value) {
-        tempLanguages.push(languages[i])
-    }
-}
 
-
-//for (var i = 0; i < languages.length; i++) {
-    //console.log(languages[i])
-//}
-
+//Antons tole me to put this in onMouned but that broke everything so fuck that guy 
+orderLanguages()
 
 function getLanguage(lang) {
     changedData.newLanguage = lang
@@ -161,28 +165,16 @@ async function removeBlock() {
 async function modifyBlock() {
     console.log("pressing")
     try {
-    showModal.value = false
-    changedData.code = originalCode.value
-    changedData.description = originalTitle.value
-    changedData.newCode = codeResult.value
-    changedData.newDescription = title.value
+        showModal.value = false
+        changedData.code = originalCode.value
+        changedData.description = originalTitle.value
+        changedData.newCode = codeResult.value
+        changedData.newDescription = title.value
 
-    const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
-    
-    tempLang.value = changedData.newLanguage
-    showModal.value = true
-    selectedLanguage = ref(props.search["language"])
-    
-    tempLanguages = [[props.search["language"]]]
-
-    languages = [["python"], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']]
-
-    for (var i = 0; i < languages.length; i++) {
-        if (languages[i][0] != selectedLanguage.value) {
-            tempLanguages.push(languages[i])
-        }
-    }
-    languages = tempLanguages
+        const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
+        
+        tempLang.value = changedData.newLanguage
+        showModal.value = true
     }
     catch (e) {
         console.log(e)
