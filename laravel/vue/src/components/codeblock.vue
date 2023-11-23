@@ -44,12 +44,12 @@
                     <h3 class="mb-4 text-xl font-medium text-white">Modify This Code Block</h3>
                     <form class="space-y-6" action="#">
                         <div>
-                            <label for="description" class="block mb-2 text-sm font-medium text-white">Code Block Title</label>
-                            <input v-model="title" type="text" name="description" id="description" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                            <label for="title" class="block mb-2 text-sm font-medium text-white">Code Block Title</label>
+                            <input v-model="title" type="text" name="title" id="title" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
                         </div>
                         <div>
                             <label for="description" class="block mb-2 text-sm font-medium text-white">Code Block Description</label>
-                            <input v-model="title" type="text" name="description" id="description" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                            <input v-model="description" type="text" name="description" id="description" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
                         </div>
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-white">Code</label>
@@ -87,11 +87,14 @@ var languages = [["python"], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php
 // Variables for the code editor
 var codeResult = ref(props.search["code"])
 var title = ref(props.search["title"])
+var description = ref(props.search["description"])
+console.log(props.search["description"])
 var deleted = ref(false)
 
 // Original code and title
 const originalCode = ref(props.search["code"])
 const originalTitle = ref(props.search["title"])
+const originalDescription = ref(props.search["description"])
 const expandIf = ref(false)
 const descriptionLength = ref(props.search["description"].length)
 var shortDescription = ref()
@@ -112,17 +115,14 @@ var blockData = {
 // Changed data for the API
 var changedData = {
     code: '',
-    description: '',
+    title: '',
     newLanguage: '',
     newCode: '',
     newDescription: '',
+    newTitle: '',
 }
 
-// On mounted
-// Currently initializing flowbite
-onMounted(() => {
-    initFlowbite()
-    
+function setDescription() {
     if (descriptionLength.value > 40) {
         shortDescription.value = props.search["description"].substring(0, 40)
         tempDescription.value = shortDescription.value
@@ -130,6 +130,13 @@ onMounted(() => {
     else {
         shortDescription.value = props.search["description"]
     }
+}
+// On mounted
+// Currently initializing flowbite
+onMounted(() => {
+    initFlowbite()
+    
+    setDescription()
 })
 
 function expandManager() {
@@ -139,7 +146,7 @@ function expandManager() {
     }
     else {
         expandIf.value = true
-        tempDescription.value = props.search["description"]
+        tempDescription.value = description
     }
 }
 
@@ -163,7 +170,7 @@ function getLanguage(lang) {
 // Calls API to remove block
 async function removeBlock() {
     blockData.code = codeResult
-    blockData.description = props.search["title"]
+    blockData.title = props.search["title"]
     try {
         await axios.post(apiUrl + '/api/deleteBlock', blockData, {headers: headers, withCredentials: true}).then(function(response) {
             deleted.value = true
@@ -185,11 +192,14 @@ async function removeBlock() {
 async function modifyBlock() {
     console.log("pressing")
     try {
+
     showModal.value = false
     changedData.code = originalCode.value
-    changedData.description = originalTitle.value
+    changedData.title = originalTitle.value
+
     changedData.newCode = codeResult.value
-    changedData.newDescription = title.value
+    changedData.newTitle = title.value
+    changedData.newDescription = description.value
 
     const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
     
@@ -207,6 +217,12 @@ async function modifyBlock() {
         }
     }
     languages = tempLanguages
+
+    shortDescription.value = description.value.substring(0, 40)
+    tempDescription.value = shortDescription.value
+    console.log(tempDescription.value)
+    descriptionLength.value = ref(description.length)
+    
     }
     catch (e) {
         console.log(e)
