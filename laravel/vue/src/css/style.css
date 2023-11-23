@@ -185,6 +185,7 @@ div.codeblock-container{
   height : 100%;
 }
 
+/* Codeblocks */
 div.codeblock{
   height: 78%;
   margin-bottom: 4%;
@@ -193,6 +194,9 @@ div.codeblock{
 div.codeblock-editor{
   position: absolute;
   bottom: 0;
+}
+div.expand {
+  color: red;
 }
 div.codeblock-text{
   height: 40%;

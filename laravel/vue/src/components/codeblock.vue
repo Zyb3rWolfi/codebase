@@ -1,12 +1,14 @@
 <template>
     <div id="block" v-if="deleted == false" class="border-white codeblock-container">
         <div class="w-auto mx-auto max-w-sm codeblock">
-            <div class="codeblock-text">
+            <div :class="{expand : expandIf}">
                 <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-gray-900 dark:text-white"> {{ title }}</h5>
                 <p class="mb-5 text-sm max-w-md">{{ props.search["description"] }}</p>    
             </div>
+            <button @click="change">...</button>
             <div>
                 <CodeEditor v-if="showModal" lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
+                
                 <div v-if="!showModal" class="text-center mx-auto my-auto">
                     <div role="status">
                         <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,6 +18,7 @@
                         <span class="sr-only">Loading...</span>
                     </div>
                 </div>
+            
             </div>
         </div>
     <ul class=" justify-center flex flex-wrap p-6 text-gray-400 font-semibold gap-5 codeblock-buttons">
@@ -86,6 +89,7 @@ var deleted = ref(false)
 // Original code and title
 const originalCode = ref(props.search["code"])
 const originalTitle = ref(props.search["title"])
+var expandIf = ref(false)
 
 // Header for API
 const headers = {
@@ -112,6 +116,7 @@ var changedData = {
 // Currently initializing flowbite
 onMounted(() => {
     initFlowbite()
+    expandIf = true
 })
 
 // Zakk can you explain baby girl
@@ -130,7 +135,6 @@ for (var i = 0; i < languages.length; i++) {
 function getLanguage(lang) {
     changedData.newLanguage = lang
 }
-
 
 // Calls API to remove block
 async function removeBlock() {
@@ -186,5 +190,10 @@ async function modifyBlock() {
 
 }
 
+function change() {
+    console.log("Expanding")
+    expandIf = expandIf;
+    console.log(expandIf)
+}
 
 </script>
