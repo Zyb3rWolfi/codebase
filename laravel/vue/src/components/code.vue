@@ -4,7 +4,7 @@
         <router-link to="/" class="flex items-center">
             <p id="userTitle" class=" text-2xl font-semibold col-start-2">Code Blocks</p>
         </router-link>
-        <button id="openCreateModal" class=" text-white bg-blue-700  border-2 rounded-lg p-2 justify-self-end text-sm" >Create CodeBlock</button>            
+        <button id="openCreateModal" class=" text-white bg-blue-700 rounded-lg p-3 justify-self-end text-sm" >CodeBlock + </button>            
   </div>
 
     <div v-if="!gotBlocks" class="text-center">
