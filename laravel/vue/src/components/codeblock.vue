@@ -4,8 +4,9 @@
             <div v-bind:class="{ expandText : expandIf }" class="codeblock-text mt-10">
                 <h5 id="title" class="text-xl font-semibold tracking-tight text-white codeblock-title">{{ title }}</h5>
                 <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
-                <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 40" @click="expandManager">...</button> </p>    
+                <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 30" @click="expandManager">...</button> </p>    
             </div>
+
             <div>
                 <CodeEditor v-if="showModal" lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
                 
@@ -62,6 +63,7 @@
             </div> 
             </div>
         </div>
+    <p v-if="descriptionLength > 30">Penis</p>
 </template>
 
 <script setup>
@@ -117,6 +119,7 @@ var blockData = {
 }
 // Changed data for the API
 var changedData = {
+    
     code: '',
     title: '',
     description: '',
@@ -139,11 +142,14 @@ function orderLanguages() {
 
 // If the length is over 40 then it will set shortDescription and the tempDescription is set to it.
 function setDescription() {
+
     descriptionLength.value = props.search["description"].length
-    console.log(descriptionLength.value)
+    console.log(props.search["description"])
     if (descriptionLength.value > 40) {
         shortDescription.value = props.search["description"].substring(0, 40)
         tempDescription.value = shortDescription.value
+    } else {
+        tempDescription.value = props.search["description"]
     }
 }
 // On mounted
@@ -198,21 +204,25 @@ async function removeBlock() {
 async function modifyBlock() {
     try {
         showModal.value = false
+
         changedData.code = originalCode.value
         changedData.title = originalTitle.value
-        changedData.description = originalTitle.value
+        changedData.description = originalDescription.value
+
         changedData.newCode = codeResult.value
         changedData.newTitle = title.value
-        changedData.newDescription = title.value
+        changedData.newDescription = description.value
 
         showModal.value = false
-
-        await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
+        console.log(originalCode.value)
+        const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
         
-        shortDescription.value = changedData.newDescription.substring(0, 40)
-        description.value = changedData.newDescription
-        tempDescription.value = shortDescription
-        descriptionLength.value = changedData.newDescription.length
+        shortDescription.value = changedData.newDescription.substring(0, 40) // This sets the short description max 40 characters
+        description.value = changedData.newDescription // This sets the whole description when expanded
+        tempDescription.value = shortDescription.value // This is the current description that going to be displayed
+        descriptionLength.value = changedData.newDescription.length // This is the length of the overall
+        console.log(descriptionLength.value)
+
         tempLang.value = changedData.newLanguage
         showModal.value = true
     }   
