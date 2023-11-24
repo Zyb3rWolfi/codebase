@@ -1,4 +1,3 @@
-// TBA
 
 <template>
     <div class="mx-auto lg:grid-cols-3 sm:grid-cols-1 md-grid-cols-2 grid container mt-20 justify-items-center">
@@ -15,4 +14,62 @@
             </div>
         </div>
     </div>
+    <loginRegister />
 </template>
+<script setup>
+    import {  onMounted, computed } from 'vue'
+    import { Modal } from 'flowbite'
+    import { useStore } from 'vuex';
+    import loginRegister from "../views/loginRegisterView.vue"
+    import '../css/guestStyle.css'
+
+    const store = useStore()
+    const auth = computed(() => store.state.auth)
+
+    onMounted(() => {
+
+        const $signInButton = document.getElementById('openLogin')
+        const $target = document.getElementById('loginRegisterModal')
+        const $submitButton = document.getElementById('submitButton')
+        const $submitButtonRegister = document.getElementById('submitButtonRegister')
+        const $close = document.getElementById('closeButton')
+        const $closeregister = document.getElementById('closeButtonRegister')
+    
+        const options = {
+        closable: true,
+        backdropClasses: '',
+    };
+
+    const instanceOptions = {
+        id: 'modalEl',
+        override: true
+        };
+
+    if($target){
+
+        const modal = new Modal($target, options, instanceOptions)
+
+        $signInButton.addEventListener('click', () => toggleSignUpModal(1, modal))
+        $submitButtonRegister.addEventListener('click', () => closeModal(modal))
+        $closeregister.addEventListener('click', () => modal.hide())
+        $submitButton.addEventListener('click', () => closeModal(modal))
+        $close.addEventListener('click', () => modal.hide())
+    }
+
+    })
+
+    function closeModal(modal) {
+    setTimeout(() => {
+        if (auth.value){
+            modal.hide()
+        }
+    }, 2000);
+}
+
+
+    async function toggleSignUpModal(state, modal){
+        await store.dispatch('setSignupModalState', state)
+        modal.toggle()
+    }
+
+</script>

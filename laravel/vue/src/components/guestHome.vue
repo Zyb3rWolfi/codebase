@@ -18,8 +18,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, Static, computed } from 'vue'
-import { useRouter } from 'vue-router';
+import {  onMounted,  computed } from 'vue'
 import { initFlowbite, Modal } from 'flowbite'
 import { useStore } from 'vuex';
 import loginRegister from "../views/loginRegisterView.vue"
