@@ -207,7 +207,11 @@ div.codeblock-text{
   width: 100%;
   overflow:hidden;
   transition: max-height 0.5s !important;
-
+}
+h5.codeblock-title{
+  height: 60px !important;
+  width: 100%;
+  overflow:auto;
 }
 div.codeblock-buttons{
   position: absolute;
