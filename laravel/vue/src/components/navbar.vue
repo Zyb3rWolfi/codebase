@@ -1,25 +1,29 @@
 <script setup>
   import { RouterLink, useRouter } from 'vue-router';
-  import { ref } from 'vue'
   import { useStore } from 'vuex';
   import {computed} from 'vue'
   import axios from 'axios'
 
+  // access the store
   const store = useStore()
-  const auth = computed(() => store.state.auth)
+  const auth = computed(() => store.state.auth) // checks if the user is authenticated
 
-  const router = useRouter()
-  const apiUrl = import.meta.env.VITE_API_BASE_URL
+  const router = useRouter() // access the router
+  const apiUrl = import.meta.env.VITE_API_BASE_URL // declares the api url from the .env file
 
+  // logs the user out
   async function logOut() {
 
+    //crete the headers for the request
     const headers = {
       Accept: 'application/json',
-      'content-type': 'application/json',}
-    const response = await axios.post(apiUrl + '/api/logout', {headers: headers}, {withCredentials: true})
-    await store.dispatch('setAuthentication', false)
-    await store.dispatch('setUserID', -1)
-    router.push("/")
+      'content-type': 'application/json',
+    }
+    await axios.post(apiUrl + '/api/logout', {headers: headers}, {withCredentials: true}) // makes the request to the api to remove the session cookie
+    await store.dispatch('setAuthentication', false) // sets the authentication to false
+    await store.dispatch('setUserID', -1) // sets the user id to -1 ==> P.S i have no idea why it does this antons was wondering why now i know why this happens
+
+    router.push("/") // redirects the user to the home page
   }
 
 </script>

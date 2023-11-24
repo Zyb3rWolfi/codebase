@@ -1,9 +1,5 @@
 <script setup>
-  import { useRouter } from 'vue-router';
-  import { computed,watch, onMounted, onUpdated, ref } from 'vue';
-  import MarkdownIt from 'markdown-it'
-  const markdown = new MarkdownIt()
-  const router = useRouter()
+  import { computed, onMounted } from 'vue';
   const props = defineProps(['search'])
   import simpleEditor from 'simple-code-editor'
   import { initFlowbite } from 'flowbite';
@@ -12,25 +8,28 @@
 
   var codess = props.search["code"]
   var title = props.search["title"]
-  var description = props.search["description"]
   var language = computed(() =>  props.search["language"])
 
-  onMounted(() => {
+  onMounted(() => { // runs after the component is mounted
     initFlowbite()
-
+    
+    // creates the modal and button variables
     const $target = document.getElementById(title)
     const $inspectOpen = document.getElementById(title + "_button")
     const $inspectClose = document.getElementById(title + "_button_close")
 
+    // sets the options for the modal
     const settings = {
       placement: 'bottom-right',
       backdropClasses: 'bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40',
       closable: true,
     }
+
     if ($target) {
 
-      const modal = new Modal($target, settings)
+      const modal = new Modal($target, settings) // creates the modal variable
 
+      // adds event listeners to the buttons for when they are pressed
       $inspectOpen.addEventListener('click', () => modal.toggle())
       $inspectClose.addEventListener('click', () => modal.toggle())
   }

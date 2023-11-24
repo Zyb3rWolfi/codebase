@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import { onMounted, ref, computed, onBeforeMount } from 'vue'
 import axios from 'axios';
 const apiUrl = import.meta.env.VITE_API_BASE_URL
 
 export default  {
+    // Returns all data that is associated with the account 
     data() {
         return {
             user_name: '',
@@ -58,7 +58,7 @@ export default  {
     }
 },
 
-async mounted() {
+async mounted() {   // I am 99% sure that this is a typo and it does nothing but im scared to delete it
     const data = await this.getUser()
 },
 
@@ -75,31 +75,38 @@ async changeDetails() {
     this.accountDetails.user_name = this.user_name
     this.accountDetails.user_email = this.user_email
 
+    // calls the api to change the details
     await axios.post(apiUrl + '/api/changedetails', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
         this.changed = true
         this.emailAlreadyExists = false
     }).catch(error => {
-        this.emailAlreadyExists = true
+        this.emailAlreadyExists = true // If the email already exists we will enable the prompt
     })
 },
 
     // Password change request
     async changePassword() {
-        this.textToggle = false
+    this.textToggle = false
     this.accountDetails.user_password = this.user_password
     this.accountDetails.user_new_password = this.user_new_password
     
+    // Checks if the new password is long enough
+    // Changes place holder if this is not the case
     if (this.accountDetails.user_new_password.length < 8) {
         this.textPlaceholder = 'Password must be at least 8 characters long'
         this.textToggle = true
         return
     }
+
+    // Checks if the new password is the same as the old password
+    // Changes place holder if this is the case
     if (this.accountDetails.user_new_password == this.accountDetails.user_password) {
         this.textPlaceholder = 'New password must be different from old password'
         this.textToggle = true
         return
     }
 
+    // calls the api to change the password
     await axios.post(apiUrl + '/api/changePassword', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
         this.changed2 = true
     }).catch(error => {
@@ -111,6 +118,7 @@ async changeDetails() {
 
 }
 
+// Headers for the api requests
 const headers = {
     Accept: 'application/json',
     'content-type': 'application/json',

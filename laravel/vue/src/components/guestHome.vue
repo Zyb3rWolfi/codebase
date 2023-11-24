@@ -24,14 +24,16 @@ import { useStore } from 'vuex';
 import loginRegister from "../views/loginRegisterView.vue"
 import '../css/guestStyle.css'
 
+// access the store
 const store = useStore()
-const auth = computed(() => store.state.auth)
+const auth = computed(() => store.state.auth) // checks if the user is authenticated
 
-onMounted(() => {
+onMounted(() => {   // Runs just before the component is mounted
     initFlowbite()
 
     document.documentElement.style.overflow = 'hidden';
 
+    // creates const variables for the buttons and modals
     const $signUpButon = document.getElementById('openSignUp')
     const $loginButton = document.getElementById('openLoginModal')
     const $signInButton = document.getElementById('openLogin')
@@ -42,11 +44,12 @@ onMounted(() => {
     const $closeregister = document.getElementById('closeButtonRegister')
 
 
-    
+    // sets the options for the modal
     const options = {
         closable: true,
         backdropClasses: '',
     };
+    // sets the instance options for the modal
     const instanceOptions = {
         id: 'modalEl',
         override: true
@@ -54,8 +57,10 @@ onMounted(() => {
 
     if($target){
 
+        // creates the modal variable
         const modal = new Modal($target, options, instanceOptions)
 
+        // adds event listeners to the buttons for when they are pressed
         $signUpButon.addEventListener('click', () => toggleSignUpModal(2,modal))
         $loginButton.addEventListener('click', () => toggleSignUpModal(1, modal))
         $signInButton.addEventListener('click', () => toggleSignUpModal(1, modal))
@@ -67,6 +72,7 @@ onMounted(() => {
 
 })
 
+// closes the modal after 2 seconds if the user is authenticated
 function closeModal(modal) {
     setTimeout(() => {
         if (auth.value){
@@ -75,7 +81,7 @@ function closeModal(modal) {
     }, 2000);
 }
 
-
+// toggles the modal between sign in and sign up
 async function toggleSignUpModal(state, modal){
     await store.dispatch('setSignupModalState', state)
     modal.toggle()
