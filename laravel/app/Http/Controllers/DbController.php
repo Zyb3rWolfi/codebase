@@ -67,7 +67,7 @@ class DbController extends Controller
     public function updateBlock(Request $request) {
         if (Auth::user()) {
             $id = Auth::user()->id;
-            $db = DB::table('codeBlocks')->where('user_id', $id)->where('title', $request->input('title'))->update([
+            $db = DB::table('codeBlocks')->where('user_id', $id)->where('id', $request->input('id'))->update([
                 'code' => $request->input('newCode'),
                 'title' => $request->input('newTitle'),
                 'description' => $request->input('newDescription'),

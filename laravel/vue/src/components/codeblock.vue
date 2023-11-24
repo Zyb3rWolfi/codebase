@@ -2,15 +2,12 @@
     <div id="block" v-if="deleted == false" class="border-white codeblock-container">
         <div class="w-auto mx-auto max-w-sm codeblock">
             <div v-bind:class="{ expandText : expandIf }" class="codeblock-text mt-10">
-                <div class="h-12 items-end container align-bottom grid">
-                    <h5 id="title" class=" text-left align-bottom text-md font-semibold tracking-tight text-white codeblock-title">{{ title }}</h5>
-                </div>
-                <hr class="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700">
-                <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 30" @click="expandManager">...</button> </p>    
+                <h5 id="title" class="text-xl font-semibold tracking-tight text-white codeblock-title">{{ title }}</h5>
+                <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
+                <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 40" @click="expandManager">...</button> </p>    
             </div>
-
             <div>
-                <CodeEditor class="mt-2" v-if="showModal" lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
+                <CodeEditor v-if="showModal" lang-list-height="200px" :languages="[[currentLanguage]]" height="200px" max-height="200px" max-width="100%" font-size="15px" :read-only="true" v-model="codeResult"/>
                 
                 <div v-if="!showModal" class="text-center mx-auto my-auto">
                     <div role="status">
@@ -37,7 +34,7 @@
     <div :id="codeResult" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-5xl max-h-full">
             <!-- Modal content -->
-            <div class="relative rounded-lg shadow bg-gray-700">
+            <div class="relative rounded-lg shadow bg-slate-950">
                 <button :data-modal-hide="codeResult" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white" data-modal-hide="authentication-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -49,17 +46,15 @@
                     <form class="space-y-6" action="#">
                         <div>
                             <label for="title" class="block mb-2 text-sm font-medium text-white">Code Block Title</label>
-                            <input maxlength="55" v-model="title" type="text" name="title" id="title" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
-                            <p class=" text-xs mt-3 text-gray-400">max characters is 50</p>
+                            <input v-model="title" type="text" name="title" id="title" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
                         </div>
                         <div>
                             <label for="description" class="block mb-2 text-sm font-medium text-white">Code Block Description</label>
-                            <textarea maxlength="255" v-model="description" type="text" name="description" id="description" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required />
-                            <p class=" text-xs mt-3 text-gray-400">max characters is 255</p>
+                            <input v-model="description" type="text" name="description" id="description" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
                         </div>
                         <div>
                             <label for="password" class="block mb-2 text-sm font-medium text-white">Code</label>
-                            <CodeEditor height="400px" lang-list-height="200px" font-size="15px" v-model="codeResult" width="100%" :header="true" :languages="languages"  @lang="getLanguage"/>
+                            <CodeEditor lang-list-height="200px" font-size="15px" v-model="codeResult" width="100%" :header="true" :languages="languages"  @lang="getLanguage"/>
                         </div>
                         <button :data-modal-hide="codeResult" @click="modifyBlock()" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modify</button>
                     </form>
@@ -90,8 +85,6 @@ var languages = [["python"], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php
 var tempLanguages = [[props.search["language"]]] // Temporary languages used for ordering the code editor languages
 var selectedLanguage = ref(props.search["language"]) // Current language used to determin which language should be defualted to when modifying a code block
 
-// there was this variable language = tempLanguages but dunno what it does so deleted it <--- this was a mistake it broke stuff :(
-
 // Variables for the code editor
 var codeResult = ref(props.search["code"])
 var title = ref(props.search["title"])
@@ -101,9 +94,7 @@ var deleted = ref(false)
 // Original code and title
 const originalCode = ref(props.search["code"])
 const originalTitle = ref(props.search["title"])
-const originalDescription = ref(props.search["description"])
 const expandIf = ref(false)
-
 const descriptionLength = ref(props.search["description"].length)
 var shortDescription = ref()
 var tempDescription = ref(props.search["description"])
@@ -122,9 +113,9 @@ var blockData = {
 }
 // Changed data for the API
 var changedData = {
-    
     code: '',
     title: '',
+    id: ref(props.search["id"]).value,
     description: '',
     newLanguage: '',
     newCode: '',
@@ -143,16 +134,13 @@ function orderLanguages() {
     languages = tempLanguages
 }
 
-// If the length is over 40 then it will set shortDescription and the tempDescription is set to it.
 function setDescription() {
-
-    descriptionLength.value = props.search["description"].length
-
     if (descriptionLength.value > 40) {
         shortDescription.value = props.search["description"].substring(0, 40)
         tempDescription.value = shortDescription.value
-    } else {
-        tempDescription.value = props.search["description"]
+    }
+    else {
+        shortDescription.value = props.search["description"]
     }
 }
 // On mounted
@@ -160,18 +148,17 @@ function setDescription() {
 onMounted(() => {
     initFlowbite()
     
-    setDescription() // Ran at the beggining to figure out the length
+    setDescription()
 })
 
 function expandManager() {
     if (expandIf.value == true) {
-
         expandIf.value = false
         tempDescription.value = shortDescription.value
     }
     else {
         expandIf.value = true
-        tempDescription.value = description.value
+        tempDescription.value = description
     }
 }
 
@@ -206,27 +193,18 @@ async function removeBlock() {
 
 // Calls API to modify block
 async function modifyBlock() {
+    console.log("pressing")
     try {
         showModal.value = false
-
         changedData.code = originalCode.value
-        changedData.title = originalTitle.value
-        changedData.description = originalDescription.value
-
+        changedData.description = originalTitle.value
         changedData.newCode = codeResult.value
+        changedData.title = originalTitle.value
         changedData.newTitle = title.value
         changedData.newDescription = description.value
 
-        showModal.value = false
-        console.log(originalCode.value)
         const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
         
-        shortDescription.value = changedData.newDescription.substring(0, 40) // This sets the short description max 40 characters
-        description.value = changedData.newDescription // This sets the whole description when expanded
-        tempDescription.value = shortDescription.value // This is the current description that going to be displayed
-        descriptionLength.value = changedData.newDescription.length // This is the length of the overall
-        console.log(descriptionLength.value)
-
         tempLang.value = changedData.newLanguage
         showModal.value = true
     }   
@@ -234,6 +212,12 @@ async function modifyBlock() {
         console.log(e)
     }
 
+}
+
+function change() {
+    console.log("Expanding")
+    expandIf.value = true
+    console.log(expandIf)
 }
 
 </script>
