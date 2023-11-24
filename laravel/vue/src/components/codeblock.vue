@@ -63,7 +63,6 @@
             </div> 
             </div>
         </div>
-    <p v-if="descriptionLength > 30">Penis</p>
 </template>
 
 <script setup>
