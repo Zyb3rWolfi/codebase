@@ -202,17 +202,19 @@ div.expandText {
   transition: max-height 0.5s !important;
 }
 div.codeblock-text{
-  height: 60%;
+  height: 40%;
   max-height: 100px;
   width: 100%;
   overflow:hidden;
   transition: max-height 0.5s !important;
 }
 h5.codeblock-title{
-  height: 60px !important;
   width: 100%;
   overflow:auto;
+  position: relative;
+
 }
+
 div.codeblock-buttons{
   position: absolute;
   height: 18%;;
