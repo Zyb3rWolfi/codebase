@@ -8,7 +8,8 @@
 
         </div>
         <div class="col-start-2">
-            <div class="row mt-10">
+            <div class="row mt-10 text-center">
+                <hr class="h-px my-2 bg-gray-200 border-2 mb-10 mx-auto dark:bg-gray-700 w-90">
                 <p>Imagine a world where finding that one perfect piece of code doesn't involve a wild goose chase through your files. That's what CodeBranch brings to the table – a cozy space where you can stash your code snippets in neat little blocks. Your coding closet just got a whole lot tidier!</p>
                 <p class="mt-5">But here's the kicker: searching for your gems is a breeze. No more digging through folders like you're on an archeological expedition. Just type in a keyword, hit search, and voila – your snippet is right there, ready to shine.</p>
             </div>
