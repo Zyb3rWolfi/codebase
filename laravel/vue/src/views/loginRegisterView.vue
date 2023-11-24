@@ -62,6 +62,7 @@
             </div>
             <p v-if="this.accountExists" class=" text-red-600 text-sm mb-5">Account With This Email Already Exists!</p>
             <p v-if="this.passwordTooShort" class=" text-red-600 text-sm mb-5">The Password Should Be 8 Characters Or Longer</p>
+            <p v-if="loggingIn" class=" text-green-600 text-sm mb-5">Logging in, redirecting...</p>
             <div class="flex align-middle justify-center">
                 <button id="submitButtonRegister" @click="submitDataRegister() " type="button" class=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
             </div>
@@ -157,6 +158,7 @@ export default {
                         this.router.push("/user/" + user.data["id"] + "/code")
 
                         this.store.dispatch('setSignupModalState', 0)
+                        this.loggingIn = true
                     })
                 })
 
@@ -169,10 +171,12 @@ export default {
         // Called when the submit button is clicked
         async submitData() {
 
+            console.log("submitting data")
+
             try {
                 // If the email or password is empty we will return
                 if(this.login.email == '' || this.login.password == '') {
-                    return;
+                    throw new Error("Email or password is empty");
                 }
 
                 // Otherwise we will make a request to the api and set the answer array to the response
