@@ -2,7 +2,8 @@
     <div id="block" v-if="deleted == false" class="border-white codeblock-container">
         <div class="w-auto mx-auto max-w-sm codeblock">
             <div v-bind:class="{ expandText : expandIf }" class="codeblock-text mt-10">
-                <h5 id="title" class="mb-4 text-xl font-semibold tracking-tight text-white"> {{ title }}</h5>
+                <h5 id="title" class="text-xl font-semibold tracking-tight text-white codeblock-title">{{ title }}</h5>
+                <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
                 <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 40" @click="expandManager">...</button> </p>    
             </div>
             <div>
