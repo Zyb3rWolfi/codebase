@@ -1,10 +1,12 @@
 <template class="">
-    <div class="grid lg:grid-cols-7 md:grid-cols-6 sm:grid-cols-2">
-        <p id="userTitle" class=" text-2xl font-semibold col-start-2">Code Blocks</p>
-        <div id="sub" class="col-start-2 mt-5 row-start-2">
-            <button id="openCreateModal" class=" border-white bg-white text-black border-2 rounded-lg p-2 justify-self-end text-sm" >Create CodeBlock</button>            
-        </div>
-    </div>
+
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
+        <router-link to="/" class="flex items-center">
+            <p id="userTitle" class=" text-2xl font-semibold col-start-2">Code Blocks</p>
+        </router-link>
+        <button id="openCreateModal" class=" text-white bg-blue-700  border-2 rounded-lg p-2 justify-self-end text-sm" >Create CodeBlock</button>            
+  </div>
+
     <div v-if="!gotBlocks" class="text-center">
         <div role="status">
             <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

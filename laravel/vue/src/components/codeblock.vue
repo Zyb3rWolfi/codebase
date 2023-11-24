@@ -97,6 +97,7 @@ const originalCode = ref(props.search["code"])
 const originalTitle = ref(props.search["title"])
 const originalDescription = ref(props.search["description"])
 const expandIf = ref(false)
+
 const descriptionLength = ref(props.search["description"].length)
 var shortDescription = ref()
 var tempDescription = ref(props.search["description"])
@@ -135,13 +136,13 @@ function orderLanguages() {
     languages = tempLanguages
 }
 
+// If the length is over 40 then it will set shortDescription and the tempDescription is set to it.
 function setDescription() {
+    descriptionLength.value = props.search["description"].length
+    console.log(descriptionLength.value)
     if (descriptionLength.value > 40) {
         shortDescription.value = props.search["description"].substring(0, 40)
         tempDescription.value = shortDescription.value
-    }
-    else {
-        shortDescription.value = props.search["description"]
     }
 }
 // On mounted
@@ -149,7 +150,7 @@ function setDescription() {
 onMounted(() => {
     initFlowbite()
     
-    setDescription()
+    setDescription() // Ran at the beggining to figure out the length
 })
 
 function expandManager() {
@@ -194,24 +195,23 @@ async function removeBlock() {
 
 // Calls API to modify block
 async function modifyBlock() {
-    console.log("pressing")
     try {
         showModal.value = false
         changedData.code = originalCode.value
+        changedData.title = originalTitle.value
         changedData.description = originalTitle.value
         changedData.newCode = codeResult.value
+        changedData.newTitle = title.value
         changedData.newDescription = title.value
 
-    showModal.value = false
-    changedData.code = originalCode.value
-    changedData.title = originalTitle.value
+        showModal.value = false
 
-    changedData.newCode = codeResult.value
-    changedData.newTitle = title.value
-    changedData.newDescription = description.value
-
-        const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
+        await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
         
+        shortDescription.value = changedData.newDescription.substring(0, 40)
+        description.value = changedData.newDescription
+        tempDescription.value = shortDescription
+        descriptionLength.value = changedData.newDescription.length
         tempLang.value = changedData.newLanguage
         showModal.value = true
     }   
@@ -219,12 +219,6 @@ async function modifyBlock() {
         console.log(e)
     }
 
-}
-
-function change() {
-    console.log("Expanding")
-    expandIf.value = true
-    console.log(expandIf)
 }
 
 </script>
