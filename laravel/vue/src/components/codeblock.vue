@@ -6,7 +6,7 @@
                     <h5 id="title" class=" text-left align-bottom text-md font-semibold tracking-tight text-white codeblock-title">{{ title }}</h5>
                 </div>
                 <hr class="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700">
-                <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 30" @click="expandManager">...</button> </p>    
+                <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 40" @click="expandManager">...</button> </p>    
             </div>
 
             <div>
