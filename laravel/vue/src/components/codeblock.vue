@@ -2,8 +2,10 @@
     <div id="block" v-if="deleted == false" class="border-white codeblock-container">
         <div class="w-auto mx-auto max-w-sm codeblock">
             <div v-bind:class="{ expandText : expandIf }" class="codeblock-text mt-10">
-                <h5 id="title" class="text-xl font-semibold tracking-tight text-white codeblock-title">{{ title }}</h5>
-                <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
+                <div class="h-12 items-end container align-bottom grid">
+                    <h5 id="title" class=" text-left align-bottom text-md font-semibold tracking-tight text-white codeblock-title">{{ title }}</h5>
+                </div>
+                <hr class="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700">
                 <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 40" @click="expandManager">...</button> </p>    
             </div>
             <div>
@@ -158,7 +160,7 @@ function expandManager() {
     }
     else {
         expandIf.value = true
-        tempDescription.value = description
+        tempDescription.value = description.value
     }
 }
 
@@ -204,6 +206,11 @@ async function modifyBlock() {
         changedData.newDescription = description.value
 
         const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
+
+        shortDescription.value = changedData.newDescription.substring(0, 40) // This sets the short description max 40 characters
+        description.value = changedData.newDescription // This sets the whole description when expanded
+        tempDescription.value = shortDescription.value // This is the current description that going to be displayed
+        descriptionLength.value = changedData.newDescription.length // This is the length of the overall
         
         tempLang.value = changedData.newLanguage
         showModal.value = true
