@@ -18,9 +18,13 @@
     </div>
     <div class="lg:flex-cols-4 w-auto mt-3 flex gap-5 flex-wrap flex-row sm:flex-cols-1 md:grid-cols-2 justify-evenly">
         <codeBlock v-for="ans in answer" :search="ans" :key="ans"/>
+        <div v-if="answer.length == 0 && gotBlocks" class="text-center my-48">
+            <p id="title" class="text-2xl font-semibold col-start-2">/ 404 No Codeblocks Found /</p>
+            <p class=" mt-5 text-neutral-300 text-sm">not an error btw</p>
+        </div>
     </div>
 <!-- Main modal -->
-<div id="authentication-modal" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+<div id="authentication-modal" class="fixed top-0 left-0 right-0 z-30 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-5xl max-h-full">
         <!-- Modal content -->
         <div class="relative rounded-lg shadow bg-gray-700">
@@ -49,7 +53,7 @@
                         <label id="sub" for="password" class="block mb-2 text-sm font-medium text-white">Code</label>
                         <CodeEditor lang-list-height="200px" max-height="800px" height="400px" v-model="sendData.code" font-size="15px" width="100%" :header="true" :languages="languages" @lang="getLanguage"/>
                     </div>
-                    <button id="submitModal" @click="sendBlock()"  type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
+                    <button id="submitModal" @click="sendBlock" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create</button>
                 </form>
             </div>
         </div>
@@ -67,6 +71,8 @@ import axios from 'axios';
 import { initFlowbite } from 'flowbite'
 import { useStore } from 'vuex';
 const apiUrl = import.meta.env.VITE_API_BASE_URL
+
+let modal = null
 
 export default {
     async mounted() {
@@ -89,6 +95,7 @@ export default {
                 description: '',
             },
             gotBlocks: false,
+            checked: false,
             
         }
     },
@@ -104,11 +111,10 @@ export default {
             const modalTarget = document.getElementById('authentication-modal')
             const modalButton = document.getElementById('openCreateModal')
             const closeModal = document.getElementById('closeButton')
-            const submitButton = document.getElementById('submitModal')
 
             const settings = {
                 closable: false,
-                backdropClasses: 'bg-gray-900/50 bg-gray-900/80 fixed inset-0 z-40',
+                backdropClasses: 'bg-gray-900/50 bg-gray-900/80 fixed inset-0 z-10',
                 backdrop: 'dynamic',
             }
             const isntanceSettings = {
@@ -117,10 +123,9 @@ export default {
             }
 
             if (modalTarget) {
-                const modal = new Modal(modalTarget, settings, isntanceSettings)
+                modal = new Modal(modalTarget, settings, isntanceSettings)
                 modalButton.addEventListener('click', () => modal.show())
                 closeModal.addEventListener('click', () => modal.hide())
-                submitButton.addEventListener('click', () => modal.hide())
             }
 
         })
@@ -136,6 +141,9 @@ export default {
         }
     },
     methods: {
+        checkFields() {
+            console.log(this.sendData)
+        },
         getLanguage(lang) {
             this.sendData.language = lang
         },
@@ -155,7 +163,7 @@ export default {
             if (this.sendData.code == '' || this.sendData.title == '' || this.sendData.language == '' || this.sendData.description == '') {
                 this.store.commit('ADD_TOAST', {
                     title: 'Please fill out all fields',
-                    type: 'error',
+                    type: 'warning',
                     id: Math.floor(Math.random() * 50),
                     duration: 5000
                 })
@@ -170,6 +178,8 @@ export default {
                 id: Math.floor(Math.random() * 50),
                 duration: 5000
             })
+            this.checked = true
+            modal.hide()
             return this.getResponse()
         },
     },

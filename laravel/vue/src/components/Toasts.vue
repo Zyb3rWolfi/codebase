@@ -1,8 +1,7 @@
 <template>
 
-    <div v-if="toasts.length">
+    <div v-if="toasts.length" class="z-40">
         <toast v-for="toast in toasts" :toast="toast">
-
         </toast>
     </div>
 

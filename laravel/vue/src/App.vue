@@ -36,7 +36,7 @@ onMounted(async ()=> {
     <NavBar></NavBar>
   </header>
   <router-view></router-view>
-  <Toasts class=" absolute right-2 bottom-2"></Toasts>
+  <Toasts class=" fixed right-2 bottom-2"></Toasts>
 </template>
 
 <style scoped>
