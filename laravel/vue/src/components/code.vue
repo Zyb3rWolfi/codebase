@@ -19,7 +19,7 @@
     <div class="px-3 py-2">
         <label class="block text-sm font-medium text-gray-700 dark:text-gray-400">Languages</label>
         <ul class=" grid ">
-            <li v-for="lang in this.storedLanguages">
+            <li v-for="lang in this.filterUpdate">
                 <label class="inline-flex items-center mt-3">
                     <input @click="updateFilters" v-model="selectedLanguages" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" :value="lang">
                     <span class="ml-2 text-gray-700 dark:text-gray-400">{{ lang }}</span>
@@ -162,6 +162,12 @@ export default {
     },
     mounted() {
     },
+    computed: {
+        filterUpdate() {
+            this.getResponse()
+            return this.store.state.filterLanguages
+        }
+    },
     watch: {
         codeRefresh() {
             this.getResponse()
@@ -227,6 +233,8 @@ export default {
                         }
                         
                     }
+                    this.store.dispatch('setFilterLanguages', this.storedLanguages)
+                    console.log(this.storedLanguages)
                 }
                 this.gotBlocks = true
             }
@@ -263,6 +271,7 @@ export default {
             }
             if (!found) {
                 this.storedLanguages.push(this.sendData.language)
+                this.store.dispatch('setFilterLanguages', this.storedLanguages)
             }
 
             this.store.commit('ADD_TOAST', {
