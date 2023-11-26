@@ -180,6 +180,9 @@ export default {
             })
             this.checked = true
             modal.hide()
+            this.sendData.code = ''
+            this.sendData.title = ''
+            this.sendData.description = ''
             return this.getResponse()
         },
     },
