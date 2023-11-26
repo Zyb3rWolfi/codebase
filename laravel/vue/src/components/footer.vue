@@ -1,21 +1,14 @@
 <template>
-
-    <footer class="rounded-lg shadow m-4 mx-auto fixed bottom-0 w-full" style="background-color: #23272f;">
+    <footer class="rounded-lg shadow mx-auto absolute bottom-0 w-full m-10" style="background-color: #23272f;">
         <div class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">CodeBase™</a>. All Rights Reserved.
+        <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://flowbite.com/" class="hover:underline">CodeBranch</a>. All Rights Reserved.
         </span>
         <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
             <li>
-                <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+                <router-link to="/about" href="#" class="mr-4 hover:underline md:mr-6 ">About</router-link>
             </li>
             <li>
-                <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
-            </li>
-            <li>
-                <a href="#" class="mr-4 hover:underline md:mr-6">Licensing</a>
-            </li>
-            <li>
-                <a href="#" class="hover:underline">Contact</a>
+                <router-link to="/privacy" href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</router-link>
             </li>
         </ul>
         </div>
@@ -26,3 +19,7 @@
 <script setup>
 
 </script>
+
+<style scoped>
+
+</style>

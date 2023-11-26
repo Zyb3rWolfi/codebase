@@ -6,7 +6,7 @@
         </div>
     </div>
 
-    <div class="mx-auto content-center mt-10">
+    <div class="mx-auto content-center mt-10 mb-20">
         <router-view></router-view>
     </div>
 

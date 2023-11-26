@@ -4,6 +4,7 @@ import code from "../components/code.vue";
 import account from "../components/account.vue";
 import homePage from "../views/homePage.vue";
 import about from "../views/about.vue";
+import privacy from "../views/privacyNotice.vue";
 import store from "../store/index.ts";
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
                 component: account,
             }
         ]
+    },
+    {
+        path: '/privacy',
+        name: 'privacy',
+        component: privacy,
     },
     {
         path: '/about',
