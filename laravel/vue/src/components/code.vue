@@ -1,10 +1,34 @@
 <template class="">
-
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
-        <router-link to="/" class="flex items-center">
+    <div class="max-w-screen-xl items-center flex flex-wrap mx-auto justify-between p-3">
+        <div>
             <p id="userTitle" class=" text-2xl font-semibold col-start-2">Code Blocks</p>
-        </router-link>
-        <button id="openCreateModal" class=" text-white bg-blue-700 rounded-lg p-3 justify-self-end text-sm" >CodeBlock + </button>            
+        </div>
+        <div class=" flex justify-end flex-wrap">
+            <button id="openCreateModal" class=" text-white bg-blue-700 rounded-lg p-3 justify-self-end text-sm" >CodeBlock + </button>            
+            <button data-popover-placement="bottom" data-popover-target="filters" class="ml-5 bg-blue-700 p-2 rounded-lg">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                    <path d="M18.85 1.1A1.99 1.99 0 0 0 17.063 0H2.937a2 2 0 0 0-1.566 3.242L6.99 9.868 7 14a1 1 0 0 0 .4.8l4 3A1 1 0 0 0 13 17l.01-7.134 5.66-6.676a1.99 1.99 0 0 0 .18-2.09Z"/>
+                </svg>
+            </button>
+        </div>
+  </div>
+  <div id="filters" role="tooltip" class="absolute z-10 invisible inline-block text-sm transition-opacity duration-300 border rounded-lg shadow-sm opacity-0 text-gray-400 border-gray-600 bg-gray-800">
+    <div class="px-3 py-2 border-b rounded-t-lg border-gray-600 ">
+        <h3 class="font-semibold text-gray-900 dark:text-white">Filters</h3>
+    </div>
+    <div class="px-3 py-2">
+        <label class="block text-sm font-medium text-gray-700 dark:text-gray-400">Languages</label>
+        <ul class=" grid ">
+            <li v-for="lang in this.storedLanguages">
+                <label class="inline-flex items-center mt-3">
+                    <input @click="updateFilters" v-model="selectedLanguages" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" :value="lang">
+                    <span class="ml-2 text-gray-700 dark:text-gray-400">{{ lang }}</span>
+                </label>
+
+            </li>
+        </ul>
+    </div>
+    <div data-popper-arrow></div>
   </div>
 
     <div v-if="!gotBlocks" class="text-center">
@@ -96,6 +120,9 @@ export default {
             },
             gotBlocks: false,
             checked: false,
+            storedLanguages: [],
+            selectedLanguages: [],
+            reloading: false,
             
         }
     },
@@ -141,6 +168,36 @@ export default {
         }
     },
     methods: {
+        async updateFilters() {
+            var temp = []
+
+            const response = await axios.get(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
+            this.answer = response.data["strings"]
+            
+            try {
+                setTimeout(() => {
+                    if (this.selectedLanguages.length == 0) {
+                        this.answer = response.data["strings"]
+                        return
+                    }
+                    for (var i = 0; i < this.answer.length; i++) {
+                        
+                        for (var j = 0; j < this.selectedLanguages.length; j++) {
+
+                            if (this.answer[i]["language"] == this.selectedLanguages[j]) {
+                                temp.push(this.answer[i])
+                            }
+                        }
+                    }
+                    this.answer = temp
+                }, 10);
+
+            }
+            catch (e) {
+                console.log(e)
+            }
+
+        },
         checkFields() {
             console.log(this.sendData)
         },
@@ -151,6 +208,26 @@ export default {
             try {
                 const response = await axios.get(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
                 this.answer = response.data["strings"]
+                
+                if (!this.gotBlocks){
+
+                    for (var i = 0; i < response.data["strings"].length; i++) {
+
+                        if (this.storedLanguages.length == 0) {
+                            this.storedLanguages.push(response.data["strings"][i]["language"])
+                        } else {
+                            for (var j = 0; j < this.storedLanguages.length; j++) {
+                                if (this.storedLanguages[j] == response.data["strings"][i]["language"]) {
+                                    break
+                                }
+                                if (j == this.storedLanguages.length - 1) {
+                                    this.storedLanguages.push(response.data["strings"][i]["language"])
+                                }
+                            }
+                        }
+                        
+                    }
+                }
                 this.gotBlocks = true
             }
             catch (e) {
@@ -172,6 +249,22 @@ export default {
             
             await axios.post(apiUrl + '/api/addBlock', this.sendData, {headers: this.headers, withCredentials: true})
 
+            var found = false
+            for (var i = 0; i < this.answer.length; i++) {
+                
+                for (var j = 0; j < this.storedLanguages.length; j++) {
+                    console.log("looping")
+                    if (this.sendData.language == this.storedLanguages[j]) {
+                        console.log("found")    
+                        found = true
+                    }
+                }
+
+            }
+            if (!found) {
+                this.storedLanguages.push(this.sendData.language)
+            }
+
             this.store.commit('ADD_TOAST', {
                 title: 'Block Created',
                 type: 'success',
@@ -180,6 +273,9 @@ export default {
             })
             this.checked = true
             modal.hide()
+            this.sendData.code = ''
+            this.sendData.title = ''
+            this.sendData.description = ''
             return this.getResponse()
         },
     },
