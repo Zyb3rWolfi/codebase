@@ -174,6 +174,7 @@ export default {
         }
     },
     methods: {
+        // FILTERING LOGIC WHEN SELECTING A LANGUAGE
         async updateFilters() {
             var temp = []
 
@@ -199,13 +200,11 @@ export default {
                 }, 10);
 
             }
+            // -------
             catch (e) {
                 console.log(e)
             }
 
-        },
-        checkFields() {
-            console.log(this.sendData)
         },
         getLanguage(lang) {
             this.sendData.language = lang
@@ -215,6 +214,7 @@ export default {
                 const response = await axios.get(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
                 this.answer = response.data["strings"]
                 
+                // FILTERING LOGIC WHEN GETTING THE BLOCKS
                 if (!this.gotBlocks){
 
                     for (var i = 0; i < response.data["strings"].length; i++) {
@@ -234,7 +234,7 @@ export default {
                         
                     }
                     this.store.dispatch('setFilterLanguages', this.storedLanguages)
-                    console.log(this.storedLanguages)
+                    // -------
                 }
                 this.gotBlocks = true
             }
@@ -257,22 +257,21 @@ export default {
             
             await axios.post(apiUrl + '/api/addBlock', this.sendData, {headers: this.headers, withCredentials: true})
 
-            var found = false
-            for (var i = 0; i < this.answer.length; i++) {
-                
-                for (var j = 0; j < this.storedLanguages.length; j++) {
-                    console.log("looping")
-                    if (this.sendData.language == this.storedLanguages[j]) {
-                        console.log("found")    
-                        found = true
-                    }
+            // FILTERING LOGIC WHEN ADDING A NEW BLOCK
+            var addLanguage = true
+            for (var i = 0; i < this.store.state.filterLanguages.length; i++) {
+                if (this.store.state.filterLanguages[i] == this.sendData.language) {
+                    addLanguage = false
+                    break
                 }
+            }
 
+            if (addLanguage) {
+                this.store.state.filterLanguages.push(this.sendData.language)
             }
-            if (!found) {
-                this.storedLanguages.push(this.sendData.language)
-                this.store.dispatch('setFilterLanguages', this.storedLanguages)
-            }
+
+            // -------
+            
 
             this.store.commit('ADD_TOAST', {
                 title: 'Block Created',
