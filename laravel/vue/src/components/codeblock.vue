@@ -193,6 +193,7 @@ async function removeBlock() {
         const blocks = await axios.get(apiUrl + '/api/getBlocks', {headers : headers, withCredentials: true})
 
         // FILTERING LOGIC WHEN DELETING A BLOCK
+        // We loop through the languageStore and the blocksData from REQUEST, if the language exists in the request we push
         var temp = []
         for (var i = 0; i < languageStore.length; i++) {
             for (var j = 0; j < blocks.data["strings"].length; j++) {
@@ -226,7 +227,7 @@ async function modifyBlock() {
         changedData.newTitle = title.value
         changedData.newDescription = description.value
 
-        const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
+        await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
 
         shortDescription.value = changedData.newDescription.substring(0, 40) // This sets the short description max 40 characters
         description.value = changedData.newDescription // This sets the whole description when expanded
@@ -235,6 +236,32 @@ async function modifyBlock() {
         
         tempLang.value = changedData.newLanguage
         showModal.value = true
+
+        const blocks = await axios.get(apiUrl + '/api/getBlocks', {headers: headers, withCredentials: true})
+
+        // FILTERING LOGIC WHEN MODIFYING A BLOCK
+        var temp = []
+        var addLanguage = true
+        for (var i = 0; i < languageStore.length; i++) {
+            if (changedData.newLanguage == this.store.state.filterLanguages[i]) {
+                addLanguage = false
+            }
+            for (var j = 0; j < blocks.data["strings"].length; j++) {
+                if (blocks.data["strings"][j]["language"] == languageStore[i]) {
+                    temp.push(blocks.data["strings"][j]["language"])
+                    break
+                } else {
+                    continue
+                }
+            }
+        }
+
+        if (addLanguage) {
+            console.log("adding")
+            temp.push(changedData.newLanguage)
+        }
+        store.dispatch('setFilterLanguages', temp)
+        // ------
     }   
     catch (e) {
         console.log(e)
