@@ -125,6 +125,8 @@ var changedData = {
     newTitle: '',
 }
 
+var languageStore = store.state.filterLanguages
+
 function orderLanguages() {
 
     //simple linear search to put all but the slected language in the array 
@@ -185,6 +187,20 @@ async function removeBlock() {
                 id: Math.floor(Math.random() * 50),
                 duration: 5000
             })
+
+            var temp = []
+            for (var i = 0; i < languageStore.length; i++) {
+                console.log("looping")
+
+                if (languageStore[i] == selectedLanguage.value) {
+                    continue
+                } else {
+                    temp.push(languageStore[i])
+                }
+
+            }
+            store.dispatch('setFilterLanguages', temp)
+            console.log(store.state.filterLanguages)
     })
     } 
     catch (e) {
