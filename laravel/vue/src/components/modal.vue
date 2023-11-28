@@ -22,13 +22,7 @@
 
 <script setup>
 
-import { onMounted, ref, computed } from 'vue'
 const props = defineProps(['title', 'description', 'code', 'language'])
 import CodeEditor from "simple-code-editor";
-import hljs from 'highlight.js';
-
-function resetValue() {
-
-}
 
 </script>

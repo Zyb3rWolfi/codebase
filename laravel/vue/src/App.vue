@@ -7,7 +7,6 @@ import Toasts from './components/Toasts.vue';
 import fter from './components/footer.vue';
 const store = useStore();
 const apiUrl = import.meta.env.VITE_API_BASE_URL
-console.log(apiUrl)
 onMounted(async ()=> {
   try {
       const headers = {
@@ -22,7 +21,6 @@ onMounted(async ()=> {
           })
 
       } catch(e) {
-        console.log(e)
         await store.dispatch('setAuthentication', false) 
       }
 })
