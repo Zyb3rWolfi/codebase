@@ -88,4 +88,16 @@ class DbController extends Controller
             'strings' => $data,
         ]);
     }
+    public function createShareToken(Request $request) {
+            $token = bin2hex(random_bytes(16));
+            $db = DB::table('codeBlocks')->where('id', $request->input('id'))->update([
+                'shareToken' => $token,
+            ]);
+            return response()->json([
+                'message' => 'success',
+                'token' => $token,
+                'db' => $db,
+            ]);
+        
+    }
 }

@@ -27,8 +27,13 @@
         <li class="mr-2">
             <button :data-modal-target="codeResult" :data-modal-toggle="codeResult" class="bg-transparent hover:bg-gray-700 hover:text-gray-300 ">Modify</button>
         </li>
+        <li>|</li>
         <li class="hover:bg-gray-700 hover:text-gray-300">
             <button @click="removeBlock()" class="hover:bg-gray-700 hover:text-gray-30 bg-transparent">Delete</button>
+        </li>
+        <li>|</li>
+        <li class="hover:bg-gray-700 hover:text-gray-300">
+            <button @click="getShareToken()" :data-modal-target="id" :data-modal-toggle="id" class="hover:bg-gray-700 hover:text-gray-30 bg-transparent">Share</button>
         </li>
     </ul>
     </div>
@@ -64,11 +69,32 @@
             </div> 
             </div>
         </div>
+        <div :id="id" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative w-full max-w-5xl max-h-full">
+            <!-- Modal content -->
+            <div class="relative rounded-lg shadow bg-slate-950">
+                <button :data-modal-hide="id" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white" data-modal-hide="authentication-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="px-6 py-6 lg:px-8">
+                    <h3 class="mb-4 text-xl font-medium text-white">Share this link</h3>
+                    <form class="space-y-6" action="#">
+                        <div>
+                            <CodeEditor v-if="loadLink" font-size="34px" v-model="shareLink" width="100%" :header="true" :languages="[[]]" />
+                        </div>
+                    </form>
+                </div>
+            </div> 
+            </div>
+        </div>
 </template>
 
 <script setup>
 // Imports
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, onBeforeMount } from 'vue'
 import CodeEditor from "simple-code-editor";
 import axios from 'axios';
 import { initFlowbite } from 'flowbite'
@@ -92,6 +118,39 @@ var codeResult = ref(props.search["code"])
 var title = ref(props.search["title"])
 var description = ref(props.search["description"])
 var deleted = ref(false)
+var shareToken = ref(props.search["shareToken"])
+var id = ref(props.search["id"])
+var shareLink = ref("")
+var loadLink = ref(false)
+const updateLink = computed(() => shareLink)
+var payload = {
+        code: codeResult.value,
+        title: title.value,
+        description: description.value,
+        language: selectedLanguage.value,
+        id: id.value,
+    }
+
+
+var header = {
+                Accept: 'application/json',
+                'content-type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+        }
+
+async function getShareToken() {
+
+        if (shareToken.value == null) {
+            const response = await axios.post(apiUrl + '/api/createShareToken', payload, {headers: header, withCredentials: true});
+            shareLink.value = "codebranch.me/share/" + response.data["token"]
+            console.log(shareLink)
+            return
+        }
+        shareLink = "https://codebranch.me/share/" + shareToken.value
+        console.log(shareLink)
+        loadLink.value = true
+}
+
 
 // Original code and title
 const originalCode = ref(props.search["code"])
@@ -242,5 +301,6 @@ function change() {
     expandIf.value = true
     console.log(expandIf)
 }
+
 
 </script>

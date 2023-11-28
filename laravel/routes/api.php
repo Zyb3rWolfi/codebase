@@ -19,6 +19,7 @@ Route::middleware(['throttle:20,1']) ->group(function () {
     Route::post('login', [App\Http\Controllers\AuthController::class, 'Login']);
 });
 
+Route::post('/createShareToken', [App\Http\Controllers\DbController::class, 'createShareToken']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('getBlocks', [App\Http\Controllers\DbController::class, 'getUserBlocks']);
     Route::get('user', [App\Http\Controllers\AuthController::class, 'User']);
