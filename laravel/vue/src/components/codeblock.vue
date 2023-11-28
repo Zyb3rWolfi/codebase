@@ -179,7 +179,7 @@ async function removeBlock() {
     blockData.code = codeResult
     blockData.title = props.search["title"]
     try {
-        await axios.post(apiUrl + '/api/deleteBlock', blockData, {headers: headers, withCredentials: true}).then(function(response) {
+        await axios.post(apiUrl + '/api/deleteBlock', blockData, {headers: headers, withCredentials: true}).then(async function(response) {
             deleted.value = true
             store.commit('ADD_TOAST', {
                 title: 'Block Deleted',
@@ -187,21 +187,28 @@ async function removeBlock() {
                 id: Math.floor(Math.random() * 50),
                 duration: 5000
             })
+            
+        })
 
-            var temp = []
-            for (var i = 0; i < languageStore.length; i++) {
-                console.log("looping")
+        const blocks = await axios.get(apiUrl + '/api/getBlocks', {headers : headers, withCredentials: true})
 
-                if (languageStore[i] == selectedLanguage.value) {
-                    continue
+        // FILTERING LOGIC WHEN DELETING A BLOCK
+        // We loop through the languageStore and the blocksData from REQUEST, if the language exists in the request we push
+        var temp = []
+        for (var i = 0; i < languageStore.length; i++) {
+            for (var j = 0; j < blocks.data["strings"].length; j++) {
+                if (blocks.data["strings"][j]["language"] == languageStore[i]) {
+                    temp.push(blocks.data["strings"][j]["language"])
+                    break
                 } else {
-                    temp.push(languageStore[i])
+                    continue
                 }
 
             }
-            store.dispatch('setFilterLanguages', temp)
-            console.log(store.state.filterLanguages)
-    })
+
+        }
+        store.dispatch('setFilterLanguages', temp)
+        // ------
     } 
     catch (e) {
         console.log(e)
@@ -211,7 +218,6 @@ async function removeBlock() {
 
 // Calls API to modify block
 async function modifyBlock() {
-    console.log("pressing")
     try {
         showModal.value = false
         changedData.code = originalCode.value
@@ -221,7 +227,7 @@ async function modifyBlock() {
         changedData.newTitle = title.value
         changedData.newDescription = description.value
 
-        const response = await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
+        await axios.post(apiUrl + '/api/updateBlock', changedData, {headers: headers, withCredentials: true})
 
         shortDescription.value = changedData.newDescription.substring(0, 40) // This sets the short description max 40 characters
         description.value = changedData.newDescription // This sets the whole description when expanded
@@ -230,17 +236,37 @@ async function modifyBlock() {
         
         tempLang.value = changedData.newLanguage
         showModal.value = true
+
+        const blocks = await axios.get(apiUrl + '/api/getBlocks', {headers: headers, withCredentials: true})
+
+        // FILTERING LOGIC WHEN MODIFYING A BLOCK
+        var temp = []
+        var addLanguage = true
+        for (var i = 0; i < languageStore.length; i++) {
+            if (changedData.newLanguage == this.store.state.filterLanguages[i]) {
+                addLanguage = false
+            }
+            for (var j = 0; j < blocks.data["strings"].length; j++) {
+                if (blocks.data["strings"][j]["language"] == languageStore[i]) {
+                    temp.push(blocks.data["strings"][j]["language"])
+                    break
+                } else {
+                    continue
+                }
+            }
+        }
+
+        if (addLanguage) {
+            console.log("adding")
+            temp.push(changedData.newLanguage)
+        }
+        store.dispatch('setFilterLanguages', temp)
+        // ------
     }   
     catch (e) {
         console.log(e)
     }
 
-}
-
-function change() {
-    console.log("Expanding")
-    expandIf.value = true
-    console.log(expandIf)
 }
 
 </script>
