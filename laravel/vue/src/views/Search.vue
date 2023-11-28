@@ -3,7 +3,7 @@
         <div class="text-center my-6">
             <p id="searchTitle" class="text-4xl">Search Engine For Code</p>
         </div>
-        <div class="">
+        <div >
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

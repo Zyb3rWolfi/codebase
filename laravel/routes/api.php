@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('changePassword', [App\Http\Controllers\AuthController::class, 'changePassword']);
     Route::post('logout', [App\Http\Controllers\AuthController::class, 'Logout']);
     Route::get('/test/{search}', [App\Http\Controllers\DbController::class, 'getData']);
+    Route::get('/getSharedBlock/{token}', [App\Http\Controllers\DbController::class,'getSharedBlock']);
     Route::middleware(['throttle:10,1']) ->group(function () {
         Route::post('/addBlock', [App\Http\Controllers\DbController::class, 'addBlock']);
         Route::post('/deleteBlock', [App\Http\Controllers\DbController::class, 'deleteBlock']);

@@ -79,4 +79,13 @@ class DbController extends Controller
             ]);
         }
     }
+    public function getSharedBlock(string $token) {
+        $data = DB::table('codeBlocks')->where('shareToken', $token)-> get();
+        foreach ($data as $key => $value) {
+            $data[$key] = $value;
+        }
+        return response()->json([
+            'strings' => $data,
+        ]);
+    }
 }

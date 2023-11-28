@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('language');
             $table->foreign('user_id')->references('id')->on('users');
         });
+        Schema::table('codeBlocks', function (Blueprint $table) {
+            $table->string('shareToken')->nullable();
+        });
     }
 
     /**
