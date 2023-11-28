@@ -122,6 +122,7 @@ export default {
             storedLanguages: [],
             selectedLanguages: [],
             reloading: false,
+            languageSet: new Set(),
             
         }
     },
@@ -211,29 +212,15 @@ export default {
         async getResponse() {
             try {
                 const response = await axios.get(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
+                console.log(response)
                 this.answer = response.data["strings"]
                 
                 // FILTERING LOGIC WHEN GETTING THE BLOCKS
-                if (!this.gotBlocks){
-
+                if(!this.gotBlocks) {
                     for (var i = 0; i < response.data["strings"].length; i++) {
-
-                        if (this.storedLanguages.length == 0) {
-                            this.storedLanguages.push(response.data["strings"][i]["language"])
-                        } else {
-                            for (var j = 0; j < this.storedLanguages.length; j++) {
-                                if (this.storedLanguages[j] == response.data["strings"][i]["language"]) {
-                                    break
-                                }
-                                if (j == this.storedLanguages.length - 1) {
-                                    this.storedLanguages.push(response.data["strings"][i]["language"])
-                                }
-                            }
-                        }
-                        
+                        this.languageSet.add(response.data["strings"][i]["language"])
                     }
-                    this.store.dispatch('setFilterLanguages', this.storedLanguages)
-                    // -------
+                    this.store.dispatch('setFilterLanguages', Array.from(this.languageSet))
                 }
                 this.gotBlocks = true
             }
@@ -257,19 +244,12 @@ export default {
             await axios.post(apiUrl + '/api/addBlock', this.sendData, {headers: this.headers, withCredentials: true})
 
             // FILTERING LOGIC WHEN ADDING A NEW BLOCK
-            var addLanguage = true
-            for (var i = 0; i < this.store.state.filterLanguages.length; i++) {
-                if (this.store.state.filterLanguages[i] == this.sendData.language) {
-                    addLanguage = false
-                    break
-                }
-            }
 
-            if (addLanguage) {
-                this.store.state.filterLanguages.push(this.sendData.language)
-            }
+            this.languageSet.add(this.sendData.language)
+            console.log("Saving to dataset")
 
-            // -------
+            
+            this.store.dispatch('setFilterLanguages', Array.from(this.languageSet))
             
 
             this.store.commit('ADD_TOAST', {

@@ -256,6 +256,7 @@ async function removeBlock() {
         // FILTERING LOGIC WHEN DELETING A BLOCK
         // We loop through the languageStore and the blocksData from REQUEST, if the language exists in the request we push
         var temp = []
+        
         for (var i = 0; i < languageStore.length; i++) {
             for (var j = 0; j < blocks.data["strings"].length; j++) {
                 if (blocks.data["strings"][j]["language"] == languageStore[i]) {

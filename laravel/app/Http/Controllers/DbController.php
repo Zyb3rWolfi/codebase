@@ -8,14 +8,23 @@ use Illuminate\Support\Facades\DB;
 
 class DbController extends Controller
 {
-    public function getData(string $search) {
+    public function getData(Request $request) {
         $id = Auth::user()->id;
-        $data = DB::table('codeBlocks')->where('title', 'LIKE', '%'.$search.'%') ->where('user_id', $id) -> get();
-        foreach ($data as $key => $value) {
-            $data[$key] = $value;
+        if (Auth::user()) {
+            $title = $request->input('title');
+            $languages = $request->input('filters', []);
+            if ($languages == null) {
+                $results = DB::table('codeBlocks')->where('user_id', $id)->where('title', 'LIKE', '%'.$title.'%')->get();
+            } else {
+                $results = DB::table('codeBlocks')->where('user_id', $id)->where('title', 'LIKE', '%'.$title.'%')->whereIn('language', $languages)->get();
+            }
+    
+            foreach ($results as $key => $value) {
+                $results[$key] = $value;
+            }
         }
         return response()->json([
-            'strings' => $data,
+            'strings' => $results,
         ]);
     }
 
