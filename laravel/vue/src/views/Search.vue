@@ -62,10 +62,7 @@ export default {
     data() {
         return {
             answer: {},
-            search: {
-                title: '',
-                languages: '',
-            },
+            search: '',
             auth: null,
             header: {
                 Accept: 'application/json',
@@ -90,7 +87,15 @@ export default {
         async updateFilters() {
             const getBlocks = await axios.get(apiUrl + '/api/getBlocks', {headers: this.header, withCredentials: true});
             for (var i = 0; i < getBlocks.data["strings"].length; i++) {
-                this.languages.push(getBlocks.data["strings"][i]["language"]);
+                var shouldAdd = true
+                    for (var j = 0; j < this.languages.length; j++) {
+                        if (this.languages[j] == getBlocks.data["strings"][i]["language"]) {
+                            shouldAdd = false
+                        }
+                    }
+                if (shouldAdd) {
+                    this.languages.push(getBlocks.data["strings"][i]["language"]);
+                }
         };
         },
         async getResponse() {
@@ -101,7 +106,24 @@ export default {
             }
             // Otherwise we will make a request to the api and set the answer array to the response
             const response = await axios.get(apiUrl + '/api/test/' + this.search, {headers: this.header, withCredentials: true});
-            this.answer = response.data["strings"];
+            
+            if (this.selectedLanguages != 0) {
+                var temp = []
+                for (var i = 0; i < this.languages.length; i++) {
+                    console.log("Looping")
+                    for (var j = 0; j < response.data["strings"].length; j++) {
+                        console.log("Sheesh")
+                        if (this.languages[i] == response.data["strings"][j]["language"]) {
+                            console.log("fond!")
+                            temp.push(response.data["strings"][j])
+                        }
+                    }
+                }
+                this.answer = temp
+            } else {
+                this.answer = response.data["strings"]
+            }
+            console.log(answer)
             },
         
         },
