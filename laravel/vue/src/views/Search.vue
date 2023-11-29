@@ -31,7 +31,7 @@
             <ul class=" grid ">
                 <li v-for="lang in languages">
                     <label class="inline-flex items-center mt-3">
-                        <input v-model="selectedLanguages" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" :value="lang">
+                        <input @change="getResponse" v-model="selectedLanguages" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" :value="lang">
                         <span class="ml-2 text-gray-700 dark:text-gray-400">{{ lang }}</span>
                     </label>
                 </li>
@@ -49,7 +49,7 @@
                 </svg>
                 <span class="sr-only">Loading...</span>
             </div>
-            <Result v-if="answer.length > 0" v-for="ans in answer" :search="ans" :key="ans.id"></Result>
+            <Result v-if="answer.length > 0 && !loading" v-for="ans in answer" :search="ans" :key="ans.id"></Result>
         </div>
     </div>
 
