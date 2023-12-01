@@ -139,9 +139,11 @@ var header = {
         }
 
 async function getShareToken() {
-
+        console.log("Getting" + shareToken.value)
         if (shareToken.value == null) {
+            console.log("Creating")
             const response = await axios.post(apiUrl + '/api/createShareToken', payload, {headers: header, withCredentials: true});
+            shareToken.value = response.data["token"]
             shareLink.value = "codebranch.me/share/" + response.data["token"]
             loadLink.value = true
             console.log(shareLink)
