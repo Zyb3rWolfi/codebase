@@ -23,16 +23,13 @@
         </div>
     </div>
     <div id="searchFilter" role="tooltip" class="absolute z-10 invisible inline-block text-sm transition-opacity duration-300 border rounded-lg shadow-sm opacity-0 text-gray-400 border-gray-600 bg-gray-800">
-        <div class="px-3 py-2 border-b rounded-t-lg border-gray-600 ">
-            <h3 class="font-semibold text-gray-900 dark:text-white">Filters</h3>
-        </div>
         <div class="px-3 py-2">
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-400">Languages</label>
+            <label id="sub" class="block text-sm font-medium text-white">Languages</label>
             <ul class=" grid ">
                 <li v-for="lang in languages">
                     <label class="inline-flex items-center mt-3">
                         <input @change="getResponse" v-model="selectedLanguages" type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" :value="lang">
-                        <span class="ml-2 text-gray-700 dark:text-gray-400">{{ lang }}</span>
+                        <span class="ml-2 text-gray-300">{{ lang }}</span>
                     </label>
                 </li>
             </ul>

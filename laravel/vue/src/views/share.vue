@@ -1,16 +1,11 @@
 <template>
-        <div v-if="props.title" id="sharedBlock" class="my-16 fixed mx-auto top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative mx-auto w-full max-w-6xl max-h-full">
-                <!-- Modal content -->
-                <div class="relative rounded-lg shadow bg-gray-700">
-
-                    <div class="px-8 pb-8 py-10 lg:px-20">
-                        <h3 id="title" class="mb-4 text-xl font-medium text-white">{{ props.title }}</h3>
-                        <p id="sub" class="mb-5">{{ props.description }}</p>
-                        <CodeEditor font-size="15px" :value="props.code" width="100%" height="600px" :read-only="true" :languages="[[props.language]]" />
-                    </div>
-                    
-                </div> 
+        <div v-if="props.title" id="sharedBlock" class="my-16 flex justify-evenly">
+            <div class=" flex-initial w-1/2">
+                <CodeEditor font-size="15px" :value="props.code" width="100%" height="600px" :read-only="true" :languages="[[props.language]]" />
+            </div>
+            <div class=" flex-2">
+                <h1 id="title" class=" text-2xl">{{ props.title }}</h1>
+                <h1 id="" class=" text-md mt-5">{{ props.description }}</h1>
             </div>
         </div>    
 </template>
