@@ -98,7 +98,7 @@ export default {
     },
     methods: {
         async updateFilters() {
-            const getBlocks = await axios.get(apiUrl + '/api/getBlocks', {headers: this.header, withCredentials: true});
+            const getBlocks = await axios.post(apiUrl + '/api/getBlocks', [], {headers: this.header, withCredentials: true});
             for (var i = 0; i < getBlocks.data["strings"].length; i++) {
                 
                 this.languageSet.add(getBlocks.data["strings"][i]["language"])

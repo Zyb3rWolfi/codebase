@@ -42,7 +42,7 @@
         <div class="relative w-full max-w-5xl max-h-full">
             <!-- Modal content -->
             <div class="relative rounded-lg shadow bg-slate-950">
-                <button :data-modal-hide="codeResult" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white" data-modal-hide="authentication-modal">
+                <button :data-modal-hide="codeResult" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -73,7 +73,7 @@
         <div class="relative w-full max-w-5xl max-h-full">
             <!-- Modal content -->
             <div class="relative rounded-lg shadow bg-slate-950">
-                <button :data-modal-hide="id" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white" data-modal-hide="authentication-modal">
+                <button :data-modal-hide="id" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -251,25 +251,14 @@ async function removeBlock() {
             
         })
 
-        const blocks = await axios.get(apiUrl + '/api/getBlocks', {headers : headers, withCredentials: true})
-
+        const blocks = await axios.post(apiUrl + '/api/getBlocks', [], {headers : headers, withCredentials: true})
         // FILTERING LOGIC WHEN DELETING A BLOCK
         // We loop through the languageStore and the blocksData from REQUEST, if the language exists in the request we push
-        var temp = []
-        
-        for (var i = 0; i < languageStore.length; i++) {
-            for (var j = 0; j < blocks.data["strings"].length; j++) {
-                if (blocks.data["strings"][j]["language"] == languageStore[i]) {
-                    temp.push(blocks.data["strings"][j]["language"])
-                    break
-                } else {
-                    continue
-                }
-
-            }
-
+        var tempSet = new Set()
+        for (var i = 0; i < blocks.data["strings"].length; i++) {
+            tempSet.add(blocks.data["strings"][i]["language"])
         }
-        store.dispatch('setFilterLanguages', temp)
+        store.dispatch('setFilterLanguages', Array.from(tempSet))
         // ------
     } 
     catch (e) {
