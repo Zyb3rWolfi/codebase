@@ -67,7 +67,6 @@ export default {
 
         removeFromDom() {
             if (this.show == false) {
-                console.log('remove')
                 this.remove = true
             }
         }

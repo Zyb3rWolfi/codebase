@@ -28,23 +28,24 @@ class DbController extends Controller
         ]);
     }
 
-    public function getUserBlocks() {
-        if (Auth::user()){
+    public function getUserBlocks(Request $request) {
+        if (Auth::user()) {
             $id = Auth::user()->id;
-            $data = DB::table('codeBlocks')->where('user_id', $id)->get();
-
-            foreach ($data as $key => $value) {
-                $data[$key] = $value;
+            $languages = $request->input('filters', []);
+            if ($languages == null) {
+                $results = DB::table('codeBlocks')->where('user_id', $id)->get();
+            } else {
+                $results = DB::table('codeBlocks')->where('user_id', $id)->whereIn('language', $languages)->get();
             }
-            return response()->json([
-                'strings' => $data,
-            ]);
+    
+            foreach ($results as $key => $value) {
+                $results[$key] = $value;
+            }
 
-        } else {
-            return response ([
-                'message' => 'error'
-            ]);
         }
+        return response()->json([
+            'strings' => $results,
+        ]);
     }
 
     public function addBlock(Request $request) {
