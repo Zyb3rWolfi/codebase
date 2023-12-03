@@ -85,15 +85,19 @@ class AuthController extends Controller
     }
     public function handleGoogleCallback() {
         $user = Socialite::driver('google')->user();
-        if (User::where('email', '=', $user->email)->exists()) {
+        if (User::where('email', '=', $user->email)->exists() && User::where('provider', '=', 'google')->exists()) {
             $user = User::where('email', '=', $user->email)->first();
             $token = $user->createToken('API Token')->accessToken;
             return redirect('http://localhost:5173?token='.$token);
         } else {
+            if (User::where('email', '=', $user->email)->exists()) {
+                return redirect('http://localhost:5173?error=Email already exists');
+            }
             $newUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
-                'password'=> Hash::make($user->id)
+                'password'=> Hash::make($user->id),
+                'provider' => 'google'
             ]);
             $token = $newUser->createToken('API Token')->accessToken;
             return redirect('http://localhost:5173?token='.$token);
@@ -106,19 +110,41 @@ class AuthController extends Controller
 
     public function handleGithubCallback() {
         $user = Socialite::driver('github')->user();
-        if (User::where('email', '=', $user->email)->exists()) {
+        if (User::where('email', '=', $user->email)->exists() && User::where('provider', '=', 'github')->exists()) {
             $user = User::where('email', '=', $user->email)->first();
             $token = $user->createToken('API Token')->accessToken;
             return redirect('http://localhost:5173?token='.$token);
         } else {
+            if (User::where('email', '=', $user->email)->exists()) {
+                return redirect('http://localhost:5173?error=Email already exists');
+            }
             $newUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
-                'password'=> Hash::make($user->id)
+                'password'=> Hash::make($user->id),
+                'provider' => 'github'
             ]);
             $token = $newUser->createToken('API Token')->accessToken;
             return redirect('http://localhost:5173?token='.$token);
         }
+    }
+
+    public function deleteAccount(Request $request) {
+        $user = Auth::user();
+        $user->delete();
+        DB::table('codeblocks')->where('user_id', $user->id)->delete();
+        return response([
+            'message' => 'success'
+        ], 200);
+    }
+    public function resetAuth(Request $request) {
+        $user = Auth::user();
+        $user->tokens()->delete();
+        $user->provider = null;
+        $user->save();
+        return response([
+            'message' => 'success'
+        ], 200);
     }
 
     public function Login(Request $request) {

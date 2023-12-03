@@ -12,13 +12,36 @@ onMounted(async ()=> {
     const urlParams = new URLSearchParams(window.location.search);
     const myParam = urlParams.get('token');
 
+    const errorParams = new URLSearchParams(window.location.search);
+    const errorParam = errorParams.get('error');
+
+    if (errorParam) {
+      var url = new URL(window.location.href);
+      url.searchParams.delete('error');
+      window.history.replaceState({}, '', url);
+
+      store.commit('ADD_TOAST', {
+          title: 'Sorry, that email is already in use.',
+          type: 'error',
+          id: Math.floor(Math.random() * 50),
+          duration: 5000
+      })
+    }
+
     if (myParam) {
       localStorage.setItem('token', myParam)
       const url = new URL(window.location.href);
       url.searchParams.delete('token');
       window.history.replaceState({}, '', url);
+
+      store.commit('ADD_TOAST', {
+          title: 'Logged in successfully.',
+          type: 'success',
+          id: Math.floor(Math.random() * 50),
+          duration: 5000
+      })
     }
-    
+
       const headers = {
           Accept: 'application/json',
           'content-type': 'application/json',

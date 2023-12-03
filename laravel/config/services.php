@@ -35,6 +35,7 @@ return [
         'client_secret' => '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',
         'redirect' => 'http://localhost:8000/auth/google/callback',
     ],
+
     'github' => [
         'client_id' => 'Iv1.facd4d85531bae65',
         'client_secret' => '4308c4f49585df5f01942e09d26f4f222a142b17',
