@@ -1,7 +1,7 @@
 <script setup>
   import { RouterLink, useRouter } from 'vue-router';
   import { useStore } from 'vuex';
-  import {computed} from 'vue'
+  import {computed, onMounted} from 'vue'
   import axios from 'axios'
 
   // access the store
@@ -15,11 +15,14 @@
   async function logOut() {
 
     //crete the headers for the request
-    const headers = {
-      Accept: 'application/json',
-      'content-type': 'application/json',
+    try {
+      await axios.post(apiUrl + '/api/logout', [], {headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      }, withCredentials: true}) // makes the request to the api to remove the session cookie
+    } catch (e) {
+      console.log(e)
     }
-    await axios.post(apiUrl + '/api/logout', {headers: headers}, {withCredentials: true}) // makes the request to the api to remove the session cookie
     await store.dispatch('setAuthentication', false) // sets the authentication to false
     await store.dispatch('setUserID', -1) // sets the user id to -1 ==> P.S i have no idea why it does this antons was wondering why now i know why this happens
 

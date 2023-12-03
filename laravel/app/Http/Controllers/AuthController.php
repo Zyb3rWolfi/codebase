@@ -8,14 +8,51 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Sanctum\PersonalAccessToken;
-use Laravel\Sanctum\Sanctum;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\RateLimiter;
+use Laravel\Socialite\Facades\Socialite;
 use Response;
+use Laravel\Passport\Token;
+use Laravel\Passport\RefreshToken;
 
 class AuthController extends Controller
 {
+    public function newRegister(Request $request) {
+        $data = $request->validate([
+            'name' => 'required|max:55',
+            'email' => 'required|email|unique:users',
+            'password'=> 'required'
+        ]);
+
+        $data['password'] = bcrypt($request->password);
+        $user = User::create($data);
+        $token = $user->createToken('API Token')->accessToken;
+        return response([
+            'user'=> $user,
+            'token'=> $token
+
+        ]);
+    }
+
+    public function newLogin(Request $request) {
+        $data = $request->validate([
+            'email' => 'required|email',
+            'password'=> 'required'
+        ]);
+        if (!Auth::attempt($data)) {
+            return response([
+                'message' => 'Invalid credentials '
+            ], 401);
+        }
+        $token = Auth::user()->createToken('API Token')->accessToken;
+        return response([
+            'token'=> $token
+            
+        ], 200);
+    }
+
+
     public function Register(Request $request) {
 
         if (User::where('email', '=', $request->input('email'))->exists()) {
@@ -42,6 +79,46 @@ class AuthController extends Controller
         $user->save();
 
         return response($user, 201);
+    }
+    public function redirectToGoogle() {
+        return Socialite::driver('google')->redirect();
+    }
+    public function handleGoogleCallback() {
+        $user = Socialite::driver('google')->user();
+        if (User::where('email', '=', $user->email)->exists()) {
+            $user = User::where('email', '=', $user->email)->first();
+            $token = $user->createToken('API Token')->accessToken;
+            return redirect('http://localhost:5173?token='.$token);
+        } else {
+            $newUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'password'=> Hash::make($user->id)
+            ]);
+            $token = $newUser->createToken('API Token')->accessToken;
+            return redirect('http://localhost:5173?token='.$token);
+        }
+    }
+
+    public function redirectToGithub() {
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function handleGithubCallback() {
+        $user = Socialite::driver('github')->user();
+        if (User::where('email', '=', $user->email)->exists()) {
+            $user = User::where('email', '=', $user->email)->first();
+            $token = $user->createToken('API Token')->accessToken;
+            return redirect('http://localhost:5173?token='.$token);
+        } else {
+            $newUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'password'=> Hash::make($user->id)
+            ]);
+            $token = $newUser->createToken('API Token')->accessToken;
+            return redirect('http://localhost:5173?token='.$token);
+        }
     }
 
     public function Login(Request $request) {
@@ -80,15 +157,20 @@ class AuthController extends Controller
     }
 
     public function User(Request $request) {
-        return Auth::user();
+        if ($request->user()) {
+            return response($request->user(), 200);
+        }
+        return response([
+            'message' => 'Not logged in'
+        ], 401);
     }
 
     public function Logout(Request $request) {
-        $cookie = \Cookie::forget('jwt');
-        $request->user()->tokens()->delete();
+        $user = Auth::user()->token();
+        $user->revoke();
 
         return response([
-            'message' => 'success'
-        ])->withCookie($cookie);
+            'message' => 'logged out'
+        ], 200);
     }
 }

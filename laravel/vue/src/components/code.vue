@@ -103,10 +103,6 @@ export default {
             languages: [['python'], ['cpp'], ['html'], ['js'], ['css'], ['java'], ['php'], ['csharp'], ['c'], ['ruby'], ['go'], ['kotlin'], ['swift'], ['sql'], ['rust'], ['typescript'], ['bash'], ['perl'], ['lua'], ['powershell']],
             search: '',
             answer: [],
-            headers: {
-                Accept: 'application/json',
-                'content-type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'},
             
             sendData: {
                 code: '',
@@ -122,6 +118,11 @@ export default {
             },
             reloading: false,
             languageSet: new Set(),
+            headers: {
+                Accept: 'application/json',
+                'content-type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')},
             
         }
     },

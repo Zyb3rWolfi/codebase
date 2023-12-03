@@ -15,19 +15,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['throttle:20,1']) ->group(function () {
-    Route::post('register', [App\Http\Controllers\AuthController::class, 'Register']);
-    Route::post('login', [App\Http\Controllers\AuthController::class, 'Login']);
+    Route::post('register', [App\Http\Controllers\AuthController::class, 'newRegister']);
+    Route::post('login', [App\Http\Controllers\AuthController::class, 'newLogin']);
+    Route::get('/login/discord', [App\Http\Controllers\AuthController::class, 'redirectToDiscord']);
+    Route::get('login/discordCallback', [App\Http\Controllers\AuthController::class, 'discordLogin']);
 });
 
 Route::get('/getSharedBlock/{token}', [App\Http\Controllers\DbController::class,'getSharedBlock']);
 Route::post('/createShareToken', [App\Http\Controllers\DbController::class, 'createShareToken']);
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('user', [App\Http\Controllers\AuthController::class, 'User']);
+Route::middleware('auth:api')->group(function () {
+    Route::get('user', [App\Http\Controllers\AuthController::class, 'user']);
+    Route::post('logout', [App\Http\Controllers\AuthController::class, 'Logout']);
     Route::post('getBlocks', [App\Http\Controllers\DbController::class, 'getUserBlocks']);
     Route::post('changedetails', [App\Http\Controllers\AuthController::class, 'changeDetails']);
     Route::post('changePassword', [App\Http\Controllers\AuthController::class, 'changePassword']);
     Route::post('/test', [App\Http\Controllers\DbController::class, 'getData']);
-    Route::post('logout', [App\Http\Controllers\AuthController::class, 'Logout']);
     Route::middleware(['throttle:10,1']) ->group(function () {
         Route::post('/addBlock', [App\Http\Controllers\DbController::class, 'addBlock']);
         Route::post('/deleteBlock', [App\Http\Controllers\DbController::class, 'deleteBlock']);

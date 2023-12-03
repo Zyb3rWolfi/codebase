@@ -9,10 +9,21 @@ const store = useStore();
 const apiUrl = import.meta.env.VITE_API_BASE_URL
 onMounted(async ()=> {
   try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('token');
+
+    if (myParam) {
+      localStorage.setItem('token', myParam)
+      const url = new URL(window.location.href);
+      url.searchParams.delete('token');
+      window.history.replaceState({}, '', url);
+    }
+    
       const headers = {
           Accept: 'application/json',
           'content-type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'}
+          'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')}
           const response = await axios.get(apiUrl + '/api/user', {headers: headers, withCredentials: true}).then(function(response) {
           
             store.dispatch('setAuthentication', true)

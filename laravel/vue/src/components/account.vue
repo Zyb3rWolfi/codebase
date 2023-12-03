@@ -122,7 +122,8 @@ async changeDetails() {
 const headers = {
     Accept: 'application/json',
     'content-type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
 }
 
 </script>
