@@ -53,23 +53,6 @@ class AuthController extends Controller
     }
 
 
-    public function Register(Request $request) {
-
-        if (User::where('email', '=', $request->input('email'))->exists()) {
-            return response([
-                'message' => 'Email already exists'
-            ], 409);
-        }
-
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password'=> Hash::make($request->input('password'))
-        ]);
-        return response($user, 201);
-
-    }
-
     public function changeDetails(Request $request) {
 
         $user = Auth::user();
@@ -81,18 +64,18 @@ class AuthController extends Controller
         return response($user, 201);
     }
     public function redirectToGoogle() {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->with(["prompt" => "select_account"])->redirect();
     }
     public function handleGoogleCallback() {
+
         $user = Socialite::driver('google')->user();
+
         if (User::where('email', '=', $user->email)->exists() && User::where('provider', '=', 'google')->exists()) {
             $user = User::where('email', '=', $user->email)->first();
             $token = $user->createToken('API Token')->accessToken;
             return redirect('http://localhost:5173?token='.$token);
         } else {
-            if (User::where('email', '=', $user->email)->exists()) {
-                return redirect('http://localhost:5173?error=Email already exists');
-            }
+
             $newUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
@@ -105,7 +88,7 @@ class AuthController extends Controller
     }
 
     public function redirectToGithub() {
-        return Socialite::driver('github')->redirect();
+        return Socialite::driver('github')->with(["prompt" => "select_account"])->redirect();
     }
 
     public function handleGithubCallback() {

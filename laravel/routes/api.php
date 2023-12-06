@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['throttle:20,1']) ->group(function () {
     Route::post('register', [App\Http\Controllers\AuthController::class, 'newRegister']);
     Route::post('login', [App\Http\Controllers\AuthController::class, 'newLogin']);
-    Route::post('resetAuth', [App\Http\Controllers\AuthController::class, 'resetAuth']);
 });
 
 Route::get('/getSharedBlock/{token}', [App\Http\Controllers\DbController::class,'getSharedBlock']);

@@ -4,7 +4,6 @@ import NavBar from './components/navbar.vue';
 import { onMounted } from 'vue';
 import { useStore } from 'vuex';
 import Toasts from './components/Toasts.vue';
-import fter from './components/footer.vue';
 const store = useStore();
 const apiUrl = import.meta.env.VITE_API_BASE_URL
 onMounted(async ()=> {

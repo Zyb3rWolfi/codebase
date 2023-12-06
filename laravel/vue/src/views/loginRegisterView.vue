@@ -94,7 +94,7 @@
 </template>
     
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, resolveComponent } from 'vue'
 import axios from 'axios'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
@@ -179,10 +179,18 @@ export default {
                 this.login.email = this.signup.email
                 this.login.password = this.signup.password
 
-                await axios.post(apiUrl + '/api/login', this.login, {headers: this.headers, withCredentials: true}).then(async () => {
+                await axios.post(apiUrl + '/api/login', this.login, {headers: this.headers, withCredentials: true}).then(async response => {
+                    
                     localStorage.setItem('token', response.data["token"])
 
-                    const user = await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(async () => {
+
+                    const headerss = {
+                        Accept: 'application/json',
+                        'content-type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')}
+
+                    const user = await axios.get(apiUrl + '/api/user', {headers: headerss, withCredentials: true}).then(async user => {
                         await this.store.dispatch('setAuthentication', true)
                         await this.store.dispatch('setUserID', user.data["id"])
                         await this.router.push("/user/" + user.data["id"] + "/code")
@@ -194,6 +202,7 @@ export default {
                 })
 
             }).catch(error => {
+            console.log(error)
                 this.accountExists = true
             })
             

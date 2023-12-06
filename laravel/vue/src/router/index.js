@@ -6,7 +6,6 @@ import homePage from "../views/homePage.vue";
 import about from "../views/about.vue";
 import privacy from "../views/privacyNotice.vue";
 import share from "../views/share.vue";
-import store from "../store/index.ts";
 
 const routes = [
     {

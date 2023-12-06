@@ -19,8 +19,6 @@ Route::get('auth/google/callback', [App\Http\Controllers\AuthController::class, 
 Route::get('auth/github', [App\Http\Controllers\AuthController::class, 'redirectToGithub']);
 Route::get('auth/github/callback', [App\Http\Controllers\AuthController::class, 'handleGithubCallback']);
 
-Route::get('signup/google/callback', [App\Http\Controllers\AuthController::class, 'handleGoogleCallbackForSignup']);
-Route::get('signup/google', [App\Http\Controllers\AuthController::class, 'redirectToGoogleForSignup']);
 
 Route::get('/', function () {
     return view('welcome');
