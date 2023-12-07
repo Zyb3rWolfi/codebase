@@ -15,6 +15,7 @@ import guestHome from '../components/guestHome.vue'
 const router = useRouter()
 const store = useStore()
 
+
 onMounted(() => {
 
 })
