@@ -25,15 +25,28 @@
         </div>
     <ul class="justify-center flex flex-wrap p-6 text-gray-400 font-semibold gap-5 codeblock-buttons">
         <li class="mr-2">
-            <button :data-modal-target="codeResult" :data-modal-toggle="codeResult" class="bg-transparent hover:bg-gray-700 hover:text-gray-300 ">Modify</button>
+            <button :data-modal-target="codeResult" :data-modal-toggle="codeResult" class=" hover:text-gray-300 ">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                    <path d="M12.687 14.408a3.01 3.01 0 0 1-1.533.821l-3.566.713a3 3 0 0 1-3.53-3.53l.713-3.566a3.01 3.01 0 0 1 .821-1.533L10.905 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V11.1l-3.313 3.308Zm5.53-9.065.546-.546a2.518 2.518 0 0 0 0-3.56 2.576 2.576 0 0 0-3.559 0l-.547.547 3.56 3.56Z"/>
+                    <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z"/>
+                </svg>
+            </button>
         </li>
-        <li>|</li>
-        <li class="hover:bg-gray-700 hover:text-gray-300">
-            <button @click="removeBlock()" class="hover:bg-gray-700 hover:text-gray-30 bg-transparent">Delete</button>
+        <li class="">
+            <button @click="removeBlock()" class=" bg-transparent">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
+                </svg>
+  
+            </button>
         </li>
-        <li>|</li>
-        <li class="hover:bg-gray-700 hover:text-gray-300">
-            <button @click="getShareToken()" :data-modal-target="id" :data-modal-toggle="id" class="hover:bg-gray-700 hover:text-gray-30 bg-transparent">Share</button>
+        <li class="">
+            <button @click="getShareToken()" class=" bg-transparent">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16.922 11.76a1.56 1.56 0 0 0-.551-1.208L11.264 6.3a1.35 1.35 0 0 0-1.473-.2 1.542 1.542 0 0 0-.872 1.427v1.221a6.922 6.922 0 0 0-6 7.134v1.33A1.225 1.225 0 0 0 4.143 18.5a1.187 1.187 0 0 0 1.08-.73 4.72 4.72 0 0 1 3.7-2.868v1.085a1.546 1.546 0 0 0 .872 1.428 1.355 1.355 0 0 0 1.472-.2l5.108-4.25a1.56 1.56 0 0 0 .547-1.206Z"/>
+                    <path d="m21.428 10.205-5.517-4.949a1 1 0 1 0-1.336 1.488l5.517 5.014-5.611 5.088a1 1 0 1 0 1.344 1.482l5.611-5.088a2.049 2.049 0 0 0-.008-3.035Z"/>
+                </svg>    
+            </button>
         </li>
     </ul>
     </div>
@@ -150,9 +163,14 @@ async function getShareToken() {
             return
         }
         shareLink = "https://codebranch.me/share/" + shareToken.value
-        console.log(shareLink)
-        console.log("Showing")
         loadLink.value = true
+        navigator.clipboard.writeText(shareLink)
+        store.commit('ADD_TOAST', {
+                title: 'Share Link Copied',
+                type: 'success',
+                id: Math.floor(Math.random() * 50),
+                duration: 5000
+            })
 }
 
 
