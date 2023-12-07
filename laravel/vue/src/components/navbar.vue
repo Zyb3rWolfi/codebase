@@ -42,7 +42,10 @@
     </button>
     <div class="hidden w-full md:block md:w-auto my-auto" id="navbar-default">
       <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 text-sm my-auto border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
-        <li>
+        <li v-if="!auth">
+          <router-link active-class="active" :to="'/'" class=" cursor-pointer block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-neutral-500">// Home</router-link>
+        </li>
+        <li v-if="auth">
           <router-link active-class="active" :to="'/'" class=" cursor-pointer block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-neutral-500">// Search</router-link>
         </li>
         
