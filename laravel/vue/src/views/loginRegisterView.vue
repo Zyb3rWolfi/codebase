@@ -82,21 +82,15 @@ import axios from 'axios'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { initFlowbite, Modal } from 'flowbite'
-import { useAuth0 } from '@auth0/auth0-vue';
 const apiUrl = import.meta.env.VITE_API_BASE_URL
 
 export default {
     name: 'search',
     setup() {
 
-        const { loginWithRedirect } = useAuth0()
         const router = useRouter()
         const store = useStore()
-
-        const loginOauth = () => {
-            loginWithRedirect({connection: 'github'})
-        }
-        return { router, store, loginOauth }
+        return { router, store }
 
     },
     props: {
