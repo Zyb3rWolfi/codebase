@@ -5,7 +5,7 @@
                 <div class="h-12 items-end container align-bottom grid">
                     <h5 id="title" class=" text-left align-bottom text-md font-semibold tracking-tight text-white codeblock-title">{{ title }}</h5>
                 </div>
-                <hr class="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700">
+                <hr class="h-px my-1 border-0 bg-gray-700">
                 <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 40" @click="expandManager">...</button> </p>    
             </div>
             <div>
@@ -33,7 +33,7 @@
             </button>
         </li>
         <li class="">
-            <button @click="removeBlock()" class=" bg-transparent">
+            <button :data-modal-target="title + 'removeConfirm'" :data-modal-toggle="title + 'removeConfirm'" class=" bg-transparent">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
                 </svg>
@@ -51,9 +51,9 @@
     </ul>
     </div>
 
+    <!-- This is the modify modal -->
     <div :id="codeResult" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-5xl max-h-full">
-            <!-- Modal content -->
             <div class="relative rounded-lg shadow bg-gray-700">
                 <button :data-modal-hide="codeResult" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -76,33 +76,37 @@
                             <label id="sub" for="password" class="block mb-2 text-sm font-medium text-white">Code</label>
                             <CodeEditor lang-list-height="200px" font-size="15px" v-model="codeResult" height="400px" width="100%" :header="true" :languages="languages"  @lang="getLanguage"/>
                         </div>
-                        <button :data-modal-hide="codeResult" @click="modifyBlock()" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modify</button>
+                        <button :data-modal-hide="codeResult" @click="modifyBlock()" type="button" class="w-full text-white  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Modify</button>
                     </form>
                 </div>
             </div> 
             </div>
         </div>
-        <div :id="id" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative w-full max-w-5xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative rounded-lg shadow bg-slate-950">
-                <button :data-modal-hide="id" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-                <div class="px-6 py-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-white">Share this link</h3>
-                    <form class="space-y-6" action="#">
-                        <div>
-                            <CodeEditor v-if="loadLink" font-size="34px" v-model="shareLink" width="100%" :header="true" :languages="[[]]" />
-                        </div>
-                    </form>
+
+        <!--This modal shows a confirmation screen-->
+        <div :id="title + 'removeConfirm'" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <div class="relative  rounded-lg shadow bg-gray-700">
+                    <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white" :data-modal-hide="title + 'removeConfirm'">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="p-4 md:p-5 text-center">
+                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this Code Block?</h3>
+                        <button @click="removeBlock()" :data-modal-hide="title + 'removeConfirm'" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none  focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                            Yes, I'm sure
+                        </button>
+                        <button :data-modal-hide="title + 'removeConfirm'" type="button" class=" hover:bg-gray-100 focus:ring-4 focus:outline-none  rounded-lg border  text-sm font-medium px-5 py-2.5  focus:z-10 bg-gray-700 text-gray-300 border-gray-500 hover:text-white :hover:bg-gray-600 focus:ring-gray-600">No, cancel</button>
+                    </div>
                 </div>
-            </div> 
             </div>
         </div>
+
 </template>
 
 <script setup>
