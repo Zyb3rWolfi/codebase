@@ -18,7 +18,7 @@
             <div class=" row mt-10 text-center">
                 <h2 id="title" class=" text-2xl">Developers</h2>
                 <p class=" mt-5">Creator - Antons Cereskevics</p>
-                <p class="">Developer - Zakk Amers-Delp</p>
+                <p class="">Developer - Zakk Amers-Delph</p>
             </div>
         </div>
     </div>
