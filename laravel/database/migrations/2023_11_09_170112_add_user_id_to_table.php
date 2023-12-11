@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('language');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('shareToken')->nullable();
         });
         Schema::table('codeBlocks', function (Blueprint $table) {
             $table->string('shareToken')->nullable();

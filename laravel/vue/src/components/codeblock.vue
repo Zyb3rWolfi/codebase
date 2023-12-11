@@ -101,7 +101,7 @@
                         <button @click="removeBlock()" :data-modal-hide="title + 'removeConfirm'" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none  focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
                             Yes, I'm sure
                         </button>
-                        <button :data-modal-hide="title + 'removeConfirm'" type="button" class=" hover:bg-gray-100 focus:ring-4 focus:outline-none  rounded-lg border  text-sm font-medium px-5 py-2.5  focus:z-10 bg-gray-700 text-gray-300 border-gray-500 hover:text-white :hover:bg-gray-600 focus:ring-gray-600">No, cancel</button>
+                        <button :data-modal-hide="title + 'removeConfirm'" type="button" class=" focus:ring-4 focus:outline-none  rounded-lg border  text-sm font-medium px-5 py-2.5  focus:z-10 bg-gray-700 text-gray-300 border-gray-500 hover:text-white">No, cancel</button>
                     </div>
                 </div>
             </div>
