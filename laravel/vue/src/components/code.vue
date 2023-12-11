@@ -185,7 +185,7 @@ export default {
         async updateFilters() {
             gotBlocks = false
 
-            const response = await axios.get(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
+            const response = await axios.post(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
             this.answer = response.data["strings"]
             
             this.store.dispatch('setFilterLanguages', Array.from(this.languageSet))
