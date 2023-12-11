@@ -14,16 +14,6 @@ return new class extends Migration
     public function up(): void
     {
 
-        Schema::create('codeBlocks', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->binary('code');
-            $table->string('description');
-            $table->unsignedBigInteger('user_id');
-            $table->string('language');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->string('shareToken')->nullable();
-        });
         Schema::table('codeBlocks', function (Blueprint $table) {
             $table->string('shareToken')->nullable();
         });
