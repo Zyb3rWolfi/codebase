@@ -66,11 +66,15 @@
                     <form class="space-y-6" action="#">
                         <div>
                             <label id="sub" for="title" class="block mb-2 text-sm font-medium text-white">Code Block Title</label>
-                            <input v-model="title" type="text" name="title" id="title" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                            <input v-model="title" maxlength="55" type="text" name="title" id="title" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                            <p class=" text-xs mt-3 text-gray-400">characters left: {{55 - title.length}}</p>
+
                         </div>
                         <div>
                             <label id="sub" for="description" class="block mb-2 text-sm font-medium text-white">Code Block Description</label>
-                            <input v-model="description" type="text" name="description" id="description" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                            <textarea  v-model="description" maxlength="255" type="text" name="description" id="description" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required/>
+                            <p class=" text-xs mt-3 text-gray-400">characters left {{255 - description.length}}</p>
+
                         </div>
                         <div>
                             <label id="sub" for="password" class="block mb-2 text-sm font-medium text-white">Code</label>
@@ -139,6 +143,8 @@ var shareToken = ref(props.search["shareToken"])
 var id = ref(props.search["id"])
 var shareLink = ref("")
 var loadLink = ref(false)
+var titleCharacters = ref(50)
+var descriptionCharacters = ref(255)
 const updateLink = computed(() => shareLink)
 var payload = {
         code: codeResult.value,
@@ -154,6 +160,7 @@ var header = {
                 'content-type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest'
         }
+
 
 async function getShareToken() {
         console.log("Getting" + shareToken.value)
@@ -235,6 +242,9 @@ function setDescription() {
 // On mounted
 // Currently initializing flowbite
 onMounted(() => {
+
+    descriptionCharacters = title.length;
+    titleCharacters = description.length;
     initFlowbite()
     
     setDescription()
