@@ -17,11 +17,11 @@
             
             <div class="mb-6">
                 <label for="email" class="block mb-2 text-sm font-medium text-white">Your email</label>
-                <input v-model="login.email" @keyup.enter="submitData()" type="email" id="email" class=" border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="name@example.com" required>
+                <input maxlength="40" v-model="login.email" @keyup.enter="submitData()" type="email" id="email" class=" border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="name@example.com" required>
             </div>
             <div class="mb-6">
                 <label for="password" class="block mb-2 text-sm font-medium text-white">Your password</label>
-                <input v-model="login.password" @keyup.enter="submitData()" type="password" id="password" class=" border  text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required>
+                <input maxlength="50" v-model="login.password" @keyup.enter="submitData()" type="password" id="password" class=" border  text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required>
             </div>
             <p v-if="loggingIn" class=" text-green-600 text-sm mb-5">Logging in, redirecting...</p>
             <p v-if="incorrect" class=" text-red-600 text-sm mb-5">Incorrect Password Or Username</p>
@@ -67,15 +67,15 @@
             </div>            
             <div class="mb-6">
                 <label for="Regname" class="block mb-2 text-sm font-medium text-white">Your name</label>
-                <input v-model="signup.name" @keyup.enter="submitDataRegister()" type="text" id="Regname" class=" border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required>
+                <input maxlength="20" v-model="signup.name" @keyup.enter="submitDataRegister()" type="text" id="Regname" class=" border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required>
             </div>
             <div class="mb-6">
                 <label for="Regemail" class="block mb-2 text-sm font-medium text-white">Your email</label>
-                <input v-model="signup.email" @keyup.enter="submitDataRegister()" type="email" id="Regemail" class="border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="name@example.com" required>
+                <input maxlength="40" v-model="signup.email" @keyup.enter="submitDataRegister()" type="email" id="Regemail" class="border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="name@example.com" required>
             </div>
             <div class="mb-6">
                 <label for="Regpassword" class="block mb-2 text-sm font-medium text-white" >Your password</label>
-                <input v-model="signup.password" @keyup.enter="submitDataRegister()" type="password" id="Regpassword" class=" border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required>
+                <input maxlength="50" v-model="signup.password" @keyup.enter="submitDataRegister()" type="password" id="Regpassword" class=" border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required>
             </div>
             <p v-if="this.accountExists" class=" text-red-600 text-sm mb-5">Account With This Email Already Exists!</p>
             <p v-if="this.passwordTooShort" class=" text-red-600 text-sm mb-5">The Password Should Be 8 Characters Or Longer</p>
@@ -157,10 +157,10 @@ export default {
     },
     methods: {
         loginOauth() {
-            window.location.href = 'http://localhost:8000/auth/google'
+            window.location.href = 'http://localhost:8000/auth/google?id=$null'
         },
         discordLogin() {
-            window.location.href = 'http://localhost:8000/auth/github'
+            window.location.href = 'http://localhost:8000/auth/github?id=$null'
         },
         // Submits the data to the api
         async submitDataRegister() {

@@ -24,6 +24,7 @@ Route::post('/createShareToken', [App\Http\Controllers\DbController::class, 'cre
 Route::middleware('auth:api')->group(function () {
     Route::post('deleteAccount', [App\Http\Controllers\AuthController::class, 'deleteAccount']);
     Route::get('user', [App\Http\Controllers\AuthController::class, 'User']);
+    Route::get('getConnections', [App\Http\Controllers\AuthController::class, 'getConnections']);
     Route::post('logout', [App\Http\Controllers\AuthController::class, 'Logout']);
     Route::post('getBlocks', [App\Http\Controllers\DbController::class, 'getUserBlocks']);
     Route::post('changedetails', [App\Http\Controllers\AuthController::class, 'changeDetails']);

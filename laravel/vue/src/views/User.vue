@@ -21,7 +21,7 @@ import { computed } from 'vue';
 import codePage from '../components/code.vue';
 import accountPage from '../components/account.vue';
 import settingsNav from '../components/settingsNav.vue'
-
+const apiUrl = import.meta.env.VITE_API_BASE_URL
 export default {
     name: 'user',
     setup() {
@@ -59,7 +59,7 @@ export default {
         }
         // This function will make a request to the api to get the users name
         const userRequest = async () => {
-            const response = await axios.get('https://codebranch.me/api/user', { headers: this.headers, withCredentials: true });
+            const response = await axios.get(apiUrl + '/api/user', { headers: this.headers, withCredentials: true });
             this.name = response.data["name"];
         };
         userRequest();

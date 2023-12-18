@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\RateLimiter;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Request as FacadesRequest;
 use Response;
 use Laravel\Passport\Token;
 use Laravel\Passport\RefreshToken;
@@ -36,6 +37,11 @@ class AuthController extends Controller
     }
 
     public function newLogin(Request $request) {
+        if(DB::table('users')->where('password', '=', null)->where('email', '=', $request->input('email'))->exists()) {
+            return response([
+                'message' => 'Invalid credentials '
+            ], 401);
+        }
         $data = $request->validate([
             'email' => 'required|email',
             'password'=> 'required'
@@ -64,49 +70,107 @@ class AuthController extends Controller
         return response($user, 201);
     }
     public function redirectToGoogle() {
-        return Socialite::driver('google')->with(["prompt" => "select_account"])->redirect();
+        // Gets the type of login the user is trying to do
+        $type = FacadesRequest::query('id');
+        return Socialite::driver('google')->with(["prompt" => "select_account"])->with(["state" => $type])->redirect();
     }
     public function handleGoogleCallback() {
+        // Gets the user from the provider and fetches the user ID from the database if it exists
+        $user = Socialite::driver('google')->stateless()->user();
+        $userId = request('state'); 
 
-        $user = Socialite::driver('google')->user();
+        // If the users connection exists in the database, log them in
+        if (DB::table('user_providers')->where('provider_user_id', '=', $user->id)->exists() && DB::table('user_providers')->where('provider', '=', 'google')->exists()) {
 
-        if (User::where('email', '=', $user->email)->exists() && User::where('provider', '=', 'google')->exists()) {
             $user = User::where('email', '=', $user->email)->first();
             $token = $user->createToken('API Token')->accessToken;
             return redirect('http://localhost:5173?token='.$token);
         } else {
 
+            // If the user exists however the connection does not, create the connection and log them in
+            if (User::where('id', '=', $userId)->exists()) {
+                DB::table('user_providers')->insert([
+                    'user_id' => $userId,
+                    'provider_user_id' => $user->id,
+                    'provider' => 'google'
+                ]);
+                return redirect('http://localhost:5173?error='.$userId);
+            }
+            // If the user is not logged in and a record of the user connection doesn not exist with their account we do not log them in.
+            if (User::where('email', '=', $user->email)->exists()) {
+                return redirect('http://localhost:5173?error='.$userId);
+            }
+            // Otherwise we create a new user and log them in
+            // This is where we create the user for Users table
             $newUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
                 'password'=> Hash::make($user->id),
                 'provider' => 'google'
             ]);
+
+            // This is where we create the user for user_providers table
+            DB::table('user_providers')->insert([
+                'user_id' => $newUser->id,
+                'provider_user_id' => $user->id,
+                'provider' => 'google'
+            ]);
+
+            // This is where we create the token for the user and redirect them to the front end
             $token = $newUser->createToken('API Token')->accessToken;
             return redirect('http://localhost:5173?token='.$token);
         }
     }
 
     public function redirectToGithub() {
-        return Socialite::driver('github')->with(["prompt" => "select_account"])->redirect();
+        // Gets the type of login the user is trying to do
+        $type = FacadesRequest::query('id');
+        return Socialite::driver('github')->with(["state" => $type])->redirect();
     }
 
+
     public function handleGithubCallback() {
-        $user = Socialite::driver('github')->user();
-        if (User::where('email', '=', $user->email)->exists() && User::where('provider', '=', 'github')->exists()) {
+        // Gets the user from the provider and fetches the user ID from the database if it exists
+        $user = Socialite::driver('github')->stateless()->user();
+        $userId = request('state'); 
+
+        // If the users connection exists in the database, log them in
+        if (DB::table('user_providers')->where('provider_user_id', '=', $user->id)->exists() && DB::table('user_providers')->where('provider', '=', 'github')->exists()) {
             $user = User::where('email', '=', $user->email)->first();
             $token = $user->createToken('API Token')->accessToken;
             return redirect('http://localhost:5173?token='.$token);
         } else {
-            if (User::where('email', '=', $user->email)->exists()) {
-                return redirect('http://localhost:5173?error=Email already exists');
+
+            // If the user exists however the connection does not, create the connection and log them in
+            if (User::where('id', '=', $userId)->exists()) {
+                DB::table('user_providers')->insert([
+                    'user_id' => $userId,
+                    'provider_user_id' => $user->id,
+                    'provider' => 'github'
+                ]);
+                return redirect('http://localhost:5173');
             }
+            
+            // If the user is not logged in and a record of the user connection doesn not exist with their account we do not log them in.
+            if (User::where('email', '=', $user->email)->exists()) {
+                return redirect('http://localhost:5173?error='.$userId);
+            }
+            // Otherwise we create a new user and log them in
+            // This is where we create the user for Users table
             $newUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
-                'password'=> Hash::make($user->id),
+                'password'=> null,
                 'provider' => 'github'
             ]);
+
+            // This is where we create the user for user_providers table
+            DB::table('user_providers')->insert([
+                'user_id' => $newUser->id,
+                'provider_user_id' => $user->id,
+                'provider' => 'github'
+            ]);
+            // This is where we create the token for the user and redirect them to the front end
             $token = $newUser->createToken('API Token')->accessToken;
             return redirect('http://localhost:5173?token='.$token);
         }
@@ -181,5 +245,11 @@ class AuthController extends Controller
         return response([
             'message' => 'logged out'
         ], 200);
+    }
+
+    public function getConnections() {
+        $user = Auth::user();
+        $connections = DB::table('user_providers')->where('user_id', '=', $user->id)->get();
+        return response($connections, 200);
     }
 }
