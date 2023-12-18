@@ -14,9 +14,8 @@ return new class extends Migration
     public function up(): void
     {
 
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('provider')->nullable();
+        Schema::table('codeBlocks', function (Blueprint $table) {
+            $table->string('shareToken')->nullable();
         });
     }
 

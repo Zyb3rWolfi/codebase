@@ -46,6 +46,7 @@ onMounted(async ()=> {
           'content-type': 'application/json',
           'X-Requested-With': 'XMLHttpRequest',
           'Authorization': 'Bearer ' + localStorage.getItem('token')}
+          console.log(localStorage.getItem('token'))
           const response = await axios.get(apiUrl + '/api/user', {headers: headers, withCredentials: true}).then(function(response) {
           
             store.dispatch('setAuthentication', true)

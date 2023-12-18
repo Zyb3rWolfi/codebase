@@ -14,6 +14,13 @@
                 <p class="mt-5">But here's the kicker: searching for your gems is a breeze. No more digging through folders like you're on an archeological expedition. Just type in a keyword, hit search, and voila – your snippet is right there, ready to shine.</p>
             </div>
         </div>
+        <div class=" col-start-2">
+            <div class=" row mt-10 text-center">
+                <h2 id="title" class=" text-2xl">Developers</h2>
+                <p class=" mt-5">Creator - Antons Cereskevics</p>
+                <p class="">Developer - Zakk Amers-Delph</p>
+            </div>
+        </div>
     </div>
     <loginRegister />
 </template>

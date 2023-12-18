@@ -59,14 +59,14 @@
                 <form class="space-y-6" action="#">
                     <div>
                         <label id="sub" for="title" class="block mb-2 text-sm font-medium text-white">Code Block Title</label>
-                        <input maxlength="50" v-model="sendData.title" type="text" name="title" id="title" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
-                        <p class=" text-xs mt-3 text-gray-400">max characters is 50</p>
+                        <input @input="checkTitleLength" maxlength="50" v-model="sendData.title" type="text" name="title" id="title" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                        <p class=" text-xs mt-3 text-gray-400">characters left: {{this.titleCharacters}}</p>
                     </div>
 
                     <div>
                         <label id="sub" for="description" class="block mb-2 text-sm font-medium text-white">Code Block Description</label>
-                        <textarea maxlength="255" v-model="sendData.description" type="text" name="description" id="description" class="borde text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="" required />
-                        <p class=" text-xs mt-3 text-gray-400">max characters is 255</p>
+                        <textarea @input="checkDescriptionLength" maxlength="255" v-model="sendData.description" type="text" name="description" id="description" class="borde text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="" required />
+                        <p class=" text-xs mt-3 text-gray-400">characters left {{this.descriptionCharacters}}</p>
                     </div>
 
                     <div class="container">
@@ -118,6 +118,8 @@ export default {
             },
             reloading: false,
             languageSet: new Set(),
+            titleCharacters: 50,
+            descriptionCharacters: 255,
             headers: {
                 Accept: 'application/json',
                 'content-type': 'application/json',
@@ -174,11 +176,17 @@ export default {
         }
     },
     methods: {
+        checkTitleLength() {
+            this.titleCharacters = 50 - this.sendData.title.length
+        },
+        checkDescriptionLength() {
+            this.descriptionCharacters = 255 - this.sendData.description.length
+        },
         // FILTERING LOGIC WHEN SELECTING A LANGUAGE
         async updateFilters() {
             gotBlocks = false
 
-            const response = await axios.get(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
+            const response = await axios.post(apiUrl + '/api/getBlocks', {headers: this.headers, withCredentials: true})
             this.answer = response.data["strings"]
             
             this.store.dispatch('setFilterLanguages', Array.from(this.languageSet))

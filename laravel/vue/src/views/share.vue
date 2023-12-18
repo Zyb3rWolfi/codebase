@@ -13,7 +13,7 @@
                     <h1 id="title" class="text-3xl font-bold">{{props.title}}</h1>
                     <h2 class=" mt-2">{{ props.description }}</h2>
                 </div>
-                <CodeEditor :line-nums="true" font-size="15px" :value="props.code" width="100%" height="100%" :read-only="true" :languages="[[props.language]]" />
+                <CodeEditor :line-nums="true" font-size="15px" :value="props.code" width="100%" min-height="500px" height="100%" :read-only="true" :languages="[[props.language]]" />
 
             </div>
         </div>

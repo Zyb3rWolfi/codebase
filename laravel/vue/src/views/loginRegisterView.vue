@@ -4,10 +4,10 @@
         <form class=" col-start start-3 p-16 rounded-2xl shadow-xl" style="background-color: #23272f;">
             <!-- Modal header -->
             <div class="flex items-center justify-left p-4 md:p-5 border-b rounded-t dark:border-gray-600 mb-4">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 class="text-xl font-semibold text-white">
                     Sign in
                 </h3>
-                <button id="closeButton" type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                <button id="closeButton" type="button" class="end-2.5 text-gray-400 bg-transparent  rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -16,12 +16,12 @@
             </div>
             
             <div class="mb-6">
-                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                <input v-model="login.email" @keyup.enter="submitData()" type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@example.com" required>
+                <label for="email" class="block mb-2 text-sm font-medium text-white">Your email</label>
+                <input v-model="login.email" @keyup.enter="submitData()" type="email" id="email" class=" border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="name@example.com" required>
             </div>
             <div class="mb-6">
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-                <input v-model="login.password" @keyup.enter="submitData()" type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <label for="password" class="block mb-2 text-sm font-medium text-white">Your password</label>
+                <input v-model="login.password" @keyup.enter="submitData()" type="password" id="password" class=" border  text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required>
             </div>
             <p v-if="loggingIn" class=" text-green-600 text-sm mb-5">Logging in, redirecting...</p>
             <p v-if="incorrect" class=" text-red-600 text-sm mb-5">Incorrect Password Or Username</p>
@@ -54,11 +54,11 @@
 
     <div v-show="this.store.state.SignupModalState == 2" class="md:container mx-auto contain flex-col my-20 flex justify-center items-center">
         <form class=" col-start p-16 rounded-2xl start-3 shadow-xl" style="background-color: #23272f;">
-            <div class="flex items-center justify-left p-4 md:p-5 border-b rounded-t dark:border-gray-600 mb-4">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+            <div class="flex items-center justify-left p-4 md:p-5 border-b rounded-t border-gray-600 mb-4">
+                <h3 class="text-xl font-semibold :text-white">
                     Sign up
                 </h3>
-                <button id="closeButtonRegister" type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                <button id="closeButtonRegister" type="button" class="end-2.5 text-gray-400 bg-transparent  rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                     </svg>
@@ -66,23 +66,23 @@
                 </button>
             </div>            
             <div class="mb-6">
-                <label for="Regname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
-                <input v-model="signup.name" @keyup.enter="submitDataRegister()" type="text" id="Regname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <label for="Regname" class="block mb-2 text-sm font-medium text-white">Your name</label>
+                <input v-model="signup.name" @keyup.enter="submitDataRegister()" type="text" id="Regname" class=" border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required>
             </div>
             <div class="mb-6">
-                <label for="Regemail" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                <input v-model="signup.email" @keyup.enter="submitDataRegister()" type="email" id="Regemail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@example.com" required>
+                <label for="Regemail" class="block mb-2 text-sm font-medium text-white">Your email</label>
+                <input v-model="signup.email" @keyup.enter="submitDataRegister()" type="email" id="Regemail" class="border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="name@example.com" required>
             </div>
             <div class="mb-6">
-                <label for="Regpassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" >Your password</label>
-                <input v-model="signup.password" @keyup.enter="submitDataRegister()" type="password" id="Regpassword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                <label for="Regpassword" class="block mb-2 text-sm font-medium text-white" >Your password</label>
+                <input v-model="signup.password" @keyup.enter="submitDataRegister()" type="password" id="Regpassword" class=" border  text-sm rounded-lg  block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" required>
             </div>
             <p v-if="this.accountExists" class=" text-red-600 text-sm mb-5">Account With This Email Already Exists!</p>
             <p v-if="this.passwordTooShort" class=" text-red-600 text-sm mb-5">The Password Should Be 8 Characters Or Longer</p>
             <p v-if="loggingIn" class=" text-green-600 text-sm mb-5">Logging in, redirecting...</p>
             
             <div class="flex align-middle justify-center">
-                <button id="submitButtonRegister" @click="submitDataRegister() " type="button" class=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 dark:hover:bg-gray-500 dark:focus:ring-blue-800">Submit</button>
+                <button id="submitButtonRegister" @click="submitDataRegister() " type="button" class=" text-white  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2 hover:bg-gray-500 focus:ring-blue-800">Submit</button>
             </div>
             <div class="flex align-middle justify-center">
                 <a @click="this.store.dispatch('setSignupModalState', 1)" class="cursor-pointer text-sm text-gray-400 mt-5">Already have an account?</a>
@@ -99,14 +99,12 @@ import axios from 'axios'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { initFlowbite, Modal } from 'flowbite'
-import { useAuth0 } from '@auth0/auth0-vue';
 const apiUrl = import.meta.env.VITE_API_BASE_URL
 
 export default {
     name: 'search',
     setup() {
 
-        const { loginWithRedirect } = useAuth0()
         const router = useRouter()
         const store = useStore()
 

@@ -5,7 +5,7 @@
                 <div class="h-12 items-end container align-bottom grid">
                     <h5 id="title" class=" text-left align-bottom text-md font-semibold tracking-tight text-white codeblock-title">{{ title }}</h5>
                 </div>
-                <hr class="h-px my-1 bg-gray-200 border-0 dark:bg-gray-700">
+                <hr class="h-px my-1 border-0 bg-gray-700">
                 <p class="mb-5 text-sm max-w-md"> {{ tempDescription }} <button class="bg-transparent" v-if="descriptionLength > 40" @click="expandManager">...</button> </p>    
             </div>
             <div>
@@ -25,23 +25,36 @@
         </div>
     <ul class="justify-center flex flex-wrap p-6 text-gray-400 font-semibold gap-5 codeblock-buttons">
         <li class="mr-2">
-            <button :data-modal-target="codeResult" :data-modal-toggle="codeResult" class="bg-transparent hover:bg-gray-700 hover:text-gray-300 ">Modify</button>
+            <button :data-modal-target="codeResult" :data-modal-toggle="codeResult" class=" bg-transparent hover:text-gray-300 ">
+                <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                    <path d="M12.687 14.408a3.01 3.01 0 0 1-1.533.821l-3.566.713a3 3 0 0 1-3.53-3.53l.713-3.566a3.01 3.01 0 0 1 .821-1.533L10.905 2H2.167A2.169 2.169 0 0 0 0 4.167v11.666A2.169 2.169 0 0 0 2.167 18h11.666A2.169 2.169 0 0 0 16 15.833V11.1l-3.313 3.308Zm5.53-9.065.546-.546a2.518 2.518 0 0 0 0-3.56 2.576 2.576 0 0 0-3.559 0l-.547.547 3.56 3.56Z"/>
+                    <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z"/>
+                </svg>
+            </button>
         </li>
-        <li>|</li>
-        <li class="hover:bg-gray-700 hover:text-gray-300">
-            <button @click="removeBlock()" class="hover:bg-gray-700 hover:text-gray-30 bg-transparent">Delete</button>
+        <li class="">
+            <button :data-modal-target="title + 'removeConfirm'" :data-modal-toggle="title + 'removeConfirm'" class=" bg-transparent">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
+                </svg>
+  
+            </button>
         </li>
-        <li>|</li>
-        <li class="hover:bg-gray-700 hover:text-gray-300">
-            <button @click="getShareToken()" :data-modal-target="id" :data-modal-toggle="id" class="hover:bg-gray-700 hover:text-gray-30 bg-transparent">Share</button>
+        <li class="">
+            <button @click="getShareToken()" class=" bg-transparent">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16.922 11.76a1.56 1.56 0 0 0-.551-1.208L11.264 6.3a1.35 1.35 0 0 0-1.473-.2 1.542 1.542 0 0 0-.872 1.427v1.221a6.922 6.922 0 0 0-6 7.134v1.33A1.225 1.225 0 0 0 4.143 18.5a1.187 1.187 0 0 0 1.08-.73 4.72 4.72 0 0 1 3.7-2.868v1.085a1.546 1.546 0 0 0 .872 1.428 1.355 1.355 0 0 0 1.472-.2l5.108-4.25a1.56 1.56 0 0 0 .547-1.206Z"/>
+                    <path d="m21.428 10.205-5.517-4.949a1 1 0 1 0-1.336 1.488l5.517 5.014-5.611 5.088a1 1 0 1 0 1.344 1.482l5.611-5.088a2.049 2.049 0 0 0-.008-3.035Z"/>
+                </svg>    
+            </button>
         </li>
     </ul>
     </div>
 
+    <!-- This is the modify modal -->
     <div :id="codeResult" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative w-full max-w-5xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative rounded-lg shadow bg-slate-950">
+            <div class="relative rounded-lg shadow bg-gray-700">
                 <button :data-modal-hide="codeResult" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -49,47 +62,55 @@
                     <span class="sr-only">Close modal</span>
                 </button>
                 <div class="px-6 py-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-white">Modify This Code Block</h3>
+                    <h3 id="title" class="mb-4 text-xl font-medium text-white">Modify This Code Block</h3>
                     <form class="space-y-6" action="#">
                         <div>
-                            <label for="title" class="block mb-2 text-sm font-medium text-white">Code Block Title</label>
-                            <input v-model="title" type="text" name="title" id="title" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                            <label id="sub" for="title" class="block mb-2 text-sm font-medium text-white">Code Block Title</label>
+                            <input v-model="title" maxlength="55" type="text" name="title" id="title" class="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                            <p class=" text-xs mt-3 text-gray-400">characters left: {{55 - title.length}}</p>
+
                         </div>
                         <div>
-                            <label for="description" class="block mb-2 text-sm font-medium text-white">Code Block Description</label>
-                            <input v-model="description" type="text" name="description" id="description" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required>
+                            <label id="sub" for="description" class="block mb-2 text-sm font-medium text-white">Code Block Description</label>
+                            <textarea  v-model="description" maxlength="255" type="text" name="description" id="description" class=" border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-600 border-gray-500 placeholder-gray-400 text-white" placeholder="Center a DIV" required/>
+                            <p class=" text-xs mt-3 text-gray-400">characters left {{255 - description.length}}</p>
+
                         </div>
                         <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-white">Code</label>
-                            <CodeEditor lang-list-height="200px" font-size="15px" v-model="codeResult" width="100%" :header="true" :languages="languages"  @lang="getLanguage"/>
+                            <label id="sub" for="password" class="block mb-2 text-sm font-medium text-white">Code</label>
+                            <CodeEditor lang-list-height="200px" font-size="15px" v-model="codeResult" height="400px" width="100%" :header="true" :languages="languages"  @lang="getLanguage"/>
                         </div>
-                        <button :data-modal-hide="codeResult" @click="modifyBlock()" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modify</button>
+                        <button :data-modal-hide="codeResult" @click="modifyBlock()" type="button" class="w-full text-white  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Modify</button>
                     </form>
                 </div>
             </div> 
             </div>
         </div>
-        <div :id="id" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative w-full max-w-4xl max-h-full">
-            <!-- Modal content -->
-            <div class="relative rounded-lg shadow bg-gray-700">
-                <button :data-modal-hide="id" type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparentrounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-                <div class="px-6 py-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-white">Share this link</h3>
-                    <form class="space-y-6" action="#">
-                        <div>
-                            <CodeEditor :read-only="true" v-if="loadLink" font-size="24px" v-model="shareLink" width="100%" :header="true" :languages="[[]]" />
-                        </div>
-                    </form>
+
+        <!--This modal shows a confirmation screen-->
+        <div :id="title + 'removeConfirm'" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <div class="relative  rounded-lg shadow bg-gray-700">
+                    <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center hover:bg-gray-600 hover:text-white" :data-modal-hide="title + 'removeConfirm'">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="p-4 md:p-5 text-center">
+                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </svg>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this Code Block?</h3>
+                        <button @click="removeBlock()" :data-modal-hide="title + 'removeConfirm'" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none  focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                            Yes, I'm sure
+                        </button>
+                        <button :data-modal-hide="title + 'removeConfirm'" type="button" class=" focus:ring-4 focus:outline-none  rounded-lg border  text-sm font-medium px-5 py-2.5  focus:z-10 bg-gray-700 text-gray-300 border-gray-500 hover:text-white">No, cancel</button>
+                    </div>
                 </div>
-            </div> 
             </div>
         </div>
+
 </template>
 
 <script setup>
@@ -122,6 +143,8 @@ var shareToken = ref(props.search["shareToken"])
 var id = ref(props.search["id"])
 var shareLink = ref("")
 var loadLink = ref(false)
+var titleCharacters = ref(50)
+var descriptionCharacters = ref(255)
 const updateLink = computed(() => shareLink)
 var payload = {
         code: codeResult.value,
@@ -139,6 +162,7 @@ var header = {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
 
+
 async function getShareToken() {
         console.log("Getting" + shareToken.value)
         if (shareToken.value == null) {
@@ -151,9 +175,14 @@ async function getShareToken() {
             return
         }
         shareLink = "https://codebranch.me/share/" + shareToken.value
-        console.log(shareLink)
-        console.log("Showing")
         loadLink.value = true
+        navigator.clipboard.writeText(shareLink)
+        store.commit('ADD_TOAST', {
+                title: 'Share Link Copied',
+                type: 'success',
+                id: Math.floor(Math.random() * 50),
+                duration: 5000
+            })
 }
 
 
@@ -169,7 +198,8 @@ var tempDescription = ref(props.search["description"])
 const headers = {
     Accept: 'application/json',
     'content-type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
 }
 
 // Data for the API
@@ -214,6 +244,9 @@ function setDescription() {
 // On mounted
 // Currently initializing flowbite
 onMounted(() => {
+
+    descriptionCharacters = title.length;
+    titleCharacters = description.length;
     initFlowbite()
     
     setDescription()
