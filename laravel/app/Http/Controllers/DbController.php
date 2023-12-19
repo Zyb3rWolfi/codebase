@@ -110,4 +110,21 @@ class DbController extends Controller
             ]);
         
     }
+    public function Admin() {
+        if (Auth::user()) {
+            $data = DB::table('users')->where('id', $Auth::user()->id)-> get();
+            foreach ($data as $key => $value) {
+                $data[$key] = $value;
+            }
+            return response()->json([
+                'strings' => $data,
+            ]);
+        }
+        else {
+            return response()->json([
+                'message' => 'not logged in',
+            ]);
+        }
+
+    }
 }

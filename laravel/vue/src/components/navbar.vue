@@ -7,6 +7,7 @@
   // access the store
   const store = useStore()
   const auth = computed(() => store.state.auth) // checks if the user is authenticated
+  const admin = computed(() => store.state.admin) // checks if the user is an admin
 
   const router = useRouter() // access the router
   const apiUrl = import.meta.env.VITE_API_BASE_URL // declares the api url from the .env file
@@ -21,6 +22,7 @@
     }
     await axios.post(apiUrl + '/api/logout', {headers: headers}, {withCredentials: true}) // makes the request to the api to remove the session cookie
     await store.dispatch('setAuthentication', false) // sets the authentication to false
+    await store.dispatch('setadmin', false) // sets the admin to false
     await store.dispatch('setUserID', -1) // sets the user id to -1 ==> P.S i have no idea why it does this antons was wondering why now i know why this happens
 
     router.push("/") // redirects the user to the home page
@@ -51,6 +53,10 @@
         
         <li v-if="auth">
           <router-link active-class="active" :to="'/user/' + store.state.id + '/code'" class="cursor-pointer block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-neutral-500">// Manage</router-link>
+        </li>
+
+        <li v-if="admin">
+          <router-link active-class="active" :to="'/admin'" class="cursor-pointer block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-neutral-500">// Admin</router-link>
         </li>
         <li>
           <router-link active-class="active" :to="'/about'" class="cursor-pointer block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-neutral-500">// About</router-link>

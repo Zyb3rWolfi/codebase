@@ -7,6 +7,7 @@ import about from "../views/about.vue";
 import privacy from "../views/privacyNotice.vue";
 import share from "../views/share.vue";
 import store from "../store/index.ts";
+import admin from "../views/admin.vue";
 
 const routes = [
     {
@@ -43,6 +44,11 @@ const routes = [
         path: '/share/:token',
         name: 'share',
         component: share,
+    },
+    {
+        path: '/admin',
+        name: 'admin',
+        component: admin,
     }
 ];
 

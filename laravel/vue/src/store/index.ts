@@ -10,10 +10,11 @@ export default createStore({
         toasts : [],
         SignupModalState : 1,
         filterLanguages: [],
-        
+        admin : false,
     },
     mutations: {
         SET_AUTH: (state: {auth: boolean}, authh: boolean) => state.auth = authh,
+        SET_ADMIN: (state: {admin: boolean}, admin: boolean) => state.admin = admin,
         SET_ID: (state: {id: number}, id: number) => state.id = id,
         SET_BLOCK_REFRESH: (state: {blockRefresh: boolean}, block: boolean) => state.blockRefresh = block,
         ADD_TOAST: (state: {toasts: any}, toast: any) => state.toasts.push(toast),
@@ -22,6 +23,7 @@ export default createStore({
         SET_FILTER_LANGUAGES: (state: {filterLanguages: any}, languages: any) => state.filterLanguages = languages,
     },
     actions: {
+        setadmin: ({commit}: {commit: Commit}, admin: boolean) => commit('SET_ADMIN', admin),
         setAuthentication: ({commit}: {commit: Commit}, authh: boolean) => commit('SET_AUTH', authh),
         setSignupModalState: ({commit}: {commit: Commit}, state: number) => commit('SET_SIGNUP_MODAL_STATE', state),
         setUserID: ({commit}: {commit: Commit}, id: number) => commit('SET_ID', id),

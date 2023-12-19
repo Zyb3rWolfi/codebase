@@ -194,6 +194,7 @@ export default {
                 const user = await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true})
                 await this.$store.dispatch('setAuthentication', true)
                 await this.$store.dispatch('setUserID', user.data["id"])
+                await this.$store.dispatch('setadmin', user.data["admin"])
                 await this.$router.push("/user/" + user.data["id"] + "/code")    
                 
                 this.loggingIn = false

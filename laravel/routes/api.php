@@ -22,6 +22,7 @@ Route::middleware(['throttle:20,1']) ->group(function () {
 Route::get('/getSharedBlock/{token}', [App\Http\Controllers\DbController::class,'getSharedBlock']);
 Route::post('/createShareToken', [App\Http\Controllers\DbController::class, 'createShareToken']);
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('admin', [App\Http\Controllers\DbController::class, 'Admin']);
     Route::get('user', [App\Http\Controllers\AuthController::class, 'User']);
     Route::post('getBlocks', [App\Http\Controllers\DbController::class, 'getUserBlocks']);
     Route::post('changedetails', [App\Http\Controllers\AuthController::class, 'changeDetails']);
