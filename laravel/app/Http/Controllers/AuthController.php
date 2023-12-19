@@ -37,11 +37,6 @@ class AuthController extends Controller
     }
 
     public function newLogin(Request $request) {
-        if(DB::table('users')->where('password', '=', null)->where('email', '=', $request->input('email'))->exists()) {
-            return response([
-                'message' => 'Invalid credentials '
-            ], 401);
-        }
         $data = $request->validate([
             'email' => 'required|email',
             'password'=> 'required'
@@ -224,6 +219,14 @@ class AuthController extends Controller
             ], 401);
         }
         $user->password = Hash::make($request->input('user_new_password'));
+        $user->save();
+
+        return response($user, 201);
+    }
+
+    public function addPassword(Request $request) {
+        $user = Auth::user();
+        $user->password = Hash::make($request->input('user_password'));
         $user->save();
 
         return response($user, 201);
