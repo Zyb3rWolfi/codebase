@@ -13,7 +13,7 @@
                     </div>
                     <div class=" flex">
                         <input v-model="search" type="search" id="default-search" class=" rounded-xl block w-full p-4 pl-10 text-sm0 border bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="Center a DIV..." required>
-                        <button data-popover-placement="bottom" data-popover-target="searchFilter" class="ml-5 bg-blue-700 p-2 rounded-lg">
+                        <button aria-label="filter button" data-popover-placement="bottom" data-popover-target="searchFilter" class="ml-5 bg-blue-700 p-2 rounded-lg">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                                 <path d="M18.85 1.1A1.99 1.99 0 0 0 17.063 0H2.937a2 2 0 0 0-1.566 3.242L6.99 9.868 7 14a1 1 0 0 0 .4.8l4 3A1 1 0 0 0 13 17l.01-7.134 5.66-6.676a1.99 1.99 0 0 0 .18-2.09Z"/>
                             </svg>

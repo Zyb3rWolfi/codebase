@@ -222,3 +222,6 @@ div.codeblock-buttons{
 .w-90 {
   width: 90%;
 }
+.bg-codeeditor-grey {
+  background-color: #282c34;
+}

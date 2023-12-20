@@ -110,9 +110,42 @@ class DbController extends Controller
             ]);
         
     }
-    public function Admin() {
-        if (Auth::user()) {
-            $data = DB::table('users')->where('id', $Auth::user()->id)-> get();
+
+    public function getUserCount(Request $request) {
+        if (Auth::user()->admin == true) {
+            $data = DB::table('users')->count();
+            return response()->json([
+                'count' => $data,
+            ]);
+        }
+        else {
+            return response()->json([
+                'message' => 'not authed',
+            ]);
+        }
+    }
+
+    public function getNewUserCount(Request $request) {
+        if (Auth::user()->admin == true) {
+            $data = DB::table('users')->where('created_at', 'LIKE', date("Y-m-d").'%')->count();
+            return response()->json([
+                'count' => $data,
+            ]);
+        }
+        else {
+            return response()->json([
+                'message' => 'not authed',
+            ]);
+        }
+    }
+    public function GetUserPreviews(Request $request) {
+        if (Auth::user()->admin == true) {
+            $name = $request->input('name');
+            if ($name == "") {
+                $data = DB::table('users')->select("name","email","id")->get();
+            } else {
+                $data = DB::table('users')->select("name","email","id")->where("name", "LIKE", "%".$name."%")->orWhere("id", "LIKE", "%".$name."%")->get();
+            }
             foreach ($data as $key => $value) {
                 $data[$key] = $value;
             }
@@ -122,9 +155,27 @@ class DbController extends Controller
         }
         else {
             return response()->json([
-                'message' => 'not logged in',
+                'message' => 'not authed',
             ]);
         }
+    }
 
+    public function getUserDetailsByID(Request $request){
+        if (Auth::user()->admin == true) {
+            $id = $request->input('id');
+            $data = DB::table('users')->select('created_at', 'updated_at')->where('id', $id)->get();
+            foreach ($data as $key => $value) {
+                $data[$key] = $value;
+            }
+            return response()->json([
+                'strings' => $data,
+
+            ]);
+        }
+        else {
+            return response()->json([
+                'message' => 'not authed',
+            ]);
+        }
     }
 }

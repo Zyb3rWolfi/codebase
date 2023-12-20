@@ -173,7 +173,6 @@ export default {
         // Called when the submit button is clicked
         async submitData() {
 
-            console.log("submitting data")
 
             try {
                 // If the email or password is empty we will return
