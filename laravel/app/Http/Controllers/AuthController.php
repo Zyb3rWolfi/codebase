@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Psr7\Query;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
@@ -89,7 +91,7 @@ class AuthController extends Controller
                     'provider_user_id' => $user->id,
                     'provider' => 'google'
                 ]);
-                return redirect('http://localhost:5173?error='.$userId);
+                return redirect('http://localhost:5173?connection=google');
             }
             // If the user is not logged in and a record of the user connection doesn not exist with their account we do not log them in.
             if (User::where('email', '=', $user->email)->exists()) {
@@ -100,7 +102,7 @@ class AuthController extends Controller
             $newUser = User::create([
                 'name' => $user->name,
                 'email' => $user->email,
-                'password'=> Hash::make($user->id),
+                'password'=> null,
                 'provider' => 'google'
             ]);
 
@@ -143,7 +145,7 @@ class AuthController extends Controller
                     'provider_user_id' => $user->id,
                     'provider' => 'github'
                 ]);
-                return redirect('http://localhost:5173');
+                return redirect('http://localhost:5173?connection=github');
             }
             
             // If the user is not logged in and a record of the user connection doesn not exist with their account we do not log them in.
@@ -233,24 +235,47 @@ class AuthController extends Controller
     }
 
     public function removeGithub(Request $request) {
+        
         $user = Auth::user();
+        $canDelete = false;
 
         if (DB::table('users')->where('id', '=', $user->id)->where('password', '=', null)->exists()) {
-            return response([
-                'message' => 'You cannot remove your Github account as you have not set a password'
-            ], 401);
+            $data = DB::table('user_providers')->where('user_id', '=', $user->id);
+
+            foreach($data->get() as $item) {
+                if ($item->provider == 'google') {
+                    $canDelete = true;
+                }
+            }
+            if (!$canDelete) {
+                return response([
+                    'message' => 'You cannot remove your Github account as you have not set a password'
+                ], 401);
+            }
         }
 
         DB::table('user_providers')->where('user_id', '=', $user->id)->where('provider', '=', 'github')->delete();
         return response($user, 201);
     }
+
     public function removeGoogle(Request $request) {
+        
         $user = Auth::user();
+        $canDelete = false;
 
         if (DB::table('users')->where('id', '=', $user->id)->where('password', '=', null)->exists()) {
-            return response([
-                'message' => 'You cannot remove your Google account as you have not set a password'
-            ], 401);
+            $data = DB::table('user_providers')->where('user_id', '=', $user->id);
+
+            foreach($data->get() as $item) {
+                if ($item->provider == 'github') {
+                    $canDelete = true;
+                }
+            }
+            if (!$canDelete) {
+                return response([
+                    'message' => 'You cannot remove your Google account as you have not set a password'
+                ], 401);
+            }
         }
 
         DB::table('user_providers')->where('user_id', '=', $user->id)->where('provider', '=', 'google')->delete();

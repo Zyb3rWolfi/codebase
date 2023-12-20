@@ -14,6 +14,9 @@ onMounted(async ()=> {
     const errorParams = new URLSearchParams(window.location.search);
     const errorParam = errorParams.get('error');
 
+    const connectionParams = new URLSearchParams(window.location.search);
+    const connectionParam = connectionParams.get('connection');
+
     if (errorParam) {
       var url = new URL(window.location.href);
       url.searchParams.delete('error');
@@ -27,6 +30,18 @@ onMounted(async ()=> {
       })
     }
 
+    if (connectionParam) {
+      var url = new URL(window.location.href);
+      url.searchParams.delete('connection');
+      window.history.replaceState({}, '', url);
+
+      store.commit('ADD_TOAST', {
+          title: 'Added new connection successfully',
+          type: 'success',
+          id: Math.floor(Math.random() * 50),
+          duration: 5000
+      })
+    }
     if (myParam) {
       localStorage.setItem('token', myParam)
       const url = new URL(window.location.href);
