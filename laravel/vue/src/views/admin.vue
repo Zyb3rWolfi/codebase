@@ -66,6 +66,7 @@
     import { onMounted, ref, watch } from 'vue';
     import axios from 'axios';
     import userPreview from '../components/userPreiew.vue';
+    import debounce from 'lodash/debounce';
 
     var totalUsers = ref(0)
     var newUsers = ref(0)
@@ -102,7 +103,9 @@
           })
     }
 
-    async function getUserPreviews(search) {
+
+    const getUserPreviews = debounce(async(search) => {
+ 
         loading.value = true
         var payload = {
             name : search
@@ -116,7 +119,7 @@
             userPreviews.value = response.data["strings"]
             loading.value = false
           })
-    }
+    }, 250)
 
     onMounted(() => {
 
