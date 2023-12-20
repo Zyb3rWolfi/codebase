@@ -85,7 +85,8 @@
         const headers = {
           Accept: 'application/json',
           'content-type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
           const response = await axios.get(apiUrl + '/api/userCount', {headers: headers, withCredentials: true}).then(function(response) {
             totalUsers.value = response.data["count"]
@@ -96,7 +97,8 @@
         const headers = {
           Accept: 'application/json',
           'content-type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
           const response = await axios.get(apiUrl + '/api/newUserCount', {headers: headers, withCredentials: true}).then(function(response) {
             newUsers.value = response.data["count"]
@@ -113,7 +115,8 @@
         const headers = {
           Accept: 'application/json',
           'content-type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
           const response = await axios.post(apiUrl + '/api/getUserPreviews', payload, {headers: headers, withCredentials: true}).then(function(response) {
             userPreviews.value = response.data["strings"]

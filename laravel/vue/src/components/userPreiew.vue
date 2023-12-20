@@ -115,7 +115,8 @@
         const headers = {
           Accept: 'application/json',
           'content-type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
+          'X-Requested-With': 'XMLHttpRequest',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
           const response = await axios.post(apiUrl + '/api/getUserByID', payload, {headers: headers, withCredentials: true}).then(function(response) {
             userDetails.value = response.data["strings"][0]
