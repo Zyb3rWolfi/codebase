@@ -133,9 +133,17 @@ class AuthController extends Controller
 
         // If the users connection exists in the database, log them in
         if (DB::table('user_providers')->where('provider_user_id', '=', $user->id)->exists() && DB::table('user_providers')->where('provider', '=', 'github')->exists()) {
-            $user = User::where('email', '=', $user->email)->first();
-            $token = $user->createToken('API Token')->accessToken;
-            return redirect('http://localhost:5173?token='.$token);
+            
+            if (User::where('email', '=', $user->email)->first()) {
+                $token = $user->createToken('API Token')->accessToken;
+                return redirect('http://localhost:5173?token='.$token);
+            } else {
+                $user = DB::table('user_providers')->where('provider_user_id', '=', $user->id)->first()->user_id;
+                $user = User::where('id', '=', $user)->first();
+                $token = $user->createToken('API Token')->accessToken;
+                return redirect('http://localhost:5173?token='.$token);
+
+            }
         } else {
 
             // If the user exists however the connection does not, create the connection and log them in
@@ -297,6 +305,17 @@ class AuthController extends Controller
     }
 
     public function removePassword(Request $request) {
+        $data = DB::table('user_providers')->where('user_id', '=', Auth::user()->id)->get();
+        $canRemove = false;
+        foreach($data as $item) {
+            $canRemove = true;
+        }
+
+        if (!$canRemove) {
+            return response([
+                'message' => 'You cannot remove your password as you have not connected any social media accounts'
+            ], 401);
+        }
         $user = Auth::user();
         $user->password = null;
         $user->save();

@@ -85,17 +85,20 @@
                 <li v-show="!this.passwordAlreadyExists" id="null" data-modal-target="add-password-modal" data-modal-toggle="add-password-modal">
                     <label for="angular-option" class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div class="block">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                <path d="M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z"/>
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                <path d="M14 7h-1.5V4.5a4.5 4.5 0 1 0-9 0V7H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-5 8a1 1 0 1 1-2 0v-3a1 1 0 1 1 2 0v3Zm1.5-8h-5V4.5a2.5 2.5 0 1 1 5 0V7Z"/>
                             </svg>
                         </div>
                     </label>
                 </li>
-                <li v-show="this.passwordAlreadyExists" class="active" id="null" data-modal-target="remove-password-modal" data-modal-toggle="remove-password-modal">
+                <li @mouseenter="this.password_over = true" @mouseleave="this.password_over = false" v-show="this.passwordAlreadyExists" class="active" id="null" data-modal-target="remove-password-modal" data-modal-toggle="remove-password-modal">
                     <label for="angular-option" class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <div class="block">
-                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
-                                <path d="M16 0H4a2 2 0 0 0-2 2v1H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v2H1a1 1 0 0 0 0 2h1v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4.5a3 3 0 1 1 0 6 3 3 0 0 1 0-6ZM13.929 17H7.071a.5.5 0 0 1-.5-.5 3.935 3.935 0 1 1 7.858 0 .5.5 0 0 1-.5.5Z"/>
+                            <svg v-show="!this.password_over" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                <path d="M14 7h-1.5V4.5a4.5 4.5 0 1 0-9 0V7H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-5 8a1 1 0 1 1-2 0v-3a1 1 0 1 1 2 0v3Zm1.5-8h-5V4.5a2.5 2.5 0 1 1 5 0V7Z"/>
+                            </svg>
+                            <svg v-show="this.password_over" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
                             </svg>
                         </div>
                     </label>
@@ -180,7 +183,6 @@
         </div>
     </div>
 
-
         <!-- Main modal -->
         <div id="add-password-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
@@ -248,7 +250,14 @@ export default  {
             providers: [],
             page_loaded: false,
             github_over: false,
-            google_over: false
+            google_over: false,
+            password_over: false,
+            headers: {
+            Accept: 'application/json',
+            'content-type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
     }
 },
 
@@ -261,7 +270,7 @@ async mounted() {
    // I am 99% sure that this is a typo and it does nothing but im scared to delete it
     await this.getUser()
 
-    await axios.get(apiUrl + '/api/getConnections', {headers: headers, withCredentials: true}).then(response => {
+    await axios.get(apiUrl + '/api/getConnections', {headers: this.headers, withCredentials: true}).then(response => {
         for (let i = 0; i < response.data.length; i++) {
             switch (response.data[i]["provider"]) {
                 case 'github':
@@ -276,7 +285,7 @@ async mounted() {
         
     })
 
-    await axios.get(apiUrl + '/api/passwordNull', {headers: headers, withCredentials: true}).then(response => {
+    await axios.get(apiUrl + '/api/passwordNull', {headers: this.headers, withCredentials: true}).then(response => {
         console.log(response.data)
         if (response.data["password"] == "not null") {
             this.providers.push('password')
@@ -292,7 +301,7 @@ async mounted() {
 methods: {
 
     async removeGithub() {
-        await axios.post(apiUrl + '/api/removeGithub', [], {headers: headers, withCredentials: true}).then(response => {
+        await axios.post(apiUrl + '/api/removeGithub', [], {headers: this.headers, withCredentials: true}).then(response => {
             this.store.commit('ADD_TOAST', {
                 title: "Removed Github Connection!",
                 type: 'success',
@@ -302,7 +311,7 @@ methods: {
             this.github = false
         }).catch(e => {
             this.store.commit('ADD_TOAST', {
-                title: "Can't remove this connection!",
+                title: "Can't remove this connection! Must have password authentication enabled.",
                 type: 'warning',
                 id: Math.floor(Math.random() * 50),
                 duration: 5000
@@ -311,7 +320,7 @@ methods: {
     },
     async addGithub() {
 
-        await axios.get(apiUrl + '/api/user', {headers: headers, withCredentials: true}).then(response => {
+        await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(response => {
             const id = response.data["id"]
             window.location.href = `http://localhost:8000/auth/github?id=${id}` 
         
@@ -320,14 +329,14 @@ methods: {
         
     },
     async addGoogle() {
-        await axios.get(apiUrl + '/api/user', {headers: headers, withCredentials: true}).then(response => {
+        await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(response => {
             const id = response.data["id"]
             window.location.href = `http://localhost:8000/auth/google?id=${id}` 
         
         })
     },
     async removeGoogle() {
-        await axios.post(apiUrl + '/api/removeGoogle', [], {headers: headers, withCredentials: true}).then(response => {
+        await axios.post(apiUrl + '/api/removeGoogle', [], {headers: this.headers, withCredentials: true}).then(response => {
         this.store.commit('ADD_TOAST', {
             title: "Removed Google Connection!",
             type: 'success',
@@ -337,7 +346,7 @@ methods: {
         this.google = false
         }).catch(e => {
             this.store.commit('ADD_TOAST', {
-                title: "Can't remove this connection!",
+                title: "Can't remove this connection! Must have password authentication enabled.",
                 type: 'warning',
                 id: Math.floor(Math.random() * 50),
                 duration: 5000
@@ -346,13 +355,13 @@ methods: {
     },
     // Get user details
     async getUser() {
-        await axios.get(apiUrl + '/api/user', {headers: headers, withCredentials: true}).then(response => {
+        await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(response => {
         this.user_name = response.data["name"], this.user_email = response.data["email"]
     })
 },
 
     deleteAccount() {
-        axios.post(apiUrl + '/api/deleteAccount', [], {headers: headers, withCredentials: true}).then(response => {
+        axios.post(apiUrl + '/api/deleteAccount', [], {headers: this.headers, withCredentials: true}).then(response => {
             localStorage.removeItem('token')
             window.location.href = '/'
         })
@@ -365,7 +374,7 @@ async changeDetails() {
     this.accountDetails.user_email = this.user_email
 
     // calls the api to change the details
-    await axios.post(apiUrl + '/api/changedetails', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
+    await axios.post(apiUrl + '/api/changedetails', this.accountDetails, {headers: this.headers, withCredentials: true}).then(response => {
         this.changed = true
         this.emailAlreadyExists = false
     }).catch(error => {
@@ -374,7 +383,7 @@ async changeDetails() {
 },
 async setPasswordForUser() {
 
-    await axios.post(apiUrl + '/api/addPassword', this.addPasswordPayload, {headers: headers, withCredentials: true}).then(response => {
+    await axios.post(apiUrl + '/api/addPassword', this.addPasswordPayload, {headers: this.headers, withCredentials: true}).then(response => {
        console.log(response.data)
        this.passwordAlreadyExists = true
     })
@@ -390,20 +399,27 @@ async removeePassword() {
     for (var i = 0; i < this.providers.length; i++) {
         console.log(this.providers[i])
         if (this.providers[i] == 'password') {
-            await axios.post(apiUrl + '/api/removePassword', [], {headers: headers, withCredentials: true}).then(response => {
+            await axios.post(apiUrl + '/api/removePassword', [], {headers: this.headers, withCredentials: true}).then(response => {
                 console.log(response.data)
                 password = true
+                this.store.commit('ADD_TOAST', {
+                    title: "Removed password login!",
+                    type: 'success',
+                    id: Math.floor(Math.random() * 50),
+                    duration: 5000
+                })
+            
+                this.passwordAlreadyExists = false
+            }).catch(error => {
+                this.store.commit('ADD_TOAST', {
+                title: "Cant remove password if there is no connections!",
+                type: 'warning',
+                id: Math.floor(Math.random() * 50),
+                duration: 5000
+            })
             })
         }
     }
-    this.store.commit('ADD_TOAST', {
-        title: "Removed password login!",
-        type: 'success',
-        id: Math.floor(Math.random() * 50),
-        duration: 5000
-    })
-
-    this.passwordAlreadyExists = false
 
 },
 
@@ -430,7 +446,7 @@ async removeePassword() {
     }
 
     // calls the api to change the password
-    await axios.post(apiUrl + '/api/changePassword', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
+    await axios.post(apiUrl + '/api/changePassword', this.accountDetails, {headers: this.headers, withCredentials: true}).then(response => {
         this.changed2 = true
     }).catch(error => {
         this.textPlaceholder = 'Old password is incorrect'
@@ -441,13 +457,7 @@ async removeePassword() {
 
 }
 
-// Headers for the api requests
-const headers = {
-    Accept: 'application/json',
-    'content-type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest',
-    'Authorization': 'Bearer ' + localStorage.getItem('token')
-}
+
 
 </script>
 
