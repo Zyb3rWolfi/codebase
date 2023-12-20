@@ -15,27 +15,213 @@
                 <p v-if="emailAlreadyExists" class=" text-sm mt-2 text-gray-400">Email Already Exists!</p>
             </div>
             <button @click="changeDetails()" type="button" class="text-white  focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800">Change</button>
-            <p class="mt-5 mb-5 font-semibold">Change Password</p>
-            <div class="relative z-0 w-full mb-6 group">
-                <input v-model="user_password" type="password" name="floating_password" id="floating_password" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 appearance-none text-white border-gray-600focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Old Password</label>
+            <div v-show="passwordAlreadyExists">
+                <p class="mt-5 mb-5 font-semibold">Change Password</p>
+                <div class="relative z-0 w-full mb-6 group">
+                    <input v-model="user_password" type="password" name="floating_password" id="floating_password" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-600 appearance-none text-white border-gray-600focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Old Password</label>
+                </div>
+                <div class="relative z-0 w-full mb-6 group">
+                    <input v-model="user_new_password" type="password" name="new_password" id="floating_new_password" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_new_password" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                    <p v-if="changed2" class=" text-sm mt-2 text-gray-400">Your Details Where Changed</p>
+                    <p v-if="textToggle" class=" text-sm mt-2 text-gray-400">{{ textPlaceholder }}</p>
+                </div>
+                <button @click="changePassword()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirm</button>
+                
+
             </div>
-            <div class="relative z-0 w-full mb-6 group">
-                <input v-model="user_new_password" type="password" name="new_password" id="floating_new_password" class="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-white border-gray-600 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label for="floating_new_password" class="peer-focus:font-medium absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
-                <p v-if="changed2" class=" text-sm mt-2 text-gray-400">Your Details Where Changed</p>
-                <p v-if="textToggle" class=" text-sm mt-2 text-gray-400">{{ textPlaceholder }}</p>
-            </div>
-            <button @click="changePassword()" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirm</button>
+            <h3 class="mb-5 text-lg font-medium mt-5 text-gray-900 dark:text-white">Auth Method</h3>
+
+            <ul class="grid w-full gap-6 md:grid-cols-3">
+                <li @mouseenter="this.google_over = true" @mouseleave="this.google_over = false" id="google">
+                    <div v-if="!this.google" @click="addGoogle()">
+                        <label for="react-option" class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">                           
+                            <div class="block">
+                                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+                                     <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
+                                </svg>                
+                            </div>
+                        </label>
+                    </div>
+                    <div class="active" v-if="this.google" @click="removeGoogle()">
+                        <label for="react-option" class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">                           
+                            <div class="block">
+                                <svg v-show="!this.google_over" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
+                                     <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd"/>
+                                </svg>   
+                                <svg v-show="this.google_over" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
+                                </svg>             
+                            </div>
+                        </label>
+                    </div>
+                </li>
+
+                <li @mouseenter="this.github_over = true" @mouseleave="this.github_over = false" id="github">
+                    <div class="active" v-if="this.github" @click="removeGithub()">
+                        <label for="flowbite-option" class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                            <svg v-show="!this.github_over" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>
+                                </svg> 
+                            <svg v-show="this.github_over" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
+                            </svg>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="" v-if="!this.github" @click="addGithub()">
+                        <label for="flowbite-option" class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                            <div class="block">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>
+                                </svg> 
+                            </div>
+                        </label>
+                    </div>
+                </li>
+
+                <li v-show="!this.passwordAlreadyExists" id="null" data-modal-target="add-password-modal" data-modal-toggle="add-password-modal">
+                    <label for="angular-option" class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                        <div class="block">
+                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                <path d="M14 7h-1.5V4.5a4.5 4.5 0 1 0-9 0V7H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-5 8a1 1 0 1 1-2 0v-3a1 1 0 1 1 2 0v3Zm1.5-8h-5V4.5a2.5 2.5 0 1 1 5 0V7Z"/>
+                            </svg>
+                        </div>
+                    </label>
+                </li>
+                <li @mouseenter="this.password_over = true" @mouseleave="this.password_over = false" v-show="this.passwordAlreadyExists" class="active" id="null" data-modal-target="remove-password-modal" data-modal-toggle="remove-password-modal">
+                    <label for="angular-option" class="inline-flex items-center justify-center w-full p-5 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                        <div class="block">
+                            <svg v-show="!this.password_over" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                <path d="M14 7h-1.5V4.5a4.5 4.5 0 1 0-9 0V7H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2Zm-5 8a1 1 0 1 1-2 0v-3a1 1 0 1 1 2 0v3Zm1.5-8h-5V4.5a2.5 2.5 0 1 1 5 0V7Z"/>
+                            </svg>
+                            <svg v-show="this.password_over" class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h16M7 8v8m4-8v8M7 1h4a1 1 0 0 1 1 1v3H6V2a1 1 0 0 1 1-1ZM3 5h12v13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5Z"/>
+                            </svg>
+                        </div>
+                    </label>
+                </li>
+            </ul>
         </form>
+        <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" type="button" class="text-white mt-10 bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Delete Account</button>
+    
+    </div>
+        
+    </div>
+
+    <!-- Delete account modal -->
+    <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-4 md:p-5 text-center">
+                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete your account?</h3>
+                <button @click="deleteAccount()" data-modal-hide="popup-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                    Yes, I'm sure
+                </button>
+                <button data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+            </div>
+        </div>
         </div>
     </div>
-    
+
+    <!-- Remove Password modal-->
+    <div id="remove-password-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="remove-password-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-4 md:p-5 text-center">
+                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to remove your password?</h3>
+                <button @click="removeePassword()" data-modal-hide="remove-password-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                    Yes, I'm sure
+                </button>
+                <button data-modal-hide="remove-password-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Remove Github modal-->
+    <div id="remove-github-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="remove-github-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-4 md:p-5 text-center">
+                <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to remove the Github Connection?</h3>
+                <button @click="removeGithub()" data-modal-hide="remove-password-modal" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                    Yes, I'm sure
+                </button>
+                <button data-modal-hide="remove-github-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+        <!-- Main modal -->
+        <div id="add-password-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Setup password login
+                        </h3>
+                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="add-password-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5">
+                        <div class="space-y-4" action="#">
+                            <div>
+                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
+                                <input v-model="this.addPasswordPayload.user_password" type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                            </div>
+                            <button data-modal-hide="add-password-modal" @click="this.setPasswordForUser()" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Turn on password login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
 </template>
 
 <script>
 import axios from 'axios';
 const apiUrl = import.meta.env.VITE_API_BASE_URL
+import { initFlowbite } from 'flowbite'
+import { ref } from 'vue'
+import { useStore } from 'vuex';
 
 export default  {
     // Returns all data that is associated with the account 
@@ -50,25 +236,137 @@ export default  {
                 name: '',
                 email: '',
             },
+            addPasswordPayload: {
+                user_password: ''
+            },
             changed: false,
             changed2: false,
             emailAlreadyExists: false,
+            passwordAlreadyExists: false,
+            github: ref(false),
+            google: false,
             textPlaceholder: 'placeholder',
             textToggle: false,
+            providers: [],
+            page_loaded: false,
+            github_over: false,
+            google_over: false,
+            password_over: false,
+            headers: {
+            Accept: 'application/json',
+            'content-type': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
     }
 },
 
-async mounted() {   // I am 99% sure that this is a typo and it does nothing but im scared to delete it
-    const data = await this.getUser()
+setup() {
+    const store = useStore()
+    return { store }
+},
+
+async mounted() {
+   // I am 99% sure that this is a typo and it does nothing but im scared to delete it
+    await this.getUser()
+
+    await axios.get(apiUrl + '/api/getConnections', {headers: this.headers, withCredentials: true}).then(response => {
+        for (let i = 0; i < response.data.length; i++) {
+            switch (response.data[i]["provider"]) {
+                case 'github':
+                    this.github = true
+                    break;
+                case 'google':
+                    this.google = true
+                    break;
+            }
+            this.providers.push(response.data[i]["provider"])
+        }
+        
+    })
+
+    await axios.get(apiUrl + '/api/passwordNull', {headers: this.headers, withCredentials: true}).then(response => {
+        console.log(response.data)
+        if (response.data["password"] == "not null") {
+            this.providers.push('password')
+            this.passwordAlreadyExists = true
+        }
+    })
+
+    this.page_loaded = true
+
+    initFlowbite()
 },
 
 methods: {
+
+    async removeGithub() {
+        await axios.post(apiUrl + '/api/removeGithub', [], {headers: this.headers, withCredentials: true}).then(response => {
+            this.store.commit('ADD_TOAST', {
+                title: "Removed Github Connection!",
+                type: 'success',
+                id: Math.floor(Math.random() * 50),
+                duration: 5000
+            })
+            this.github = false
+        }).catch(e => {
+            this.store.commit('ADD_TOAST', {
+                title: "Can't remove this connection! Must have password authentication enabled.",
+                type: 'warning',
+                id: Math.floor(Math.random() * 50),
+                duration: 5000
+            })
+        })
+    },
+    async addGithub() {
+
+        await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(response => {
+            const id = response.data["id"]
+            window.location.href = `http://localhost:8000/auth/github?id=${id}` 
+        
+        })
+        
+        
+    },
+    async addGoogle() {
+        await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(response => {
+            const id = response.data["id"]
+            window.location.href = `http://localhost:8000/auth/google?id=${id}` 
+        
+        })
+    },
+    async removeGoogle() {
+        await axios.post(apiUrl + '/api/removeGoogle', [], {headers: this.headers, withCredentials: true}).then(response => {
+        this.store.commit('ADD_TOAST', {
+            title: "Removed Google Connection!",
+            type: 'success',
+            id: Math.floor(Math.random() * 50),
+            duration: 5000
+        })
+        this.google = false
+        }).catch(e => {
+            this.store.commit('ADD_TOAST', {
+                title: "Can't remove this connection! Must have password authentication enabled.",
+                type: 'warning',
+                id: Math.floor(Math.random() * 50),
+                duration: 5000
+            })
+        })
+    },
     // Get user details
     async getUser() {
-        await axios.get(apiUrl + '/api/user', {headers: headers, withCredentials: true}).then(response => {
-        this.user_name = response.data["name"], this.user_email = response.data["email"]})
+        await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(response => {
+        this.user_name = response.data["name"], this.user_email = response.data["email"]
+    })
 },
-    
+
+    deleteAccount() {
+        axios.post(apiUrl + '/api/deleteAccount', [], {headers: this.headers, withCredentials: true}).then(response => {
+            localStorage.removeItem('token')
+            window.location.href = '/'
+        })
+    },
+
         // Details change request
 async changeDetails() {
     
@@ -76,12 +374,53 @@ async changeDetails() {
     this.accountDetails.user_email = this.user_email
 
     // calls the api to change the details
-    await axios.post(apiUrl + '/api/changedetails', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
+    await axios.post(apiUrl + '/api/changedetails', this.accountDetails, {headers: this.headers, withCredentials: true}).then(response => {
         this.changed = true
         this.emailAlreadyExists = false
     }).catch(error => {
         this.emailAlreadyExists = true // If the email already exists we will enable the prompt
     })
+},
+async setPasswordForUser() {
+
+    await axios.post(apiUrl + '/api/addPassword', this.addPasswordPayload, {headers: this.headers, withCredentials: true}).then(response => {
+       console.log(response.data)
+       this.passwordAlreadyExists = true
+    })
+    this.store.commit('ADD_TOAST', {
+        title: "Added password login!",
+        type: 'success',
+        id: Math.floor(Math.random() * 50),
+        duration: 5000
+    })
+
+},
+async removeePassword() {
+    for (var i = 0; i < this.providers.length; i++) {
+        console.log(this.providers[i])
+        if (this.providers[i] == 'password') {
+            await axios.post(apiUrl + '/api/removePassword', [], {headers: this.headers, withCredentials: true}).then(response => {
+                console.log(response.data)
+                password = true
+                this.store.commit('ADD_TOAST', {
+                    title: "Removed password login!",
+                    type: 'success',
+                    id: Math.floor(Math.random() * 50),
+                    duration: 5000
+                })
+            
+                this.passwordAlreadyExists = false
+            }).catch(error => {
+                this.store.commit('ADD_TOAST', {
+                title: "Cant remove password if there is no connections!",
+                type: 'warning',
+                id: Math.floor(Math.random() * 50),
+                duration: 5000
+            })
+            })
+        }
+    }
+
 },
 
     // Password change request
@@ -107,7 +446,7 @@ async changeDetails() {
     }
 
     // calls the api to change the password
-    await axios.post(apiUrl + '/api/changePassword', this.accountDetails, {headers: headers, withCredentials: true}).then(response => {
+    await axios.post(apiUrl + '/api/changePassword', this.accountDetails, {headers: this.headers, withCredentials: true}).then(response => {
         this.changed2 = true
     }).catch(error => {
         this.textPlaceholder = 'Old password is incorrect'
@@ -118,11 +457,15 @@ async changeDetails() {
 
 }
 
-// Headers for the api requests
-const headers = {
-    Accept: 'application/json',
-    'content-type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest'
-}
+
 
 </script>
+
+<style scoped>
+
+.active {
+    border: white solid 2px;
+    border-radius: 10%;
+}
+
+</style>

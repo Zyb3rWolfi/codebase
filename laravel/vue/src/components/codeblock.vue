@@ -158,7 +158,8 @@ var payload = {
 var header = {
                 Accept: 'application/json',
                 'content-type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
+                'X-Requested-With': 'XMLHttpRequest',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
 
 
@@ -194,7 +195,8 @@ var tempDescription = ref(props.search["description"])
 const headers = {
     Accept: 'application/json',
     'content-type': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': 'Bearer ' + localStorage.getItem('token')
 }
 
 // Data for the API

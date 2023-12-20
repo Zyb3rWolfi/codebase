@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('auth/google', [App\Http\Controllers\AuthController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [App\Http\Controllers\AuthController::class, 'handleGoogleCallback']);
+
+Route::get('auth/github', [App\Http\Controllers\AuthController::class, 'redirectToGithub']);
+Route::get('auth/github/callback', [App\Http\Controllers\AuthController::class, 'handleGithubCallback']);
+
+
 Route::get('/', function () {
     return view('welcome');
+
 });
