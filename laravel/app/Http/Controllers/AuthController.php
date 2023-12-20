@@ -232,6 +232,53 @@ class AuthController extends Controller
         return response($user, 201);
     }
 
+    public function removeGithub(Request $request) {
+        $user = Auth::user();
+
+        if (DB::table('users')->where('id', '=', $user->id)->where('password', '=', null)->exists()) {
+            return response([
+                'message' => 'You cannot remove your Github account as you have not set a password'
+            ], 401);
+        }
+
+        DB::table('user_providers')->where('user_id', '=', $user->id)->where('provider', '=', 'github')->delete();
+        return response($user, 201);
+    }
+    public function removeGoogle(Request $request) {
+        $user = Auth::user();
+
+        if (DB::table('users')->where('id', '=', $user->id)->where('password', '=', null)->exists()) {
+            return response([
+                'message' => 'You cannot remove your Google account as you have not set a password'
+            ], 401);
+        }
+
+        DB::table('user_providers')->where('user_id', '=', $user->id)->where('provider', '=', 'google')->delete();
+        return response($user, 201);
+    }
+
+    public function passwordNull(Request $request) {
+        $user = Auth::user();
+
+        if (DB::table('users')->where('id', '=', $user->id)->where('password', '=', null)->exists()) {
+            return response([
+                'password' => 'null'
+            ], 200);
+        } else {
+            return response([
+                'password' => 'not null'
+            ], 200);
+        }
+    }
+
+    public function removePassword(Request $request) {
+        $user = Auth::user();
+        $user->password = null;
+        $user->save();
+
+        return response($user, 201);
+    }
+
     public function User(Request $request) {
         if ($request->user()) {
             return response($request->user(), 200);

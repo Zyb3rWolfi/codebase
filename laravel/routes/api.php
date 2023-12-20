@@ -31,6 +31,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('changePassword', [App\Http\Controllers\AuthController::class, 'changePassword']);
     Route::post('addPassword', [App\Http\Controllers\AuthController::class, 'addPassword']);
     Route::post('/test', [App\Http\Controllers\DbController::class, 'getData']);
+    Route::post('removeGithub', [App\Http\Controllers\AuthController::class, 'removeGithub']);
+    Route::post('removeGoogle', [App\Http\Controllers\AuthController::class, 'removeGoogle']);
+    Route::get('passwordNull', [App\Http\Controllers\AuthController::class, 'passwordNull']);
+    Route::post('removePassword' , [App\Http\Controllers\AuthController::class, 'removePassword']);
     Route::middleware(['throttle:10,1']) ->group(function () {
         Route::post('/addBlock', [App\Http\Controllers\DbController::class, 'addBlock']);
         Route::post('/deleteBlock', [App\Http\Controllers\DbController::class, 'deleteBlock']);
