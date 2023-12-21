@@ -185,6 +185,7 @@ class AuthController extends Controller
         $user = Auth::user();
         $user->delete();
         DB::table('codeblocks')->where('user_id', $user->id)->delete();
+        DB::table('user_providers')->where('user_id', $user->id)->delete();
         return response([
             'message' => 'success'
         ], 200);
@@ -351,8 +352,7 @@ class AuthController extends Controller
     }
 
     public function Logout(Request $request) {
-        $user = Auth::user()->token();
-        $user->revoke();
+        $request->user()->currentAccessToken()->delete();
 
         return response([
             'message' => 'logged out'
