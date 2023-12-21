@@ -62,13 +62,15 @@ onMounted(() => {
 
         const options = {
             closable: true,
-            backdrop: 'dyanmic',
-            backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+            onHide: () => {
+                backdropClasses: ''
+            }
         };
 
         const instanceOptions = {
-            id: 'modalEl',
-            override: true
+            id: "penis",
+            override: true,
+            backdropClasses: ''
             };
 
             if($target){

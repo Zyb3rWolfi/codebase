@@ -47,17 +47,19 @@ onMounted(() => {   // Runs just before the component is mounted
 
     // sets the instance options for the modal
     const instanceOptions = {
-        id: 'modalEl',
-        backdrop: 'dyanmic',
-        backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+        id: 'bussy',
         override: true
         };
+
+    const settings = {
+        closable: true,
+        backdropClasses: '',
+    };
 
     if($target){
 
         // creates the modal variable
-        const modal = new Modal($target, instanceOptions)
-
+        const modal = new Modal($target, settings, instanceOptions)
         // adds event listeners to the buttons for when they are pressed
         $signUpButon.addEventListener('click', () => toggleSignUpModal(2,modal))
         $loginButton.addEventListener('click', () => toggleSignUpModal(1, modal))
@@ -74,6 +76,7 @@ onMounted(() => {   // Runs just before the component is mounted
 function closeModal(modal) {
     setTimeout(() => {
         if (auth.value){
+            console.log("closing")
             modal.hide()
         }
     }, 2000);

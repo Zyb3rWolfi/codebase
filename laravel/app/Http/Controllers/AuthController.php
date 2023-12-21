@@ -134,16 +134,11 @@ class AuthController extends Controller
         // If the users connection exists in the database, log them in
         if (DB::table('user_providers')->where('provider_user_id', '=', $user->id)->exists() && DB::table('user_providers')->where('provider', '=', 'github')->exists()) {
             
-            if (User::where('email', '=', $user->email)->first()) {
-                $token = $user->createToken('API Token')->accessToken;
-                return redirect('http://localhost:5173?token='.$token);
-            } else {
                 $user = DB::table('user_providers')->where('provider_user_id', '=', $user->id)->first()->user_id;
                 $user = User::where('id', '=', $user)->first();
                 $token = $user->createToken('API Token')->accessToken;
                 return redirect('http://localhost:5173?token='.$token);
-
-            }
+            
         } else {
 
             // If the user exists however the connection does not, create the connection and log them in
