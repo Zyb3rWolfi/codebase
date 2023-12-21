@@ -44,21 +44,19 @@ onMounted(() => {   // Runs just before the component is mounted
     const $closeregister = document.getElementById('closeButtonRegister')
 
 
-    // sets the options for the modal
-    const options = {
-        closable: true,
-        backdropClasses: '',
-    };
+
     // sets the instance options for the modal
     const instanceOptions = {
         id: 'modalEl',
+        backdrop: 'dyanmic',
+        backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
         override: true
         };
 
     if($target){
 
         // creates the modal variable
-        const modal = new Modal($target, options, instanceOptions)
+        const modal = new Modal($target, instanceOptions)
 
         // adds event listeners to the buttons for when they are pressed
         $signUpButon.addEventListener('click', () => toggleSignUpModal(2,modal))

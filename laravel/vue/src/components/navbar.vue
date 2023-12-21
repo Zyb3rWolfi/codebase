@@ -1,5 +1,5 @@
 <script setup>
-  import { RouterLink, useRouter } from 'vue-router';
+  import { RouterLink, useRouter, useRoute } from 'vue-router';
   import { useStore } from 'vuex';
   import {computed, onMounted} from 'vue'
   import axios from 'axios'
@@ -9,9 +9,9 @@
   const auth = computed(() => store.state.auth) // checks if the user is authenticated
   const admin = computed(() => store.state.admin) // checks if the user is an admin
 
-  const router = useRouter() // access the router
   const apiUrl = import.meta.env.VITE_API_BASE_URL // declares the api url from the .env file
-
+  const router = useRouter() // access the router
+  const route = useRoute() // access the route
   // logs the user out
   async function logOut() {
 
@@ -54,8 +54,11 @@
           <router-link active-class="active" :to="'/'" class=" cursor-pointer block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-neutral-500">// Search</router-link>
         </li>
         
-        <li v-if="auth">
+        <li v-if="route.path != '/user/' + store.state.id + '/account' && auth">
           <router-link active-class="active" :to="'/user/' + store.state.id + '/code'" class="cursor-pointer block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-neutral-500">// Manage</router-link>
+        </li>
+        <li v-if="route.path == '/user/' + store.state.id + '/account' && auth">
+          <router-link active-class="active" :to="'/user/' + store.state.id + '/account'" class="cursor-pointer block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-neutral-500">// Manage</router-link>
         </li>
 
         <li v-if="admin">

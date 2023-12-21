@@ -17,28 +17,32 @@
 
             </div>
         </div>
-    </div>    
+    </div> 
+    <loginRegister />   
 </template>
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { onBeforeMount, onMounted, ref, computed } from 'vue';
 import {useRoute } from 'vue-router';
 import axios from 'axios';
 import CodeEditor from "simple-code-editor";
-
+import { Modal } from 'flowbite'
+import loginRegister from "../views/loginRegisterView.vue"
+import { useStore } from 'vuex';
 
 const apiUrl = import.meta.env.VITE_API_BASE_URL
 var props = ref([])
 const route = useRoute() // access the router
 var loading = ref(false)
-
+const store = useStore()
+const auth = computed(() => store.state.auth)
 async function getResponse(token, header) {
 
     loading.value = true
-        // If the search is empty we will empty the answer array and return
-        if (token === '') {
-            answer = [];
-            return;
-        }
+    // If the search is empty we will empty the answer array and return
+    if (token === '') {
+        answer = [];
+        return;
+    }
         // Otherwise we will make a request to the api and set the answer array to the response
         const response = await axios.get(apiUrl + '/api/getSharedBlock/' + token, {headers: header, withCredentials: true});
         var answer = response.data["strings"];
@@ -47,9 +51,54 @@ async function getResponse(token, header) {
     } 
 
 onMounted(() => {
-    console.log('mounted')
-        
-});
+    
+        console.log('mounted')
+
+        const $signInButton = document.getElementById('openLogin')
+        const $target = document.getElementById('loginRegisterModal')
+        const $submitButton = document.getElementById('submitButton')
+        const $submitButtonRegister = document.getElementById('submitButtonRegister')
+        const $close = document.getElementById('closeButton')
+        const $closeregister = document.getElementById('closeButtonRegister')
+
+        console.log($signInButton)
+        const options = {
+            closable: true,
+            backdrop: 'dyanmic',
+            backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+        };
+
+        const instanceOptions = {
+            id: 'modalEl',
+            override: true
+            };
+
+            if($target){
+                const modal = new Modal($target, options, instanceOptions)
+                console.log(modal)
+                $signInButton.addEventListener('click', () => toggleSignUpModal(1, modal))
+                $submitButtonRegister.addEventListener('click', () => closeModal(modal))
+                $closeregister.addEventListener('click', () => modal.hide())
+                $submitButton.addEventListener('click', () => closeModal(modal))
+                $close.addEventListener('click', () => modal.hide())
+
+        }
+    });
+    
+    function closeModal(modal) {
+        setTimeout(() => {
+            if (auth.value){
+                modal.hide()
+            }
+        }, 2000);
+    }
+    
+    async function toggleSignUpModal(state, modal){
+        await store.dispatch('setSignupModalState', state)
+        modal.toggle()
+    }
+
+
 onBeforeMount(() => {
     var $token = route.params.token // access the token parameter from the url
 

@@ -8,6 +8,7 @@ import privacy from "../views/privacyNotice.vue";
 import share from "../views/share.vue";
 import store from "../store/index.ts";
 import admin from "../views/admin.vue";
+import sym from "../views/sym.vue";
 
 const routes = [
     {
@@ -49,7 +50,12 @@ const routes = [
         path: '/admin',
         name: 'admin',
         component: admin,
-    }
+    },
+    {
+        path: '/sym',
+        name: 'sym',
+        component: sym,
+    },
 ];
 
 const router = createRouter({
