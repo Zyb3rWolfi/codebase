@@ -189,6 +189,24 @@ class AuthController extends Controller
             'message' => 'success'
         ], 200);
     }
+
+    public function adminDeleteAccount(Request $request) {
+        if (Auth::user()->admin == true) {
+            $id = $request->input('id');
+            DB::table('users')->where('id', $id)->delete();
+            DB::table('user_providers')->where('user_id', $id)->delete();
+            DB::table('codeblocks')->where('user_id', $id)->delete();
+            return response([
+                'message' => 'success'
+            ], 200);
+        }
+        else {
+            return response([
+                'message' => 'not authed'
+            ], 401);
+        }
+    }
+
     public function resetAuth(Request $request) {
         $user = Auth::user();
         $user->tokens()->delete();

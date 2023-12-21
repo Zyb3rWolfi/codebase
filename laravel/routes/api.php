@@ -23,6 +23,7 @@ Route::get('/getSharedBlock/{token}', [App\Http\Controllers\DbController::class,
 Route::post('/createShareToken', [App\Http\Controllers\DbController::class, 'createShareToken']);
 Route::middleware('auth:api')->group(function () {
     Route::post('deleteAccount', [App\Http\Controllers\AuthController::class, 'deleteAccount']);
+    Route::post('adminDeleteAccount', [App\Http\Controllers\AuthController::class, 'adminDeleteAccount']);
     Route::post('getUserByID', [App\Http\Controllers\DbController::class, 'getUserDetailsByID']);
     Route::post('getUserPreviews', [App\Http\Controllers\DbController::class, 'GetUserPreviews']);
     Route::get('userCount', [App\Http\Controllers\DbController::class, 'getUserCount']);
