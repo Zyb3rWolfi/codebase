@@ -164,11 +164,14 @@ class DbController extends Controller
         if (Auth::user()->admin == true) {
             $id = $request->input('id');
             $data = DB::table('users')->select('created_at', 'updated_at')->where('id', $id)->get();
+            $connections = DB::table('user_providers')->select('provider')->where('user_id', $id)->get();
             foreach ($data as $key => $value) {
                 $data[$key] = $value;
             }
+
             return response()->json([
                 'strings' => $data,
+                'connections' => $connections,
 
             ]);
         }

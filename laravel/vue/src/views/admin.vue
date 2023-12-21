@@ -56,8 +56,9 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-
-        <userPreview v-if="!loading"  v-for="user in userPreviews" id :user="user"></userPreview>    
+        <div class="mb-24 grid mx-auto grid-cols-1  justify-items-center w-4/5">
+            <userPreview v-if="!loading"  v-for="user in userPreviews" id :user="user"></userPreview>    
+        </div>
     </div>
 </template>
 

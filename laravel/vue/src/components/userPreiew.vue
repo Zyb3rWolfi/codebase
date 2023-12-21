@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="notDeleted" :id="user.id" class=" w-4/5 ">
+    <div v-if="notDeleted" :id="user.id" >
         <div class="grid grid-row ">
                 <div class="grid grid-cols-4  ">          
                     <h1 class=" text-xl font-bold text-left p-3 border-r-2 border-l-2 border-b-2">{{user.id}}</h1>
@@ -73,7 +73,11 @@
 
                         <h3  class="mb-4 text-xl font-medium text-white">Created at : {{userDetails.created_at}}</h3>
                         <h3  class="mb-4 text-xl font-medium text-white">Last Updated : {{userDetails.updated_at}}</h3>
-                        <div  type="button" class="w-full text-white  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"><router-link active-class="active" :to="'/user/' + user.id + '/code'" >View users blocks</router-link></div>
+                        
+                        <h3  class="mb-4 text-xl font-medium text-white">Connections :{{userDetails.connections.split("undefined")[userDetails.connections.split("undefined").length -1]}}</h3>
+
+
+                        <router-link type="button" class="w-full text-white  focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800" active-class="active" :to="'/user/' + user.id + '/code'" >View users blocks</router-link>
 
                     </div>
                 </div>
@@ -119,7 +123,9 @@
         }
           const response = await axios.post(apiUrl + '/api/getUserByID', payload, {headers: headers, withCredentials: true}).then(function(response) {
             userDetails.value = response.data["strings"][0]
-            console.log(userDetails.value)
+            response.data["connections"].forEach(element => {
+                userDetails.value.connections = userDetails.value.connections + " " + element["provider"]                
+            });
           })
         detailsLoading.value = false
     }
@@ -129,7 +135,7 @@
             id : props.user.id
         }
         axios.post(apiUrl + '/api/adminDeleteAccount', payload, {headers: this.headers, withCredentials: true}).then(response => {
-            if (response.data["status"] == "success") {
+            if (response.data["message"] == "success") {
                 notDeleted.value = false
             }
         })
