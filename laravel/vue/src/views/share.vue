@@ -52,7 +52,6 @@ async function getResponse(token, header) {
 
 onMounted(() => {
     
-        console.log('mounted')
 
         const $signInButton = document.getElementById('openLogin')
         const $target = document.getElementById('loginRegisterModal')
@@ -61,7 +60,6 @@ onMounted(() => {
         const $close = document.getElementById('closeButton')
         const $closeregister = document.getElementById('closeButtonRegister')
 
-        console.log($signInButton)
         const options = {
             closable: true,
             backdrop: 'dyanmic',
@@ -75,7 +73,7 @@ onMounted(() => {
 
             if($target){
                 const modal = new Modal($target, options, instanceOptions)
-                console.log(modal)
+
                 $signInButton.addEventListener('click', () => toggleSignUpModal(1, modal))
                 $submitButtonRegister.addEventListener('click', () => closeModal(modal))
                 $closeregister.addEventListener('click', () => modal.hide())
@@ -108,7 +106,6 @@ onBeforeMount(() => {
         'X-Requested-With': 'XMLHttpRequest'
     }
     getResponse($token, header)
-    console.log("before mount")
     
 });
 

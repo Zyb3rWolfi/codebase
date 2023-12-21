@@ -119,7 +119,6 @@
         }
           const response = await axios.post(apiUrl + '/api/getUserByID', payload, {headers: headers, withCredentials: true}).then(function(response) {
             userDetails.value = response.data["strings"][0]
-            console.log(userDetails.value)
           })
         detailsLoading.value = false
     }

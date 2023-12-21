@@ -295,7 +295,6 @@ async function removeBlock() {
         // ------
     } 
     catch (e) {
-        console.log(e)
     }
 
 }
@@ -347,7 +346,6 @@ async function modifyBlock() {
         // ------
     }   
     catch (e) {
-        console.log(e)
     }
 
 }

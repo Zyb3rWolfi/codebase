@@ -22,7 +22,6 @@
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
       }, withCredentials: true}) // makes the request to the api to remove the session cookie
     } catch (e) {
-      console.log(e)
     }
     await store.dispatch('setAuthentication', false) // sets the authentication to false
     await store.dispatch('setadmin', false) // sets the admin to false

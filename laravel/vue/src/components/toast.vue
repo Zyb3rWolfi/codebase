@@ -53,7 +53,6 @@ export default {
     },
     mounted() {
         initFlowbite()
-        console.log(this.toast.type)
         this.dismiss()
     },
 

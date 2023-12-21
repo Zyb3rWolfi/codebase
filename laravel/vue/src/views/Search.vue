@@ -116,7 +116,6 @@ export default {
             this.loading = true
             payload.title = this.search
             payload.filters = this.selectedLanguages
-            console.log(this.sendData)
             // Otherwise we will make a request to the api and set the answer array to the response
             const response = await axios.post(apiUrl + '/api/test', payload, {headers: this.header, withCredentials: true});
             this.answer = response.data["strings"];
