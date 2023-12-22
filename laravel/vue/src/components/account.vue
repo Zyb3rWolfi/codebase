@@ -356,7 +356,7 @@ methods: {
 
         await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(response => {
             const id = response.data["id"]
-            window.location.href = `http://localhost:8000/auth/github?id=${id}` 
+            window.location.href = apiUrl + `/auth/github?id=${id}` 
         
         })
         
@@ -366,7 +366,7 @@ methods: {
     async addGoogle() {
         await axios.get(apiUrl + '/api/user', {headers: this.headers, withCredentials: true}).then(response => {
             const id = response.data["id"]
-            window.location.href = `http://localhost:8000/auth/google?id=${id}` 
+            window.location.href = apiUrl + `/auth/google?id=${id}` 
         
         })
     },

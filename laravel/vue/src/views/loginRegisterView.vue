@@ -173,10 +173,10 @@ export default {
     },
     methods: {
         loginOauth() {
-            window.location.href = 'https://' + apiUrl + '/auth/google?id=$null'
+            window.location.href = apiUrl + '/auth/google?id=$null'
         },
         discordLogin() {
-            window.location.href = 'https://' + apiUrl + '/auth/github?id=$null'
+            window.location.href = apiUrl + '/auth/github?id=$null'
         },
         // Submits the data to the api
         async submitDataRegister() {
