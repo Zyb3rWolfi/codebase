@@ -81,7 +81,7 @@ class AuthController extends Controller
 
             $user = User::where('email', '=', $user->email)->first();
             $token = $user->createToken('API Token')->accessToken;
-            return redirect('http://localhost:5173?token='.$token);
+            return redirect(env('VITE_URL').'?token='.$token);
         } else {
 
             // If the user exists however the connection does not, create the connection and log them in
@@ -91,11 +91,11 @@ class AuthController extends Controller
                     'provider_user_id' => $user->id,
                     'provider' => 'google'
                 ]);
-                return redirect('http://localhost:5173?connection=google');
+                return redirect(env('VITE_URL').'?connection=google');
             }
             // If the user is not logged in and a record of the user connection doesn not exist with their account we do not log them in.
             if (User::where('email', '=', $user->email)->exists()) {
-                return redirect('http://localhost:5173?error='.$userId);
+                return redirect(env('VITE_URL').'?error='.$userId);
             }
             // Otherwise we create a new user and log them in
             // This is where we create the user for Users table
@@ -115,7 +115,7 @@ class AuthController extends Controller
 
             // This is where we create the token for the user and redirect them to the front end
             $token = $newUser->createToken('API Token')->accessToken;
-            return redirect('http://localhost:5173?token='.$token);
+            return redirect(env('VITE_URL').'?token='.$token);
         }
     }
 
@@ -137,7 +137,7 @@ class AuthController extends Controller
                 $user = DB::table('user_providers')->where('provider_user_id', '=', $user->id)->first()->user_id;
                 $user = User::where('id', '=', $user)->first();
                 $token = $user->createToken('API Token')->accessToken;
-                return redirect('http://localhost:5173?token='.$token);
+                return redirect(env('VITE_URL').'?token='.$token);
             
         } else {
 
@@ -148,12 +148,12 @@ class AuthController extends Controller
                     'provider_user_id' => $user->id,
                     'provider' => 'github'
                 ]);
-                return redirect('http://localhost:5173?connection=github');
+                return redirect(env('VITE_URL').'?connection=github');
             }
             
             // If the user is not logged in and a record of the user connection doesn not exist with their account we do not log them in.
             if (User::where('email', '=', $user->email)->exists()) {
-                return redirect('http://localhost:5173?error='.$userId);
+                return redirect(env('VITE_URL').'?error='.$userId);
             }
             // Otherwise we create a new user and log them in
             // This is where we create the user for Users table
@@ -172,7 +172,7 @@ class AuthController extends Controller
             ]);
             // This is where we create the token for the user and redirect them to the front end
             $token = $newUser->createToken('API Token')->accessToken;
-            return redirect('http://localhost:5173?token='.$token);
+            return redirect(env('VITE_URL').'?token='.$token);
         }
     }
 
@@ -213,24 +213,6 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function Login(Request $request) {
-
-
-        if (!Auth::attempt($request->only('email', 'password'))) {
-            return response([
-                'message' => 'Invalid credentials '
-            ], 401);
-        }
-
-        $user = Auth::user();
-
-        $token = $user->createToken('token')->plainTextToken;
-        $cookie = cookie('jwt', $token, 60*24); // 1 day
-
-        return response([
-            'message'=> 'success'  
-        ]) -> withCookie($cookie);
-    }
 
     public function changePassword(Request $request) {
         $user = Auth::user();
