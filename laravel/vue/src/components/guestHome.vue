@@ -76,7 +76,6 @@ onMounted(() => {   // Runs just before the component is mounted
 function closeModal(modal) {
     setTimeout(() => {
         if (auth.value){
-            console.log("closing")
             modal.hide()
         }
     }, 2000);

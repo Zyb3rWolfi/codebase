@@ -316,7 +316,6 @@ async mounted() {
     })
     // This checks if the user has a password set
     await axios.get(apiUrl + '/api/passwordNull', {headers: this.headers, withCredentials: true}).then(response => {
-        console.log(response.data)
         if (response.data["password"] == "not null") {
             this.providers.push('password')
             this.passwordLogin = true
@@ -425,7 +424,6 @@ methods: {
     async setPasswordForUser() {
 
         await axios.post(apiUrl + '/api/addPassword', this.addPasswordPayload, {headers: this.headers, withCredentials: true}).then(response => {
-        console.log(response.data)
         this.passwordAlreadyExists = true
         })
         this.store.commit('ADD_TOAST', {
@@ -443,7 +441,6 @@ methods: {
         if (this.github || this.google) {
             if (this.passwordAlreadyExists) {
                 await axios.post(apiUrl + '/api/removePassword', [], {headers: this.headers, withCredentials: true}).then(response => {
-                    console.log(response.data)
                     password = true
                     this.store.commit('ADD_TOAST', {
                         title: "Removed password login!",

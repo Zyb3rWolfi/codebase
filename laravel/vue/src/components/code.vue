@@ -231,8 +231,6 @@ export default {
             // FILTERING LOGIC WHEN ADDING A NEW BLOCK
 
             this.languageSet.add(this.sendData.language)
-            console.log("Saving to dataset")
-
             
             this.store.dispatch('setFilterLanguages', Array.from(this.languageSet))
             
