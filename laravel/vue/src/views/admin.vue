@@ -68,7 +68,11 @@
     import axios from 'axios';
     import userPreview from '../components/userPreiew.vue';
     import debounce from 'lodash/debounce';
+    import { useStore } from 'vuex';
+    import { useRouter } from 'vue-router';
 
+    const store = useStore()
+    const router = useRouter()
     var totalUsers = ref(0)
     var newUsers = ref(0)
     const apiUrl = import.meta.env.VITE_API_BASE_URL // Api Url from .evn file
@@ -117,6 +121,10 @@
 
     
     onMounted(() => {
+            
+        if (store.state.admin == false) {
+            router.push('/')
+        }
 
             gettotalUsers();
             getnewUsers();
