@@ -225,3 +225,16 @@ div.codeblock-buttons{
 .bg-codeeditor-grey {
   background-color: #282c34;
 }
+.absolute-center-x{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.md-absolute-center-x{
+  @media screen and (min-width: 768px) {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    
+  }
+}
