@@ -45,7 +45,7 @@
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
         </svg>
     </button>
-    <div class="hidden w-full md:block md:w-auto my-auto" id="navbar-default">
+    <div class="hidden w-full md:block md:w-auto my-auto md-absolute-center-x" id="navbar-default">
       <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 text-sm my-auto border rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0">
         <li v-if="!auth">
           <router-link active-class="active" :to="'/'" class=" cursor-pointer block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 text-neutral-500">// Home</router-link>
