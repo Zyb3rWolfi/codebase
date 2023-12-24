@@ -181,9 +181,12 @@
         </div>
     </div>
  
+    <footerComp class=""></footerComp>
 </template>
 
 <script setup>
+
+import footerComp from '../components/footer.vue'
 
 
 </script>

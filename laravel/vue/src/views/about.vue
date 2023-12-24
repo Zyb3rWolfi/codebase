@@ -23,6 +23,7 @@
         </div>
     </div>
     <loginRegister />
+    <footerComp class=""></footerComp>
 </template>
 <script setup>
     import {  onMounted, computed } from 'vue'
@@ -30,7 +31,7 @@
     import { useStore } from 'vuex';
     import loginRegister from "../views/loginRegisterView.vue"
     import '../css/guestStyle.css'
-
+    import footerComp from '../components/footer.vue'
     const store = useStore()
     const auth = computed(() => store.state.auth)
 

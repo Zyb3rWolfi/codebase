@@ -237,7 +237,7 @@
                 </div>
             </div>
         </div> 
-
+        <footerComp class=""/>
 </template>
 
 <script>
@@ -246,6 +246,7 @@ const apiUrl = import.meta.env.VITE_API_BASE_URL
 import { initFlowbite } from 'flowbite'
 import { ref } from 'vue'
 import { useStore } from 'vuex';
+import footerComp from './footer.vue'
 
 export default  {
     // Returns all data that is associated with the account 
@@ -289,7 +290,9 @@ export default  {
         }
     }
 },
-
+components: {
+    footerComp
+},
 setup() {
     const store = useStore()
     return { store }

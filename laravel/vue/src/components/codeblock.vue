@@ -170,8 +170,8 @@ async function getShareToken() {
             shareToken.value = response.data["token"]
             shareLink.value = "codebranch.me/share/" + response.data["token"]
             loadLink.value = true
-            return
         }
+
         shareLink = "https://codebranch.me/share/" + shareToken.value
         loadLink.value = true
         navigator.clipboard.writeText(shareLink)

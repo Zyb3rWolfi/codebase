@@ -9,7 +9,6 @@
     <div class="mx-auto content-center mt-10 mb-20">
         <router-view></router-view>
     </div>
-
 </template>
     
 <script>
@@ -18,6 +17,7 @@ import { ref } from 'vue'
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { computed } from 'vue';
+import footerComp from '../components/footer.vue'
 import codePage from '../components/code.vue';
 import accountPage from '../components/account.vue';
 import settingsNav from '../components/settingsNav.vue'
@@ -64,7 +64,7 @@ export default {
         };
         userRequest();
     },
-    components: {codePage, accountPage, settingsNav }
+    components: {codePage, accountPage, settingsNav, footerComp }
 }
 
 </script>

@@ -36,7 +36,7 @@
         </div>
         <div data-popper-arrow></div>
   </div>
-    <div class="my-10">
+    <div class="my-10 mb-56">
         <p class="text-center text-2xl font-bold mb-5">Search Results</p>
         <div class="grid mx-auto grid-cols-1  gap-5 justify-items-center">
             <div v-if="loading" role="status" class=" mt-20">
@@ -50,6 +50,8 @@
         </div>
     </div>
 
+    <footerComp class=""></footerComp>
+
 </template>
     
 <script>
@@ -59,6 +61,7 @@ import { ref, watch } from 'vue';
 import Result from '../components/result.vue';
 const apiUrl = import.meta.env.VITE_API_BASE_URL
 import { initFlowbite } from 'flowbite';
+import footerComp from '../components/footer.vue'
 export default {
     name: 'search',
     setup() {
@@ -93,6 +96,7 @@ export default {
     components: {
         Result,
         NavBar,
+        footerComp
     },
     methods: {
         async updateFilters() {

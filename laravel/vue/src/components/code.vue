@@ -3,7 +3,7 @@
         <div>
             <p id="userTitle" class=" text-2xl font-semibold col-start-2">Code Blocks</p>
         </div>
-        <div class=" flex justify-end flex-wrap">
+        <div class="flex justify-center flex-wrap">
             <button id="openCreateModal" class=" text-white bg-blue-700 rounded-lg p-3 justify-self-end text-sm" >New Codeblock</button>            
             <button data-popover-placement="bottom" data-popover-target="filters" class="ml-5 bg-blue-700 p-2 rounded-lg">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
@@ -36,7 +36,7 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <div class="lg:flex-cols-4 w-auto mt-3 flex gap-5 flex-wrap flex-row sm:flex-cols-1 md:grid-cols-2 justify-evenly">
+    <div class="lg:flex-cols-4 w-auto mt-3 lg:flex ml-3 mr-3 gap-5 flex-wrap flex-row sm:flex-cols-1 md:grid-cols-2 justify-evenly">
         <codeBlock v-for="ans in answer" :search="ans" :key="ans"/>
         <div v-if="answer.length == 0 && gotBlocks" class="text-center my-48">
             <p id="title" class="text-2xl font-semibold col-start-2">/ 404 No Codeblocks Found /</p>
@@ -79,7 +79,7 @@
         </div>
     </div>
 </div>
-
+<footerComp v-if=" this.gotBlocks"></footerComp>
 </template>
 
 <script>
@@ -91,7 +91,7 @@ import axios from 'axios';
 import { initFlowbite } from 'flowbite'
 import { useStore } from 'vuex';
 const apiUrl = import.meta.env.VITE_API_BASE_URL
-
+import footerComp from './footer.vue';
 let modal = null
 
 export default {
@@ -131,6 +131,7 @@ export default {
     components: {
         codeBlock,
         CodeEditor,
+        footerComp
     },
 
     setup() {

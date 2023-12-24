@@ -62,9 +62,7 @@ onMounted(() => {
 
         const options = {
             closable: true,
-            onHide: () => {
-                backdropClasses: ''
-            }
+            backdropClasses: ''
         };
 
         const instanceOptions = {
